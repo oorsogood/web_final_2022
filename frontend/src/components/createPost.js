@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import SearchOnMap from "./SearchOnMap";
+import GoogleMaps from "./GoogleMaps";
 import trashIcon from "../images/trash.png";
 
 const useStyles = makeStyles(() => ({
@@ -157,7 +158,8 @@ const CreatePost = () => {
         <div className={classes.rightLayout}>
           <div>
             <h2>Search On Map</h2>
-            <SearchOnMap />
+            {/* <SearchOnMap /> */}
+            <GoogleMaps />
           </div>
           <br />
           <Button variant="outlined" color="error">
