@@ -1,9 +1,12 @@
 import { React, useState, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import { Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import SearchOnMap from "./SearchOnMap";
 import GoogleMaps from "./GoogleMaps";
 import trashIcon from "../images/trash.png";
+import { useMap } from "../hooks/useMap";
+import axios from "../api"
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -52,6 +55,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const CreatePost = () => {
+  const { address, latitude, longitude } = useMap();
   const classes = useStyles();
   const [selectedImages, setSelectedImages] = useState([]);
   const [content, setContent] = useState("");
@@ -67,6 +71,18 @@ const CreatePost = () => {
     });
 
     setSelectedImages((previous) => previous.concat(imagesArray));
+  };
+
+  const handlePost = async () => {
+    const result = await axios.post('./post', {
+      id: uuidv4(),
+      address,
+      latitude,
+      longitude,
+      time: Date.now(),
+      description: content
+    });
+    console.log(result);
   };
 
   return (
@@ -165,7 +181,7 @@ const CreatePost = () => {
           <Button variant="outlined" color="error">
             Discard
           </Button>
-          <Button variant="contained" color="success">
+          <Button variant="contained" color="success" onClick={handlePost}>
             Post
           </Button>
         </div>

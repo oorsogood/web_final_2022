@@ -1,4 +1,5 @@
 // yarn add @react-google-maps/api
+// yarn add react-geocode
 // yarn add use-places-autocomplete
 // yarn add @reach/combobox
 // yarn add styled-components
@@ -8,6 +9,7 @@ import usePlacesAutocomplete, {
 	getGeocode,
 	getLatLng
 } from "use-places-autocomplete";
+import Geocode from "react-geocode";
 import {
 	Combobox,
 	ComboboxInput,
@@ -16,7 +18,9 @@ import {
 	ComboboxOption
 } from "@reach/combobox";
 import styled from 'styled-components';
+import { useMap } from '../hooks/useMap';
 
+Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
 const libraries = ["places"];
 
 const Wrapper = styled.div`
@@ -42,6 +46,7 @@ const containerStyle = {
 };
 
 const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
+	const { setAddress, setLatitude, setLongitude } = useMap();
 	const {
 		ready,
 		value,
@@ -62,6 +67,18 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
 		setSelected({ lat, lng });
 		setSearchMarkers([]);
 		panTo({ lat, lng });
+		setLatitude(lat);
+		setLongitude(lng);
+		Geocode.fromLatLng(lat, lng).then(
+			(response) => {
+				const address = response.results[0].formatted_address;
+				setAddress(address);
+				console.log(address);
+			},
+			(error) => {
+				console.error(error);
+			}
+		);
 	}
 
 	const handleSearch = (query) => {
@@ -126,6 +143,7 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
 }
 
 const Map = () => {
+	const { setAddress, setLatitude, setLongitude } = useMap();
 	const center = useMemo(() => ({ lat: 25.016259, lng: 121.533508 }), []);
 	const [selected, setSelected] = useState(null);
 	const [searchMarkers, setSearchMarkers] = useState([]);
@@ -136,7 +154,19 @@ const Map = () => {
 			mapRef.current.panTo({ lat: searchMarkers[0].lat, lng: searchMarkers[0].lng });
 			mapRef.current.setZoom(17);
 			setSelected(searchMarkers[0]);
-		}
+			setLatitude(searchMarkers[0].lat);
+			setLongitude(searchMarkers[0].lng);
+			Geocode.fromLatLng(searchMarkers[0].lat, searchMarkers[0].lng).then(
+				(response) => {
+					const address = response.results[0].formatted_address;
+					setAddress(address);
+					console.log(address);
+				},
+				(error) => {
+					console.error(error);
+				}
+			);
+		};
 	}, [searchMarkers]);
 
 	const onMapLoad = useCallback((map) => {
@@ -156,6 +186,18 @@ const Map = () => {
 		console.log(coordinate);
 		setSelected(coordinate);
 		setSearchMarkers([]);
+		setLatitude(coordinate.lat);
+		setLongitude(coordinate.lng);
+		Geocode.fromLatLng(coordinate.lat, coordinate.lng).then(
+			(response) => {
+				const address = response.results[0].formatted_address;
+				setAddress(address);
+				console.log(address);
+			},
+			(error) => {
+				console.error(error);
+			}
+		);
 	};
 
 	return (
@@ -171,7 +213,11 @@ const Map = () => {
 				onClick={handleClick}
 				onLoad={onMapLoad}
 			>
-				{selected && <MarkerF position={selected} onClick={() => setSelected(false)}/>}
+				{selected && <MarkerF position={selected} onClick={() => {
+					setSelected(false);
+					setLatitude(null);
+					setLongitude(null);
+				}}/>}
 				{searchMarkers.map((marker, i) => {
 					console.log("Marker should set");
 					return <MarkerF position={{ lat: marker.lat, lng: marker.lng }} key={i} />
