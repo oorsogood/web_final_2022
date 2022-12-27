@@ -71,9 +71,7 @@ const CreatePost = () => {
 
   const onSelectFile = (e) => {
     const selectedFiles = e.target.files;
-    // console.log("selectedFiles", selectedFiles);
     const selectedFilesArray = Array.from(selectedFiles);
-    // console.log(selectedFilesArray);
     const imagesArray = selectedFilesArray.map((file) => {
       return URL.createObjectURL(file);
     });
@@ -183,7 +181,6 @@ const CreatePost = () => {
         <div className={classes.rightLayout}>
           <div>
             <h2>Search On Map</h2>
-            {/* <SearchOnMap /> */}
             <GoogleMaps />
           </div>
           <br />
