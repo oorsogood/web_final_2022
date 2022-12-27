@@ -1,12 +1,12 @@
 import { React, useState, useEffect } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import SearchOnMap from "./SearchOnMap";
 import GoogleMaps from "./GoogleMaps";
 import trashIcon from "../images/trash.png";
 import { useMap } from "../hooks/useMap";
-import axios from "../api"
+import { TagsInput } from "react-tag-input-component";
+import axios from "../api";
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -45,13 +45,21 @@ const useStyles = makeStyles(() => ({
   error: {
     textAlign: "center",
   },
+  enterTags: {
+    color: "royalblue",
+  },
   layout: {
     margin: "20px",
     display: "flex",
     flexDirection: "row",
   },
-  leftLayout: {},
-  rightLayout: {},
+  leftLayout: {
+    width: "450px",
+    margin: "auto",
+  },
+  rightLayout: {
+    margin: "auto",
+  },
 }));
 
 const CreatePost = () => {
@@ -59,11 +67,11 @@ const CreatePost = () => {
   const classes = useStyles();
   const [selectedImages, setSelectedImages] = useState([]);
   const [content, setContent] = useState("");
-  const [tags, setTags] = useState("");
+  const [tags, setTags] = useState([]);
 
   const onSelectFile = (e) => {
     const selectedFiles = e.target.files;
-    // console.log(selectedFiles);
+    // console.log("selectedFiles", selectedFiles);
     const selectedFilesArray = Array.from(selectedFiles);
     // console.log(selectedFilesArray);
     const imagesArray = selectedFilesArray.map((file) => {
@@ -74,13 +82,14 @@ const CreatePost = () => {
   };
 
   const handlePost = async () => {
-    const result = await axios.post('./post', {
+    const result = await axios.post("./post", {
       id: uuidv4(),
       address,
       latitude,
       longitude,
       time: Date.now(),
-      description: content
+      description: content,
+      tags: tags,
     });
     console.log(result);
   };
@@ -162,13 +171,13 @@ const CreatePost = () => {
             />
           </div>
           <div className="tags">
-            <h2>Tags!</h2>
-            <TextField
-              label="Create Your Tags!"
-              fullWidth
+            <h2>Add HashTags</h2>
+            <TagsInput
               value={tags}
-              onChange={(e) => setTags(e.target.value)}
+              onChange={setTags}
+              placeHolder="Your Hashtags"
             />
+            <p className={classes.enterTags}>press Enter to add new tag.</p>
           </div>
         </div>
         <div className={classes.rightLayout}>
