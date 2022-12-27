@@ -8,7 +8,10 @@ const PostSchema = new Schema({
 	latitude: { type: Number, required: true },
 	longitude: { type: Number, required: true },
 	time: { type: Date, required: true },
-	description: String
+	description: String,
+	tags: [String],
+	images: [String],
+	// user: { type: mongoose.Types.ObjectId, ref: 'User'}
 });
 const PostModel = mongoose.model('Post', PostSchema);
 
