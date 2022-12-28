@@ -1,13 +1,14 @@
-const allAccess = (req, res) => {
-    res.status(200).send("Public Content.");
-};
+export default {
+    allAccess: (req, res, next) => {
+        console.log("hi test all");
+        res.status(200).send("Public Content.");
+    },
 
-const userBoard = (req, res) => {
-    res.status(200).send("User Content.");
-};
+    userBoard: (req, res, next) => {
+        res.status(200).send("User Content.");
+    },
 
-const adminBoard = (req, res) => {
-    res.status(200).send("Admin Content.");
-};
-
-export default { allAccess, userBoard, adminBoard };
+    adminBoard: (req, res,next) => {
+        res.status(200).send("Admin Content.");
+    }
+}
