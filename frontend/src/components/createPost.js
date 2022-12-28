@@ -66,6 +66,7 @@ const CreatePost = () => {
   const { address, latitude, longitude } = useMap();
   const classes = useStyles();
   const [selectedImages, setSelectedImages] = useState([]);
+  const [selectedImgRaw, setSelectedImgRaw] = useState([]);
   const [content, setContent] = useState("");
   const [tags, setTags] = useState([]);
 
@@ -75,12 +76,22 @@ const CreatePost = () => {
     const imagesArray = selectedFilesArray.map((file) => {
       return URL.createObjectURL(file);
     });
-
+    setSelectedImgRaw((previous) => previous.concat(selectedFilesArray));
     setSelectedImages((previous) => previous.concat(imagesArray));
   };
 
   const handlePost = async () => {
-    const result = await axios.post("./post", {
+    const imgURL = [];
+    for(const img of selectedImgRaw){
+      // console.log(img);
+      var formdata = new FormData();
+      formdata.append('image', img);
+      const result = await axios.post('./uploadImg', formdata);
+      // console.log(result.data);
+      imgURL.push(result.data);
+    };
+    // console.log("Finish mapping", imgURL);
+    const newPost = await axios.post("./post", {
       id: uuidv4(),
       address,
       latitude,
@@ -88,8 +99,9 @@ const CreatePost = () => {
       time: Date.now(),
       description: content,
       tags: tags,
+      images: imgURL
     });
-    console.log(result);
+    // console.log(newPost);
   };
 
   return (
