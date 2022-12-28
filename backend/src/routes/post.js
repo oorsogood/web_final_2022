@@ -87,6 +87,22 @@ router.post("/post", async (req, res) => {
 	};
 });
 
+router.get("/posts", async (req, res) => {
+	const place = req.query.placeFilter;
+	// console.log(place);
+	const tags = req.query.tagFilter;
+	// console.log(tags);
+	const placeFilter = place ? place : { $exists: true };
+	const tagFilter = tags ? { $in: tags } : { $exists: true };
+	const result = await Post.find({address: placeFilter, tags: tagFilter});
+	if(result.length >= 1){
+		res.status(200).send({ message: 'Success', contents: result });
+	}
+	else{
+		res.status(200).send({ message: 'No matching result. Please try different filters' });
+	};
+});
+
 router.get("/post", async (req, res) => {
 	const id = String(req.query.id);
 	// console.log(id);
