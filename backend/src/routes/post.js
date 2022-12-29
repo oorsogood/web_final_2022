@@ -77,18 +77,66 @@ router.post("/post", async (req, res) => {
 	try{
 		const newPost = await new Post(newEntry).save();
 		console.log("Created post", newPost);
-		res.json({ newPost });
+		res.status(200).send({ message: 'Success', contents: newPost });
+		// res.json({ newPost });
 		return newPost;
 	}
 	catch(e){
-		throw new Error("Post creation error: " + e);
+		res.status(400).send({ message: 'Post creation error' });
+		// throw new Error("Post creation error: " + e);
 	};
 });
 
 router.get("/posts", async (req, res) => {
+	const place = req.query.placeFilter;
+	// console.log(place);
+	const tags = req.query.tagFilter;
+	// console.log(tags);
+	const placeFilter = place ? place : { $exists: true };
+	const tagFilter = tags ? { $in: tags } : { $exists: true };
+	const result = await Post.find({address: placeFilter, tags: tagFilter});
+	if(result.length >= 1){
+		res.status(200).send({ message: 'Success', contents: result });
+	}
+	else{
+		res.status(200).send({ message: 'No matching result. Please try different filters' });
+	};
+});
+
+router.get("/post", async (req, res) => {
 	const id = String(req.query.id);
-	const post = await Post.find({ id });
-	res.json({ post });
+	// console.log(id);
+	const result = await Post.find({ id });
+	if(result.length === 1){
+		res.status(200).send({ message: 'Success', contents: result });
+	}
+	else{
+		res.status(400).send({ message: 'Error: Post ID not found' });
+	};
+	// res.json({ result });
+});
+
+router.patch("/post", async (req, res) => {
+	const id = String(req.query.id);
+	// console.log(req.body);
+	const updatedPost = await Post.findOneAndUpdate({ id }, req.body, { new: true });
+	console.log(updatedPost);
+	res.status(200).send({ message: 'Updated post successfully', contents: updatedPost });
+	// const result = await Post.find({ id });
+	// if(result.length !== 1){
+	// 	res.status(400).send({ message: 'Error: Post ID not found' });
+	// };
+});
+
+router.delete("/post", async (req, res) => {
+	const id = String(req.query.id);
+	try{
+		await Post.deleteOne({ id });
+		res.status(200).send({ message: 'Post deleted' });
+	}
+	catch (e) {
+		res.status(500).send({ message: 'Post deletion failed' });
+	};
 });
 
 export default router;
