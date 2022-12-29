@@ -1,7 +1,7 @@
-import CreatePost from "./components/createPost";
+import Home from "./containers/main/Home";
 
 function App() {
-  return <CreatePost />;
+  return <Home />;
 }
 
 export default App;
