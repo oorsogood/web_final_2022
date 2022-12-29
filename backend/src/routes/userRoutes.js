@@ -3,7 +3,6 @@ import { Router } from "express";
 import controller from "../controllers/userController";
 
 const router = Router();
-console.log("hi user");
 
 router.use((req, res, next) => {
     res.header(

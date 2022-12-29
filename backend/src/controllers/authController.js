@@ -78,10 +78,11 @@ export default {
                 if (!user) {
                     return res.status(404).send({ message: "User Not found." });
                 }
-
-                // if (!req.session){
+                // console.log(req);
+                if (!req.session){
                 //     req.push({session: {token: null}});
-                // }
+                    console.log('no req session');
+                }
                 // var passwordIsValid = bcrypt.compareSync(
                 //     req.body.password,
                 //     user.password

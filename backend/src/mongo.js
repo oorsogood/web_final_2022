@@ -56,6 +56,5 @@ export default {
                 });
             }
         });
-        console.log("done initial");
     }
 }

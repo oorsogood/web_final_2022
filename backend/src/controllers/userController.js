@@ -1,6 +1,5 @@
 export default {
     allAccess: (req, res, next) => {
-        console.log("hi test all");
         res.status(200).send("Public Content.");
     },
 
