@@ -1,4 +1,4 @@
-// const { verifySignUp } = require("../middlewares");
+import verifySignUp from "../middlewares/verifySignUp";
 import { Router } from "express";
 import controller from "../controllers/authController";
 
@@ -18,10 +18,10 @@ console.log("hi auth");
 
 router.post(
     "/signup",
-    // [
-    //     verifySignUp.checkDuplicateUsernameOrEmail,
-    //     verifySignUp.checkRolesExisted
-    // ],
+    [
+        verifySignUp.checkDuplicateUsernameOrEmail,
+        verifySignUp.checkRolesExisted
+    ],
     controller.signup
 );
 

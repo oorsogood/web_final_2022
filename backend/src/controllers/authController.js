@@ -1,4 +1,4 @@
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 // import bcrypt from 'bcyptjs';
 import config from "../config/auth_config";
 import db from "../models";
@@ -79,6 +79,9 @@ export default {
                     return res.status(404).send({ message: "User Not found." });
                 }
 
+                // if (!req.session){
+                //     req.push({session: {token: null}});
+                // }
                 // var passwordIsValid = bcrypt.compareSync(
                 //     req.body.password,
                 //     user.password
@@ -90,9 +93,9 @@ export default {
                     return res.status(401).send({ message: "Invalid Password!" });
                 }
 
-                // var token = jwt.sign({ id: user.id }, config.secret, {
-                //     expiresIn: 86400, // 24 hours
-                // });
+                var token = jwt.sign({ id: user.id }, config.secret, {
+                    expiresIn: 86400, // 24 hours
+                });
 
                 var authorities = [];
 
@@ -100,7 +103,8 @@ export default {
                     authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
                 }
 
-                // req.session.token = token;
+                console.log(`token: ${token} req session: ${req.session}`);
+                req.session.token = token;
 
                 res.status(200).send({
                     id: user._id,

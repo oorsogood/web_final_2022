@@ -1,10 +1,9 @@
-// const { authJwt } = require("../middlewares");
+import authJwt from "../middlewares/authJwt";
 import { Router } from "express";
 import controller from "../controllers/userController";
 
 const router = Router();
 console.log("hi user");
-
 
 router.use((req, res, next) => {
     res.header(
@@ -17,13 +16,13 @@ router.use((req, res, next) => {
 router.get("/all", controller.allAccess);
 
 router.get("/user",
-    // [authJwt.verifyToken],
+    [authJwt.verifyToken],
     controller.userBoard
 );
 
 router.get(
     "/admin",
-    // [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
 );
 
