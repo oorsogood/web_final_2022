@@ -2,7 +2,7 @@ import { useState } from "react";
 
 // need to add communication to DB
 // a key value pair to store in local storage
-const useLocalStorage = (keyName, defaultValue) => {
+export const useLocalStorage = (keyName, defaultValue) => {
     const [storedValue, setStoredValue] = useState(() => {
         try {
             const value = window.localStorage.getItem(keyName);
@@ -28,5 +28,3 @@ const useLocalStorage = (keyName, defaultValue) => {
 
     return [storedValue, setValue];
 };
-
-export default useLocalStorage;

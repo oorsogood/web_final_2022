@@ -1,8 +1,8 @@
 import { Link, Navigate, useOutlet } from "react-router-dom";
-import {useAuth} from "../hooks/useAuth";
-import { AppBar } from "./AppBar";
+import { useAuth } from "../hooks/useAuth";
+import AppBar from "./AppBar";
 
-export default () => {
+function ProtectedLayout() {
     const { user } = useAuth();
     const outlet = useOutlet();
 
@@ -14,10 +14,13 @@ export default () => {
         <div>
             <AppBar
                 pages={[
-                    { label: "Post", path: "post" }
+                    { label: "Settings", path: "settings" },
+                    { label: "Posts", path: "posts" }
                 ]}
             />
             {outlet}
         </div>
     );
 };
+
+export default ProtectedLayout;

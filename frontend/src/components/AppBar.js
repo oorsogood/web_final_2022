@@ -12,9 +12,9 @@ import Button from "@mui/material/Button";
 
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
-import {useAuth} from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
-export const AppBar = ({ pages }) => {
+function AppBar({ pages }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const navigate = useNavigate();
     const { user, logout } = useAuth();
@@ -115,3 +115,5 @@ export const AppBar = ({ pages }) => {
         </MuiAppBar>
     );
 };
+
+export default AppBar;

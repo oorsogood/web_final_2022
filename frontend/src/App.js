@@ -1,8 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import LoginPage from "./containers/account/Login";
-import HomePage from "./containers/main/Home";
 import ProtectedLayout from "./components/ProtectedLayout";
 import HomeLayout from "./components/HomeLayout";
+import "./App.css";
+import HomePage from "./containers/main/Home";
+import LoginPage from "./containers/account/Login";
+import SettingsPage from "./containers/main/Settings";
 import CreatePost from "./components/createPost";
 
 function App() {
@@ -14,7 +16,8 @@ function App() {
             </Route>
 
             <Route path="/dashboard" element={<ProtectedLayout />}>
-                <Route path="/post" element={<CreatePost />} />
+                <Route path="posts" element={<CreatePost />} />
+                <Route path="settings" element={<SettingsPage />} />
             </Route>
         </Routes>
     );

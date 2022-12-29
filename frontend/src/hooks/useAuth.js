@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import useLocalStorage from "./useLocalStorage";
+import { useLocalStorage } from "./useLocalStorage";
 
 const AuthContext = createContext();
 
@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
     // check user status
     const login = async (data) => {
         setUser(data);
-        navigate("/dashboard/profile", { replace: true });
+        navigate("/dashboard/posts", { replace: true });
     };
 
     const logout = () => {

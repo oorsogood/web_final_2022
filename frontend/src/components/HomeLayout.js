@@ -1,15 +1,15 @@
 import { Navigate, useOutlet } from "react-router-dom";
-import {useAuth} from "../hooks/useAuth";
-import { AppBar } from "./AppBar";
+import { useAuth } from "../hooks/useAuth";
+import AppBar from "./AppBar";
 
-export default () => {
+function HomeLayout() {
     const { user } = useAuth();
     const outlet = useOutlet();
-
+    
     if (user) {
-        return <Navigate to="/dashboard/profile" replace />;
+        return <Navigate to="/dashboard/posts" replace />;
     }
-
+    
     return (
         <div>
             <AppBar
@@ -21,4 +21,6 @@ export default () => {
             {outlet}
         </div>
     );
-};
+}
+
+export default HomeLayout;

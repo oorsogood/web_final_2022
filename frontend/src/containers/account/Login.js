@@ -5,9 +5,10 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Link as RouterLink } from "react-router-dom";
-import {useAuth} from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
-export default () => {
+
+const LoginPage = () => {
     const { login } = useAuth();
 
     const handleSubmit = (event) => {
@@ -64,3 +65,5 @@ export default () => {
         </div>
     );
 };
+
+export default LoginPage;
