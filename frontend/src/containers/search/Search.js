@@ -10,6 +10,7 @@ import SearchIcon from "../../images/search.png";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import { TagsInput } from "react-tag-input-component";
+import { useSearch } from "../../hooks/useSearch";
 
 const useStyles = makeStyles(() => ({
   searchIcon: {
@@ -28,9 +29,7 @@ const useStyles = makeStyles(() => ({
 
 export default function Search() {
   const [open, setOpen] = useState(false);
-  const [author, setAuthor] = useState("");
-  const [location, setLocation] = useState("");
-  const [tags, setTags] = useState([]);
+  const { author, setAuthor, location, setLocation, tags, setTags, getPosts } = useSearch();
   const [tagsOnFocus, setTagsOnFocus] = useState(false);
   const classes = useStyles();
 
@@ -59,6 +58,14 @@ export default function Search() {
       setOpen(false);
       setTagsOnFocus(false);
     }
+  };
+
+  const handleSearch = (event, reason) => {
+    getPosts();
+    if (reason !== "backdropClick") {
+      setOpen(false);
+      setTagsOnFocus(false);
+    };
   };
 
   return (
@@ -115,7 +122,7 @@ export default function Search() {
           <Button variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={handleClose}>
+          <Button variant="contained" onClick={handleSearch}>
             Search
           </Button>
         </DialogActions>

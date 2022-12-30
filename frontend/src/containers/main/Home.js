@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navbar, Button, Link, Text, css } from "@nextui-org/react";
-import { Layout } from "./Layout.js";
+import Layout from "./Layout.js";
+import { SearchProvider } from "../../hooks/useSearch";
 import AccountIcon from "../../images/account.png";
 import SavedPostIcon from "../../images/savedPost.png";
 import MyPostIcon from "../../images/myPost.png";
@@ -58,89 +59,91 @@ function Home() {
   const classes = useStyles();
 
   return (
-    <Layout>
-      <Navbar isBordered variant="sticky">
-        <Navbar.Brand>
-          <Navbar.Toggle aria-label="toggle navigation" />
-          <img className={classes.cp3Icon} src={CP3Icon} alt="CP3LOGO" />
-          <Text b color="inherit" hideIn="xs">
-            Web Final Project
-          </Text>
-        </Navbar.Brand>
-        <Navbar.Content
-          enableCursorHighlight
-          variant="underline"
-          css={{
-            position: "absolute",
-            marginLeft: "250px",
-          }}
-        >
-          <Navbar.Link href="home" css={{ border: "10px" }}>
-            <img className={classes.homeIcon} src={HomeIcon} alt="HomeIcon" />
-            Home
-          </Navbar.Link>
-          <div className={classes.searchBar}>
-            <Search />
-          </div>
-        </Navbar.Content>
-        <Navbar.Content enableCursorHighlight variant="underline">
-          <Navbar.Link isActive href="create">
-            <img
-              className={classes.writeIcon}
-              src={WriteIcon}
-              alt="WriteIcon"
-            />
-            Create a New Post
-          </Navbar.Link>
-        </Navbar.Content>
-        <Navbar.Collapse>
-          {collapseItems.map((item, index) => (
-            <Navbar.CollapseItem key={item}>
-              <Link
-                color="inherit"
-                css={{
-                  minWidth: "100%",
-                }}
-                href={item}
-              >
-                {item === "myaccount" && (
-                  <img
-                    className={classes.myAccountIcon}
-                    src={AccountIcon}
-                    alt="AccountIcon"
-                  />
-                )}
-                {item === "myposts" && (
-                  <img
-                    className={classes.myPostIcon}
-                    src={MyPostIcon}
-                    alt="MyPostsIcon"
-                  />
-                )}
-                {item === "savedposts" && (
-                  <img
-                    className={classes.saveIcon}
-                    src={SavedPostIcon}
-                    alt="SavedPostIcon"
-                  />
-                )}
-                {item === "logout" && (
-                  <img
-                    className={classes.logoutIcon}
-                    src={LogoutIcon}
-                    alt="LogoutIcon"
-                  />
-                )}
-                {item === "myaccount" && "My Account"}
-                {item === "myposts" && "My Posts"}
-                {item === "savedposts" && "Saved Posts"}
-                {item === "logout" && "Log Out"}
-              </Link>
-            </Navbar.CollapseItem>
-          ))}
-        </Navbar.Collapse>
-      </Navbar>
-    </Layout>
+    <SearchProvider>
+      <Layout>
+        <Navbar isBordered variant="sticky">
+          <Navbar.Brand>
+            <Navbar.Toggle aria-label="toggle navigation" />
+            <img className={classes.cp3Icon} src={CP3Icon} alt="CP3LOGO" />
+            <Text b color="inherit" hideIn="xs">
+              Web Final Project
+            </Text>
+          </Navbar.Brand>
+          <Navbar.Content
+            enableCursorHighlight
+            variant="underline"
+            css={{
+              position: "absolute",
+              marginLeft: "250px",
+            }}
+          >
+            <Navbar.Link href="home" css={{ border: "10px" }}>
+              <img className={classes.homeIcon} src={HomeIcon} alt="HomeIcon" />
+              Home
+            </Navbar.Link>
+            <div className={classes.searchBar}>
+              <Search />
+            </div>
+          </Navbar.Content>
+          <Navbar.Content enableCursorHighlight variant="underline">
+            <Navbar.Link isActive href="create">
+              <img
+                className={classes.writeIcon}
+                src={WriteIcon}
+                alt="WriteIcon"
+              />
+              Create a New Post
+            </Navbar.Link>
+          </Navbar.Content>
+          <Navbar.Collapse>
+            {collapseItems.map((item, index) => (
+              <Navbar.CollapseItem key={item}>
+                <Link
+                  color="inherit"
+                  css={{
+                    minWidth: "100%",
+                  }}
+                  href={item}
+                >
+                  {item === "myaccount" && (
+                    <img
+                      className={classes.myAccountIcon}
+                      src={AccountIcon}
+                      alt="AccountIcon"
+                    />
+                  )}
+                  {item === "myposts" && (
+                    <img
+                      className={classes.myPostIcon}
+                      src={MyPostIcon}
+                      alt="MyPostsIcon"
+                    />
+                  )}
+                  {item === "savedposts" && (
+                    <img
+                      className={classes.saveIcon}
+                      src={SavedPostIcon}
+                      alt="SavedPostIcon"
+                    />
+                  )}
+                  {item === "logout" && (
+                    <img
+                      className={classes.logoutIcon}
+                      src={LogoutIcon}
+                      alt="LogoutIcon"
+                    />
+                  )}
+                  {item === "myaccount" && "My Account"}
+                  {item === "myposts" && "My Posts"}
+                  {item === "savedposts" && "Saved Posts"}
+                  {item === "logout" && "Log Out"}
+                </Link>
+              </Navbar.CollapseItem>
+            ))}
+          </Navbar.Collapse>
+        </Navbar>
+      </Layout>
+    </SearchProvider>
   );
 }
 export default Home;
