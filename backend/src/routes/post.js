@@ -88,12 +88,12 @@ router.post("/post", async (req, res) => {
 });
 
 router.get("/posts", async (req, res) => {
+	// console.log("req.query", req.query);
 	const place = req.query.placeFilter;
-	// console.log(place);
 	const tags = req.query.tagFilter;
-	// console.log(tags);
-	const placeFilter = place ? place : { $exists: true };
-	const tagFilter = tags ? { $in: tags } : { $exists: true };
+	// console.log("tags", tags);
+	const placeFilter = (place !== "") ? place : { $exists: true };
+	const tagFilter = (tags !== undefined) ? { $in: tags } : { $exists: true };
 	const result = await Post.find({address: placeFilter, tags: tagFilter});
 	if(result.length >= 1){
 		res.status(200).send({ message: 'Success', contents: result });
