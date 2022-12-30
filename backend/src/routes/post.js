@@ -88,7 +88,7 @@ router.post("/post", async (req, res) => {
 });
 
 router.get("/posts", async (req, res) => {
-	console.log("Get api called");
+	// console.log("Get api called");
 	// console.log("req.query", req.query);
 	const place = req.query.placeFilter;
 	const tags = req.query.tagFilter;
