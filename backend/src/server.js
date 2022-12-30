@@ -9,15 +9,15 @@ import UserRouter from './routes/userRoutes';
 const app = express();
 const port = process.env.PORT || 8080;
 
-var corsOptions = {
-    origin: "http://localhost:8081"
-};
+// var corsOptions = {
+//     origin: "http://localhost:8081"
+// };
 
 db.connect();
 db.initial();
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 // store data in cookieSession
