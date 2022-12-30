@@ -1,4 +1,4 @@
-import verifySignUp from "../middlewares/verifySignUp";
+import verifySignUp from "../middleware/verifySignUp";
 import { Router } from "express";
 import controller from "../controllers/authController";
 

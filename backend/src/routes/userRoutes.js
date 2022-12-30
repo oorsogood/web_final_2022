@@ -1,4 +1,4 @@
-import authJwt from "../middlewares/authJwt";
+import authJwt from "../middleware/authJwt";
 import { Router } from "express";
 import controller from "../controllers/userController";
 
