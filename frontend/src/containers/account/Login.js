@@ -8,7 +8,6 @@ import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import axios from "../../api";
 
-
 const LoginPage = () => {
     const { login } = useAuth();
 
