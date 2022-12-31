@@ -65,33 +65,33 @@ const useStyles = makeStyles(() => ({
 }));
 
 const CreatePostPage = () => {
-	return (
-		<MapProvider>
-			<CreatePost />
-		</MapProvider>
-	)
+  return (
+    <MapProvider>
+      <CreatePost />
+    </MapProvider>
+  );
 };
 
 const CreatePost = () => {
-	// const user = JSON.parse(window.localStorage.getItem("user"));
-	// console.log("User is", user.username);
+  // const user = JSON.parse(window.localStorage.getItem("user"));
+  // console.log("User is", user.username);
   const { address, latitude, longitude } = useMap();
   const classes = useStyles();
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedImgRaw, setSelectedImgRaw] = useState([]);
   const [dateInput, setDateInput] = useState({
     $D: 1, //Date
-    $H: 12, // Hour
+    $H: 0, // Hour
     $L: "en", // Language
-    $M: 0, // Month, need to plus 1 to get the correct month, E.g. 0 represents January
-    $W: 1, // Week
-    $d: {}, // an object contain all the time info
-    $m: 3, // Minutes
-    $ms: 926, // unknown attribute
-    $s: 33, // Seconds
+    $M: 8, // Month, need to plus 1 to get the correct month, E.g. 0 represents January
+    $W: 4, // Week
+    $d: {}, // an object contain all the time info {Thu Sep 01 2022 00:00:00 GMT+0800 (Taipei Standard Time)}
+    $m: 0, // Minutes
+    $ms: 0, // unknown attribute
+    $s: 0, // Seconds
     $u: undefined,
     $x: {},
-    $y: 2000, // Year
+    $y: 2022, // Year
   });
   const [postTitle, setPostTitle] = useState("");
   const [content, setContent] = useState("");
@@ -126,12 +126,12 @@ const CreatePost = () => {
 
   const handlePost = async () => {
     const username = JSON.parse(window.localStorage.getItem("user")).username;
-		const result = await axios.get("/user", {
+    const result = await axios.get("/user", {
       params: {
-        username
-      }
+        username,
+      },
     });
-		const userID = result.data.contents;
+    const userID = result.data.contents;
     // console.log("userID", userID);
     const imgURL = [];
     for (const img of selectedImgRaw) {
@@ -152,8 +152,8 @@ const CreatePost = () => {
       description: content,
       tags: tags,
       images: imgURL,
-			userID: userID,
-      author: username
+      userID: userID,
+      author: username,
     });
     // console.log(newPost);
   };
