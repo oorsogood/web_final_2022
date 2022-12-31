@@ -6,16 +6,22 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import axios from "../../api";
 
 
 const LoginPage = () => {
     const { login } = useAuth();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const result = await axios.post('./api/auth/signin', {
+            "username": data.get("username"),
+            "password": data.get("password")
+        });
+        console.log(result.data["message"]);
         login({
-            email: data.get("email"),
+            username: data.get("username"),
             password: data.get("password")
         });
     };
@@ -28,10 +34,10 @@ const LoginPage = () => {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    id="username"
+                    label="User Name"
+                    name="username"
+                    autoComplete="username"
                     autoFocus
                 />
                 <TextField
@@ -54,7 +60,7 @@ const LoginPage = () => {
                 </Button>
                 <Grid container>
                     <Grid item>
-                        <RouterLink to="/register">
+                        <RouterLink to="/signup">
                             <Link href="#" variant="body2">
                                 {"Don't have an account? Sign Up"}
                             </Link>

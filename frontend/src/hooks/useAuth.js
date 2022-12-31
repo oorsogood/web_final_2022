@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
+import axios from "../api";
 
 const AuthContext = createContext();
 
@@ -14,17 +15,24 @@ const AuthProvider = ({ children }) => {
         navigate("/dashboard/posts", { replace: true });
     };
 
-    const logout = () => {
+    const logout = async () => {
+        const result = await axios.post('./api/auth/signout');
+        console.log(result.data["message"]);
         setUser(null);
         navigate("/", { replace: true });
     };
+
+    const signup = async () => {
+        navigate("/login", { replace: true });
+    }
 
     // change login state when user change
     const value = useMemo(
         () => ({
             user,
             login,
-            logout
+            logout,
+            signup
         }),
         [user]
     );
