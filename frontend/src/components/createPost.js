@@ -69,14 +69,20 @@ const CreatePost = () => {
   const classes = useStyles();
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedImgRaw, setSelectedImgRaw] = useState([]);
-  //   const [date, setDate] = useState([
-  //     {
-  //       Year: moment().toYear(),
-  //       Month: moment().toMonth(),
-  //       Date: moment().toDate(),
-  //       key: "selection",
-  //     },
-  //   ]);
+  const [dateInput, setDateInput] = useState({
+    $D: 1, //Date
+    $H: 12, // Hour
+    $L: "en", // Language
+    $M: 0, // Month, need to plus 1 to get the correct month, E.g. 0 represents January
+    $W: 1, // Week
+    $d: {}, // an object contain all the time info
+    $m: 3, // Minutes
+    $ms: 926, // unknown attribute
+    $s: 33, // Seconds
+    $u: undefined,
+    $x: {},
+    $y: 2000, // Year
+  });
   const [postTitle, setPostTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState([]);
@@ -132,9 +138,9 @@ const CreatePost = () => {
     // console.log(newPost);
   };
 
-  //   useEffect(() => {
-  //     console.log("date", date);
-  //   }, [date]);
+  // useEffect(() => {
+  //   console.log("dateInput", dateInput);
+  // }, [dateInput]);
 
   //   useEffect(() => {
   //     setPostTitle(address);
@@ -148,7 +154,10 @@ const CreatePost = () => {
       </center>
       <div>
         <div className={classes.date}>
-          <ResponsiveDatePicker />
+          <ResponsiveDatePicker
+            dateInput={dateInput}
+            setDateInput={setDateInput}
+          />
         </div>
         <div className={classes.map}>
           <h2>Search On Map</h2>
