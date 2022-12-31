@@ -3,17 +3,17 @@ import axios from "../api";
 
 const SearchContext = createContext({
   posts: [],
-  author: "",
-  location: "",
-  tags: [],
+  authorFilter: "",
+  locationFilter: "",
+  tagsFilter: [],
   getPosts: () => {}
 });
 
 const SearchProvider = (props) => {
   const [posts, setPosts] = useState([]);
-  const [author, setAuthor] = useState("");
-  const [location, setLocation] = useState("");
-  const [tags, setTags] = useState([]);
+  const [authorFilter, setAuthorFilter] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [tagsFilter, setTagsFilter] = useState([]);
 
   const getPosts = async () => {
     // console.log("location", location);
@@ -21,9 +21,9 @@ const SearchProvider = (props) => {
     // console.log(author);
     const result = await axios.get("/posts", {
       params: {
-        authorFilter: author,
-        placeFilter: location,
-        tagFilter: tags
+        authorFilter,
+        placeFilter: locationFilter,
+        tagFilter: tagsFilter
       }
     });
     // console.log(result.data.contents);
@@ -34,12 +34,12 @@ const SearchProvider = (props) => {
     <SearchContext.Provider
       value={{
         posts,
-        author,
-        setAuthor,
-        location,
-        setLocation,
-        tags,
-        setTags,
+        authorFilter,
+        setAuthorFilter,
+        locationFilter,
+        setLocationFilter,
+        tagsFilter,
+        setTagsFilter,
         getPosts
       }}
       {...props}

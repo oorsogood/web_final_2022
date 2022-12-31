@@ -75,7 +75,7 @@ const CreatePostPage = () => {
 const CreatePost = () => {
 	// const user = JSON.parse(window.localStorage.getItem("user"));
 	// console.log("User is", user.username);
-  const { address, latitude, longitude } = useMap();
+  const { location, setLocation, address, latitude, longitude } = useMap();
   const classes = useStyles();
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedImgRaw, setSelectedImgRaw] = useState([]);
@@ -104,6 +104,7 @@ const CreatePost = () => {
 
   const handleChangePostTitle = (e) => {
     setPostTitle(e.target.value);
+    setLocation(e.target.value);
   };
 
   const handleChangeContent = (e) => {
@@ -139,6 +140,7 @@ const CreatePost = () => {
     // console.log("Finish mapping", imgURL);
     const newPost = await axios.post("./post", {
       id: uuidv4(),
+      location,
       address,
       latitude,
       longitude,
@@ -156,10 +158,10 @@ const CreatePost = () => {
   //     console.log("date", date);
   //   }, [date]);
 
-  //   useEffect(() => {
-  //     setPostTitle(address);
-  //     console.log("postTitle", postTitle);
-  //   }, [address, postTitle]);
+    useEffect(() => {
+      setPostTitle(location);
+      // console.log("postTitle", postTitle);
+    }, [location]);
 
   return (
     <div>

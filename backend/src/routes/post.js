@@ -65,6 +65,7 @@ router.post("/uploadImg", upload.single('image'), async (req, res) => {
 
 router.post("/post", async (req, res) => {
 	const id = String(req.body.id);
+	const location = String(req.body.location);
 	const address = String(req.body.address);
 	const latitude = Number(req.body.latitude);
 	const longitude = Number(req.body.longitude);
@@ -89,6 +90,7 @@ router.post("/post", async (req, res) => {
 	};
 	const newEntry = {
 		id,
+		location,
 		address,
 		latitude,
 		longitude,
@@ -123,7 +125,7 @@ router.get("/posts", async (req, res) => {
 	// console.log(authorFilter);
 	const placeFilter = (place !== "") ? place : { $exists: true };
 	const tagFilter = (tags !== undefined) ? { $in: tags } : { $exists: true };
-	const result = await Post.find({author: authorFilter, address: placeFilter, tags: tagFilter}).sort({time: -1});
+	const result = await Post.find({author: authorFilter, location: placeFilter, tags: tagFilter}).sort({time: -1});
 	if(result.length >= 1){
 		res.status(200).send({ message: 'Success', contents: result });
 	}

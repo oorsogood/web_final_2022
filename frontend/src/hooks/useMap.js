@@ -1,12 +1,14 @@
 import { createContext, useContext, useState } from 'react';
 
 const MapContext = createContext({
+    location: "",
     address: "",
     latitude: null,
     longitude: null
 });
 
 const MapProvider = (props) => {
+    const [location, setLocation] = useState("");
     const [address, setAddress] = useState("");
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
@@ -14,6 +16,8 @@ const MapProvider = (props) => {
     return (
         <MapContext.Provider
             value={{
+                location,
+                setLocation,
                 address,
                 setAddress,
                 latitude,

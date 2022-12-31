@@ -1,8 +1,3 @@
-// yarn add @react-google-maps/api
-// yarn add react-geocode
-// yarn add use-places-autocomplete
-// yarn add @reach/combobox
-// yarn add styled-components
 import { useCallback, useEffect, useState, useMemo, useRef } from "react";
 import { GoogleMap, useLoadScript, MarkerF, InfoWindow } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
@@ -46,7 +41,7 @@ const containerStyle = {
 };
 
 const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
-    const { setAddress, setLatitude, setLongitude } = useMap();
+    const { setAddress, setLocation, setLatitude, setLongitude } = useMap();
     const {
         ready,
         value,
@@ -57,13 +52,15 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
     const [isSearching, setIsSearching] = useState(false);
     const dummyRef = useRef();
 
-    const handleSelect = async (address) => {
-        setValue(address, false);
+    const handleSelect = async (location) => {
+        // console.log("location", location);
+        setLocation(location);
+        setValue(location, false);
         clearSuggestions();
 
-        const results = await getGeocode({ address });
+        const results = await getGeocode({ address: location });
         const { lat, lng } = getLatLng(results[0]);
-        console.log({ lat, lng });
+        // console.log({ lat, lng });
         setSelected({ lat, lng });
         setSearchMarkers([]);
         panTo({ lat, lng });
@@ -73,12 +70,13 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
             (response) => {
                 const address = response.results[0].formatted_address;
                 setAddress(address);
-                console.log(address);
+                // console.log(address);
             },
             (error) => {
                 console.error(error);
             }
         );
+
     }
 
     const handleSearch = (query) => {
@@ -94,17 +92,18 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
         var service = new window.google.maps.places.PlacesService(map);
 
         service.findPlaceFromQuery(request, (results, status) => {
-            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                let markerArray = [];
-                for (var i = 0; i < results.length; i++) {
-                    console.log(results[i]);
-                    markerArray.push({ lat: results[i].geometry.location.lat(), lng: results[i].geometry.location.lng() });
-                }
-                setSearchMarkers(markerArray);
-            }
-            else {
-                alert("No results found!");
-            }
+            // if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            let markerArray = [];
+            for (var i = 0; i < results.length; i++) {
+                // console.log(results[i]);
+                // markerArray.push({ lat: results[i].geometry.location.lat(), lng: results[i].geometry.location.lng() });
+                markerArray.push(results[i]);
+            };
+            setSearchMarkers(markerArray);
+            // }
+            // else {
+            //     alert("No results found!");
+            // }
         });
     };
 
@@ -123,7 +122,7 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
                     placeholder="Search an address"
                     onKeyPress={(e) => {
                         if (e.key === "Enter") {
-                            console.log("Search fired!", value);
+                            // console.log("Search fired!", value);
                             handleSearch(value);
                             setIsSearching(false);
                         }
@@ -143,24 +142,32 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
 }
 
 const Map = () => {
-    const { setAddress, setLatitude, setLongitude } = useMap();
+    const { setAddress, setLocation, setLatitude, setLongitude } = useMap();
     const center = useMemo(() => ({ lat: 25.016259, lng: 121.533508 }), []);
     const [selected, setSelected] = useState(null);
     const [searchMarkers, setSearchMarkers] = useState([]);
     const mapRef = useRef();
+    const dummyRef = useRef();
 
     useEffect(() => {
         if (searchMarkers.length !== 0) {
-            mapRef.current.panTo({ lat: searchMarkers[0].lat, lng: searchMarkers[0].lng });
+            setLocation(searchMarkers[0].name);
+            // console.log("lat is ", searchMarkers[0].geometry.location.lat());
+            const coordinate = {
+                lat: parseFloat(searchMarkers[0].geometry.location.lat()),
+                lng: parseFloat(searchMarkers[0].geometry.location.lng())
+            };
+            // console.log("type of lat is", typeof(coordinate.lat));
+            mapRef.current.panTo({ lat: coordinate.lat, lng: coordinate.lng });
             mapRef.current.setZoom(17);
-            setSelected(searchMarkers[0]);
-            setLatitude(searchMarkers[0].lat);
-            setLongitude(searchMarkers[0].lng);
-            Geocode.fromLatLng(searchMarkers[0].lat, searchMarkers[0].lng).then(
+            // setSelected(coordinate);
+            setLatitude(coordinate.lat);
+            setLongitude(coordinate.lng);
+            Geocode.fromLatLng(coordinate.lat, coordinate.lng).then(
                 (response) => {
                     const address = response.results[0].formatted_address;
                     setAddress(address);
-                    console.log(address);
+                    // console.log(address);
                 },
                 (error) => {
                     console.error(error);
@@ -179,11 +186,13 @@ const Map = () => {
     }, []);
 
     const handleClick = (e) => {
+        // console.log("place id", e.placeId);
+
         const coordinate = {
             lat: e.latLng.lat(),
             lng: e.latLng.lng()
         };
-        console.log(coordinate);
+        // console.log(coordinate);
         setSelected(coordinate);
         setSearchMarkers([]);
         setLatitude(coordinate.lat);
@@ -192,16 +201,31 @@ const Map = () => {
             (response) => {
                 const address = response.results[0].formatted_address;
                 setAddress(address);
-                console.log(address);
+                setLocation(address);
+                // console.log(address);
             },
             (error) => {
                 console.error(error);
             }
         );
+        if(e.placeId !== undefined){
+            var map = new window.google.maps.Map(dummyRef.current);
+            var service = new window.google.maps.places.PlacesService(map);
+            var request = {
+                placeId: e.placeId
+            };
+            service.getDetails(request, function (place, status) {
+                if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+                    // console.log("place name", place.name)
+                    setLocation(place.name);
+                }
+            });
+        };
     };
 
     return (
         <Wrapper>
+            <div ref={dummyRef} />
             <div>
                 <PlacesAutocomplete setSelected={setSelected} setSearchMarkers={setSearchMarkers} panTo={panTo} />
             </div>
@@ -219,8 +243,13 @@ const Map = () => {
                     setLongitude(null);
                 }} />}
                 {searchMarkers.map((marker, i) => {
-                    console.log("Marker should set");
-                    return <MarkerF position={{ lat: marker.lat, lng: marker.lng }} key={i} />
+                    // console.log("Marker should set");
+                    const lat = parseFloat(marker.geometry.location.lat());
+                    const lng = parseFloat(marker.geometry.location.lng());
+                    return <MarkerF position={{ 
+                        lat,
+                        lng
+                    }} key={i} />
                 })}
                 {/* {markerClicked &&
 				<InfoWindow position={selected} onCloseClick={() => setMarkerClicked(false)}>
