@@ -77,7 +77,7 @@ function Home() {
               marginLeft: "250px",
             }}
           >
-            <Navbar.Link href="home" css={{ border: "10px" }}>
+            <Navbar.Link href="posts" css={{ border: "10px" }}>
               <img className={classes.homeIcon} src={HomeIcon} alt="HomeIcon" />
               Home
             </Navbar.Link>

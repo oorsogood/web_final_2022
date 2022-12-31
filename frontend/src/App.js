@@ -5,24 +5,30 @@ import "./App.css";
 import HomePage from "./containers/main/Home";
 import LoginPage from "./containers/account/Login";
 import SignUpPage from "./containers/account/SignUp";
-import SettingsPage from "./containers/main/Settings";
 import CreatePost from "./components/createPost";
+import Home from "./containers/main/Home";
+import MyAccount from "./containers/settings/MyAccount";
+import MyPosts from "./containers/settings/MyPosts";
+import SavedPosts from "./containers/settings/SavedPosts";
 
 function App() {
-    return (
-        <Routes>
-            <Route element={<HomeLayout />}>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignUpPage />} />
-            </Route>
+  return (
+    <Routes>
+      <Route element={<HomeLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+      </Route>
 
-            <Route path="/dashboard" element={<ProtectedLayout />}>
-                <Route path="posts" element={<CreatePost />} />
-                <Route path="settings" element={<SettingsPage />} />
-            </Route>
-        </Routes>
-    );
+      <Route path="/dashboard" element={<ProtectedLayout />}>
+        <Route path="posts" element={<Home />} />
+        <Route path="create" element={<CreatePost />} />
+        <Route path="myaccount" element={<MyAccount />} />
+        <Route path="myposts" element={<MyPosts />} />
+        <Route path="savedposts" element={<SavedPosts />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;
