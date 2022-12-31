@@ -21,7 +21,7 @@ function App() {
       </Route>
 
       <Route path="/dashboard" element={<ProtectedLayout />}>
-        <Route path="home" element={<Home />} />
+        <Route path="posts" element={<Home />} />
         <Route path="create" element={<CreatePost />} />
         <Route path="myaccount" element={<MyAccount />} />
         <Route path="myposts" element={<MyPosts />} />
