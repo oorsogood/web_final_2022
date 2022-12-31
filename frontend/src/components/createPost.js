@@ -4,7 +4,7 @@ import { Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import GoogleMaps from "./GoogleMaps";
 import trashIcon from "../images/trash.png";
-import { useMap } from "../hooks/useMap";
+import { MapProvider, useMap } from "../hooks/useMap";
 import { TagsInput } from "react-tag-input-component";
 import ResponsiveDatePicker from "./DatePicker";
 import axios from "../api";
@@ -64,7 +64,17 @@ const useStyles = makeStyles(() => ({
   //   },
 }));
 
+const CreatePostPage = () => {
+	return (
+		<MapProvider>
+			<CreatePost />
+		</MapProvider>
+	)
+};
+
 const CreatePost = () => {
+	// const user = JSON.parse(window.localStorage.getItem("user"));
+	// console.log("User is", user.username);
   const { address, latitude, longitude } = useMap();
   const classes = useStyles();
   const [selectedImages, setSelectedImages] = useState([]);
@@ -115,6 +125,14 @@ const CreatePost = () => {
   };
 
   const handlePost = async () => {
+    const username = JSON.parse(window.localStorage.getItem("user")).username;
+		const result = await axios.get("/user", {
+      params: {
+        username
+      }
+    });
+		const userID = result.data.contents;
+    // console.log("userID", userID);
     const imgURL = [];
     for (const img of selectedImgRaw) {
       // console.log(img);
@@ -134,6 +152,8 @@ const CreatePost = () => {
       description: content,
       tags: tags,
       images: imgURL,
+			userID: userID,
+      author: username
     });
     // console.log(newPost);
   };
@@ -269,4 +289,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default CreatePostPage;

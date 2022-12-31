@@ -18,8 +18,10 @@ const SearchProvider = (props) => {
   const getPosts = async () => {
     // console.log("location", location);
     // console.log("tags", tags);
+    // console.log(author);
     const result = await axios.get("/posts", {
       params: {
+        authorFilter: author,
         placeFilter: location,
         tagFilter: tags
       }
