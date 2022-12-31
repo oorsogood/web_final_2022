@@ -21,8 +21,8 @@ const LoginPage = () => {
         });
         console.log(result.data["message"]);
         login({
-            username: data.get("username"),
-            password: data.get("password")
+            username: data.get("username")
+            // password: data.get("password")
         });
     };
 

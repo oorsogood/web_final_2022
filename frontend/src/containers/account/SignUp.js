@@ -20,10 +20,6 @@ const SignUpPage = () => {
             "email": data.get("email"),
             "role": ["user"]
         });
-        // login({
-        //     username: data.get("username"),
-        //     password: data.get("password")
-        // });
         console.log(result.data["message"]);
         signup();
     };
