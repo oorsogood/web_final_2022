@@ -119,13 +119,14 @@ const CreatePost = () => {
   };
 
   const handlePost = async () => {
+    const username = JSON.parse(window.localStorage.getItem("user")).username;
 		const result = await axios.get("/user", {
       params: {
-        username: JSON.parse(window.localStorage.getItem("user")).username
+        username
       }
     });
 		const userID = result.data.contents;
-    console.log("userID", userID);
+    // console.log("userID", userID);
     const imgURL = [];
     for (const img of selectedImgRaw) {
       // console.log(img);
@@ -145,7 +146,8 @@ const CreatePost = () => {
       description: content,
       tags: tags,
       images: imgURL,
-			userID: userID
+			userID: userID,
+      author: username
     });
     // console.log(newPost);
   };

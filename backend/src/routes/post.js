@@ -9,14 +9,14 @@ import User from "../models/userModel";
 const ObjectId = require('mongoose').Types.ObjectId; 
 
 const router = Router();
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, "uploadedFiles/")
-	},
-	filename: function (req, file, cb) {
-		cb(null, file.originalname)
-	}
-});
+// var storage = multer.diskStorage({
+// 	destination: function (req, file, cb) {
+// 		cb(null, "uploadedFiles/")
+// 	},
+// 	filename: function (req, file, cb) {
+// 		cb(null, file.originalname)
+// 	}
+// });
 // var upload = multer({ storage: storage });
 const upload = multer({ dest: 'uploadedFiles/' });
 // console.log(upload);
@@ -71,6 +71,7 @@ router.post("/post", async (req, res) => {
 	const time = Date(req.body.time);
 	const description = String(req.body.description);
 	const userID = String(req.body.userID);
+	const author = String(req.body.author);
 	// console.log("Working here");
 	// console.log(userID);
 	// console.log(req.body.images);
@@ -95,7 +96,8 @@ router.post("/post", async (req, res) => {
 		description,
 		tags,
 		images,
-		user: ObjectId(userID)
+		user: ObjectId(userID),
+		author
 	};
 	try{
 		const newPost = await new Post(newEntry).save();
@@ -111,17 +113,17 @@ router.post("/post", async (req, res) => {
 });
 
 router.get("/posts", async (req, res) => {
-	console.log("Get api called");
+	// console.log("Get api called");
 	// console.log("req.query", req.query);
 	const author = req.query.authorFilter;
 	const place = req.query.placeFilter;
 	const tags = req.query.tagFilter;
 	// console.log("tags", tags);
-	const authorFilter = (author !== "") ? ObjectId(author) : { $exists: true };
+	const authorFilter = (author !== "") ? author : { $exists: true };
 	// console.log(authorFilter);
 	const placeFilter = (place !== "") ? place : { $exists: true };
 	const tagFilter = (tags !== undefined) ? { $in: tags } : { $exists: true };
-	const result = await Post.find({user: authorFilter, address: placeFilter, tags: tagFilter});
+	const result = await Post.find({author: authorFilter, address: placeFilter, tags: tagFilter}).sort({time: -1});
 	if(result.length >= 1){
 		res.status(200).send({ message: 'Success', contents: result });
 	}
