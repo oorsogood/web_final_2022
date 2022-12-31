@@ -4,20 +4,39 @@ import multer from 'multer';
 import AWS from 'aws-sdk';
 import mime from 'mime';
 import Post from "../models/Post";
+import User from "../models/userModel";
+
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 const router = Router();
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, 'uploadedFiles/')
+		cb(null, "uploadedFiles/")
 	},
 	filename: function (req, file, cb) {
 		cb(null, file.originalname)
 	}
 });
-var upload = multer({ storage: storage });
+// var upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploadedFiles/' });
+// console.log(upload);
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+});
+
+router.get("/user", async (req,res) => {
+	// console.log("Get user api called");
+	// console.log("req.query.username", req.query.username);
+	const username = req.query.username;
+	const result = await User.find({username});
+	if(result.length >= 1){
+		// console.log(result);
+		res.status(200).send({ message: 'Success', contents: result[0]._id });
+	}
+	else{
+		res.status(500).send({ message: 'Username not found.' });
+	};
 });
 
 router.post("/uploadImg", upload.single('image'), async (req, res) => {
@@ -51,6 +70,9 @@ router.post("/post", async (req, res) => {
 	const longitude = Number(req.body.longitude);
 	const time = Date(req.body.time);
 	const description = String(req.body.description);
+	const userID = String(req.body.userID);
+	// console.log("Working here");
+	// console.log(userID);
 	// console.log(req.body.images);
 	let tags = [];
 	for (var key in req.body.tags) {
@@ -72,7 +94,8 @@ router.post("/post", async (req, res) => {
 		time,
 		description,
 		tags,
-		images
+		images,
+		user: ObjectId(userID)
 	};
 	try{
 		const newPost = await new Post(newEntry).save();
@@ -88,14 +111,17 @@ router.post("/post", async (req, res) => {
 });
 
 router.get("/posts", async (req, res) => {
-	// console.log("Get api called");
+	console.log("Get api called");
 	// console.log("req.query", req.query);
+	const author = req.query.authorFilter;
 	const place = req.query.placeFilter;
 	const tags = req.query.tagFilter;
 	// console.log("tags", tags);
+	const authorFilter = (author !== "") ? ObjectId(author) : { $exists: true };
+	// console.log(authorFilter);
 	const placeFilter = (place !== "") ? place : { $exists: true };
 	const tagFilter = (tags !== undefined) ? { $in: tags } : { $exists: true };
-	const result = await Post.find({address: placeFilter, tags: tagFilter});
+	const result = await Post.find({user: authorFilter, address: placeFilter, tags: tagFilter});
 	if(result.length >= 1){
 		res.status(200).send({ message: 'Success', contents: result });
 	}
