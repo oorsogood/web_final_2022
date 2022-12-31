@@ -6,6 +6,7 @@ const User = db.user;
 const Role = db.role;
 
 const verifyToken = (req, res, next) => {
+    console.log(req.body);
     let token = req.session.token;
     console.log(`token: ${token} req.session: ${req.session}`);
 
@@ -23,6 +24,7 @@ const verifyToken = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
+    console.log(req.body);
     User.findById(req.userId).exec((err, user) => {
         if (err) {
             res.status(500).send({ message: err });

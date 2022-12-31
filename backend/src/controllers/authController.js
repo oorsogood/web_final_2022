@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-// import bcrypt from 'bcyptjs';
+// import bcrypt from 'bcryptjs';
 import config from "../config/auth_config";
 import db from "../models";
 
@@ -65,6 +65,7 @@ export default {
     },
 
     signin: async (req, res, next) => {
+        console.log("signing in!");
         await User.findOne({
             username: req.body.username,
         })
@@ -76,11 +77,12 @@ export default {
                 }
 
                 if (!user) {
+                    console.log("user not found.");
                     return res.status(404).send({ message: "User Not found." });
                 }
                 // console.log(req);
-                if (!req.session){
-                //     req.push({session: {token: null}});
+                if (!req.session) {
+                    //     req.push({session: {token: null}});
                     console.log('no req session');
                 }
                 // var passwordIsValid = bcrypt.compareSync(
@@ -118,6 +120,7 @@ export default {
 
     signout: async (req, res, next) => {
         try {
+            console.log("You've been signed out!");
             req.session = null;
             return res.status(200).send({ message: "You've been signed out!" });
         } catch (err) {
