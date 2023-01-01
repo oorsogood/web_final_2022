@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"
 import { v4 as uuidv4 } from "uuid";
 import { Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -80,22 +81,24 @@ const CreatePost = () => {
   // console.log("User is", user.username);
   const { location, setLocation, address, latitude, longitude } = useMap();
   const classes = useStyles();
+  const navigate = useNavigate();
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedImgRaw, setSelectedImgRaw] = useState([]);
-  const [dateInput, setDateInput] = useState({
-    $D: 0, //Date
-    $H: 0, // Hour
-    $L: "en", // Language
-    $M: 0, // Month, need to plus 1 to get the correct month, E.g. 0 represents January
-    $W: 0, // Week
-    $d: {}, // an object contain all the time info {Thu Sep 01 2022 00:00:00 GMT+0800 (Taipei Standard Time)}
-    $m: 0, // Minutes
-    $ms: 0, // unknown attribute
-    $s: 0, // Seconds
-    $u: undefined,
-    $x: {},
-    $y: 0, // Year
-  });
+  // const [dateInput, setDateInput] = useState({
+  //   $D: 0, //Date
+  //   $H: 0, // Hour
+  //   $L: "en", // Language
+  //   $M: 0, // Month, need to plus 1 to get the correct month, E.g. 0 represents January
+  //   $W: 0, // Week
+  //   $d: {}, // an object contain all the time info {Thu Sep 01 2022 00:00:00 GMT+0800 (Taipei Standard Time)}
+  //   $m: 0, // Minutes
+  //   $ms: 0, // unknown attribute
+  //   $s: 0, // Seconds
+  //   $u: undefined,
+  //   $x: {},
+  //   $y: 0, // Year
+  // });
+  const [dateInput, setDateInput] = useState(Date());
   const [postTitle, setPostTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState([]);
@@ -105,7 +108,7 @@ const CreatePost = () => {
   useEffect(() => {
     if (
       dateInput.$y !== 0 &&
-      location.length !== 0 &&
+      latitude !== null &&
       postTitle.length !== 0
       // selectedImages.length !== 0 &&
       // content.length !== 0 &&
@@ -115,7 +118,7 @@ const CreatePost = () => {
     } else {
       setDisablePostButton(true);
     }
-  }, [dateInput, location, postTitle, selectedImages, content, tags]);
+  }, [dateInput, location, postTitle, selectedImages, content, tags, latitude]);
 
   const onSelectFile = (e) => {
     const selectedFiles = e.target.files;
@@ -179,6 +182,7 @@ const CreatePost = () => {
       author: username,
     });
     // console.log(newPost);
+    navigate("/dashboard/home");
   };
 
   useEffect(() => {
