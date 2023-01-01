@@ -176,8 +176,8 @@ router.get("/post", async (req, res) => {
 });
 
 router.patch("/post", async (req, res) => {
-  const id = String(req.query.id);
-  // console.log(req.body);
+  const id = String(req.body.id);
+  console.log("req.body is ", req.body);
   const updatedPost = await Post.findOneAndUpdate({ id }, req.body, {
     new: true,
   });

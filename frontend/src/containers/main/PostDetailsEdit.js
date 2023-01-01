@@ -72,7 +72,7 @@ const useStyles = makeStyles(() => ({
 
 export default function PostDetailsEdit(props) {
   const classes = useStyles();
-
+  const { postId } = useParams();
   const { location, setLocation, address, latitude, longitude } = useMap();
   const [editTitle, setEditTitle] = useState(props.editTitle);
   // edit date should wait for date complete
@@ -80,7 +80,7 @@ export default function PostDetailsEdit(props) {
   const [editTags, setEditTags] = useState(props.editTags);
   const [editDescription, setEditDescription] = useState(props.editDescription);
   const [editImages, setEditImages] = useState(props.editImages);
-  const [editAddress, setEditAddress] = useState(props.editAddress);
+  // const [editAddress, setEditAddress] = useState(props.editAddress);
   const [tagsOnFocus, setTagsOnFocus] = useState(false);
 
   const [selectedImages, setSelectedImages] = useState([...editImages]);
@@ -98,24 +98,41 @@ export default function PostDetailsEdit(props) {
     setSelectedImages((previous) => previous.concat(imagesArray));
   };
 
-  const handleClickSave = () => {
-    const body = {
-      title: editTitle,
+  const handleClickSave = async () => {
+    const id = String(postId.substring(1, postId.length));
+    // const body = {
+    //   id: postId,
+    //   location: editTitle,
+    //   // time: editDate,
+    //   tags: editTags,
+    //   description: editDescription,
+    //   images: editImages, // this one i am not sure, maybe it should be selectedImages?
+    //   // address: editAddress, // this one not sure neither
+    //   // might be other data that needs to be saved
+    // };
+    const imgURL = [...editImages];
+    for (const img of selectedImgRaw) {
+      var formdata = new FormData();
+      formdata.append("image", img);
+      const result = await axios.post("./uploadImg", formdata);
+      imgURL.push(result.data);
+    };
+    const result = await axios.patch("/post", {
+      id,
+      location: editTitle,
       // time: editDate,
       tags: editTags,
       description: editDescription,
-      images: editImages, // this one i am not sure, maybe it should be selectedImages?
-      address: editAddress, // this one not sure neither
-      // might be other data that needs to be saved
-    };
-    console.log("body", body);
+      images: imgURL
+    });
+    // console.log("result is", result);
     // edit API here
     props.setEdit(false);
   };
 
   const handleChangeEditTitle = (e) => {
     setEditTitle(e.target.value);
-    setLocation(e.target.value);
+    // setLocation(e.target.value);
   };
 
   const handleOthersOnFocus = () => {
@@ -126,10 +143,10 @@ export default function PostDetailsEdit(props) {
     setTagsOnFocus(true);
   };
 
-  useEffect(() => {
-    setEditTitle(location);
-    // console.log("editTitle", editTitle);
-  }, [location]);
+  // useEffect(() => {
+  //   setEditTitle(location);
+  //   // console.log("editTitle", editTitle);
+  // }, [location]);
 
   // useEffect(() => {
   //   if (
@@ -186,7 +203,7 @@ export default function PostDetailsEdit(props) {
               />
             </div>
           </div>
-          <div className={classes.address}>
+          {/* <div className={classes.address}>
             <h2>Address</h2>
             <div onFocus={handleOthersOnFocus}>
               <TextField
@@ -196,7 +213,7 @@ export default function PostDetailsEdit(props) {
                 onChange={(e) => setEditAddress(e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
           <div className={classes.imagesSection}>
             <h2>Upload Picture!</h2>
             <input
@@ -238,9 +255,14 @@ export default function PostDetailsEdit(props) {
                         <button
                           className={classes.deleteButton}
                           onClick={() =>
-                            setSelectedImages(
-                              selectedImages.filter((e) => e !== img)
-                            )
+                            {
+                              setSelectedImages(
+                                selectedImages.filter((e) => e !== img)
+                              )
+                              setEditImages(
+                                editImages.filter((e) => e !== img)
+                              )
+                            }
                           }
                         >
                           <img

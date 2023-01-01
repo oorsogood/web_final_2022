@@ -51,10 +51,9 @@ export default function PostDetails() {
     setPostInfo(contents[0]);
   };
   useEffect(() => {
-    if (Object.keys(postInfo).length === 0) {
-      getPost();
-    }
-  }, []);
+    // console.log("getPost called");
+    getPost();
+  }, [edit]);
   const classes = useStyles();
 
   const handleClickEdit = () => {
@@ -81,7 +80,7 @@ export default function PostDetails() {
         <PostDetailsEdit
           postId={postInfo.id}
           setEdit={setEdit}
-          editTitle={postInfo.title}
+          editTitle={postInfo.location}
           // editDate={postInfo.time}
           editTags={postInfo.tags}
           editDescription={postInfo.description}
