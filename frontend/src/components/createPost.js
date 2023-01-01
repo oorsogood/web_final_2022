@@ -149,7 +149,7 @@ const CreatePost = () => {
 
   const handlePost = async () => {
     // console.log("Date is", dateInput);
-    const time = dateInput.$d.toISOString();
+    const time = dateInput.$d;
     // console.log("dateInput.$d.toISOString() is", dateInput.$d.toISOString());
     // console.log("type of dateInput.$d.toISOString() is", typeof(dateInput.$d.toISOString()));
     const username = JSON.parse(window.localStorage.getItem("user")).username;
@@ -174,7 +174,7 @@ const CreatePost = () => {
       address,
       latitude,
       longitude,
-      time,
+      time: (time === undefined ? dateInput : time.toISOString()),
       description: content,
       tags: tags,
       images: imgURL,
