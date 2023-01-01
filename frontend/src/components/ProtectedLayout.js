@@ -18,6 +18,7 @@ function ProtectedLayout() {
                     { label: "Create Post", path: "create" },
                     { label: "My Account", path: "myaccount" },
                     { label: "My Posts", path: "myposts" },
+                    { label: "My Map", path: "mymap" },
                     { label: "Saved Posts", path: "savedposts" },
                 ]}
             />
