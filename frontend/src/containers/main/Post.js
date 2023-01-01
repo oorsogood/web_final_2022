@@ -39,7 +39,7 @@ function Post({ data }) {
         <div className={classes.post} key={index}>
           {/* TODO: add a post title and time picker */}
           <div className={classes.author}>Author : {object.author}</div>
-          <div className={classes.address}>Address : {object.address}</div>
+          <div className={classes.address}>Title(Location) : {object.location}</div>
           <div className={classes.time}>Time : {object.time}</div>
           <div className={classes.description}>
             Description : {object.description}

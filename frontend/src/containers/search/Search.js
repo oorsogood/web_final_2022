@@ -29,16 +29,16 @@ const useStyles = makeStyles(() => ({
 
 export default function Search() {
   const [open, setOpen] = useState(false);
-  const { author, setAuthor, location, setLocation, tags, setTags, getPosts } = useSearch();
+  const { authorFilter, setAuthorFilter, locationFilter, setLocationFilter, tagsFilter, setTagsFilter, getPosts } = useSearch();
   const [tagsOnFocus, setTagsOnFocus] = useState(false);
   const classes = useStyles();
 
   const handleChangeAuthor = (e) => {
-    setAuthor(e.target.value);
+    setAuthorFilter(e.target.value);
   };
 
   const handleChangeLocation = (e) => {
-    setLocation(e.target.value);
+    setLocationFilter(e.target.value);
   };
 
   const handleOthersOnFocus = () => {
@@ -85,7 +85,7 @@ export default function Search() {
                     id="filled-search"
                     label="Author"
                     type="search"
-                    value={author}
+                    value={authorFilter}
                     onChange={handleChangeAuthor}
                   />
                 </div>
@@ -96,7 +96,7 @@ export default function Search() {
                     id="filled-search"
                     label="Location"
                     type="search"
-                    value={location}
+                    value={locationFilter}
                     onChange={handleChangeLocation}
                   />
                 </div>
@@ -104,8 +104,8 @@ export default function Search() {
               <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <div onFocus={handleTagsOnFocus}>
                   <TagsInput
-                    value={tags}
-                    onChange={setTags}
+                    value={tagsFilter}
+                    onChange={setTagsFilter}
                     placeHolder="Your Hashtags"
                   />
                   {tagsOnFocus && (
