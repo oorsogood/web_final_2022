@@ -81,7 +81,7 @@ export default function PostDetails() {
           postId={postInfo.id}
           setEdit={setEdit}
           editTitle={postInfo.location}
-          // editDate={postInfo.time}
+          editDate={postInfo.time}
           editTags={postInfo.tags}
           editDescription={postInfo.description}
           editImages={postInfo.images}

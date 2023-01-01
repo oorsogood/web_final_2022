@@ -105,7 +105,7 @@ const CreatePost = () => {
   useEffect(() => {
     if (
       dateInput.$y !== 0 &&
-      // location.length !== 0 &&
+      location.length !== 0 &&
       postTitle.length !== 0
       // selectedImages.length !== 0 &&
       // content.length !== 0 &&

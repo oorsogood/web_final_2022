@@ -10,6 +10,7 @@ import { TextField } from "@mui/material";
 import { TagsInput } from "react-tag-input-component";
 import trashIcon from "../../images/trash.png";
 import { useMap } from "../../hooks/useMap";
+import ResponsiveDatePicker from "../../components/DatePicker";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -76,7 +77,7 @@ export default function PostDetailsEdit(props) {
   const { location, setLocation, address, latitude, longitude } = useMap();
   const [editTitle, setEditTitle] = useState(props.editTitle);
   // edit date should wait for date complete
-  // const [editDate, setEditDate] = useState(props.editDate);
+  const [editDate, setEditDate] = useState(props.editDate);
   const [editTags, setEditTags] = useState(props.editTags);
   const [editDescription, setEditDescription] = useState(props.editDescription);
   const [editImages, setEditImages] = useState(props.editImages);
@@ -117,10 +118,11 @@ export default function PostDetailsEdit(props) {
       const result = await axios.post("./uploadImg", formdata);
       imgURL.push(result.data);
     };
+    const time = editDate.$d;
     const result = await axios.patch("/post", {
       id,
       location: editTitle,
-      // time: editDate,
+      time: (time === undefined ? editDate : time.toISOString()),
       tags: editTags,
       description: editDescription,
       images: imgURL
@@ -183,15 +185,15 @@ export default function PostDetailsEdit(props) {
         </div>
         <div>
           <div className={classes.date}>
-            {/* <ResponsiveDatePicker
-              dateInput={dateInput}
-              setDateInput={setDateInput}
-            /> */}
+            <ResponsiveDatePicker
+              dateInput={editDate}
+              setDateInput={setEditDate}
+            />
           </div>
-          <div className={classes.map}>
+          {/* <div className={classes.map}>
             <h2>Search On Map</h2>
             <GoogleMaps />
-          </div>
+          </div> */}
           <div className={classes.PostTitle}>
             <h2>Title</h2>
             <div onFocus={handleOthersOnFocus}>
