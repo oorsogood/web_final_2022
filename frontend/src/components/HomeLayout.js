@@ -7,7 +7,7 @@ function HomeLayout() {
   const outlet = useOutlet();
 
   if (user) {
-    return <Navigate to="/dashboard/posts" replace />;
+    return <Navigate to="/dashboard/home" replace />;
   }
 
   return (

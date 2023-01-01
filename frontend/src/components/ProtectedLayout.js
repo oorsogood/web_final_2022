@@ -14,8 +14,11 @@ function ProtectedLayout() {
         <div>
             <AppBar
                 pages={[
-                    { label: "Settings", path: "settings" },
-                    { label: "Posts", path: "posts" }
+                    { label: "Home", path: "home" },
+                    { label: "Create Post", path: "create" },
+                    { label: "My Account", path: "myaccount" },
+                    { label: "My Posts", path: "myposts" },
+                    { label: "Saved Posts", path: "savedposts" },
                 ]}
             />
             {outlet}
