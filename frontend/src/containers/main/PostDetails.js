@@ -110,7 +110,7 @@ export default function PostDetails() {
           </div>
           <h2>Title: {postInfo.title}</h2>
           <h2>Author: {postInfo.author}</h2>
-          <h2>Date: {postInfo.time}</h2>
+          <h2>Date: {(new Date(postInfo.time)).toDateString()}</h2>
           <h2>
             Tags :{" "}
             <div className={classes.tags}>

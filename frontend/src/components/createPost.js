@@ -105,11 +105,11 @@ const CreatePost = () => {
   useEffect(() => {
     if (
       dateInput.$y !== 0 &&
-      location.length !== 0 &&
-      postTitle.length !== 0 &&
-      selectedImages.length !== 0 &&
-      content.length !== 0 &&
-      tags.length !== 0
+      // location.length !== 0 &&
+      postTitle.length !== 0
+      // selectedImages.length !== 0 &&
+      // content.length !== 0 &&
+      // tags.length !== 0
     ) {
       setDisablePostButton(false);
     } else {
@@ -145,6 +145,10 @@ const CreatePost = () => {
   };
 
   const handlePost = async () => {
+    // console.log("Date is", dateInput);
+    const time = dateInput.$d.toISOString();
+    // console.log("dateInput.$d.toISOString() is", dateInput.$d.toISOString());
+    // console.log("type of dateInput.$d.toISOString() is", typeof(dateInput.$d.toISOString()));
     const username = JSON.parse(window.localStorage.getItem("user")).username;
     const result = await axios.get("/user", {
       params: {
@@ -160,13 +164,14 @@ const CreatePost = () => {
       imgURL.push(result.data);
     }
 
+    // console.log("time is", time);
     const newPost = await axios.post("./post", {
       id: uuidv4(),
       location,
       address,
       latitude,
       longitude,
-      time: Date.now(),
+      time,
       description: content,
       tags: tags,
       images: imgURL,
