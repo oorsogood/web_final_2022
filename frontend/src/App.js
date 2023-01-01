@@ -26,6 +26,7 @@ function App() {
                 <Route path="myaccount" element={<MyAccount />} />
                 <Route path="myposts" element={<MyPosts />} />
                 <Route path="savedposts" element={<SavedPosts />} />
+                <Route path="mymap" element={<MyMap />} />
                 <Route path="posts/:postId" element={<PostDetails />} />
             </Route>
         </Routes>
