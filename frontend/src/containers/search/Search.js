@@ -29,9 +29,37 @@ const useStyles = makeStyles(() => ({
 
 export default function Search() {
   const [open, setOpen] = useState(false);
-  const { authorFilter, setAuthorFilter, locationFilter, setLocationFilter, tagsFilter, setTagsFilter, getPosts } = useSearch();
+  const {
+    authorFilter,
+    setAuthorFilter,
+    locationFilter,
+    setLocationFilter,
+    tagsFilter,
+    setTagsFilter,
+    getPosts,
+  } = useSearch();
   const [tagsOnFocus, setTagsOnFocus] = useState(false);
+  const [disableSearch, setDisableSearch] = useState(true);
   const classes = useStyles();
+
+  useEffect(() => {
+    if (
+      authorFilter.length !== 0 ||
+      locationFilter.length !== 0 ||
+      tagsFilter.length !== 0
+    ) {
+      setDisableSearch(false);
+    } else {
+      setDisableSearch(true);
+    }
+  }, [
+    authorFilter,
+    setAuthorFilter,
+    locationFilter,
+    setLocationFilter,
+    tagsFilter,
+    setTagsFilter,
+  ]);
 
   const handleChangeAuthor = (e) => {
     setAuthorFilter(e.target.value);
@@ -65,7 +93,7 @@ export default function Search() {
     if (reason !== "backdropClick") {
       setOpen(false);
       setTagsOnFocus(false);
-    };
+    }
   };
 
   return (
@@ -109,9 +137,14 @@ export default function Search() {
                     placeHolder="Your Hashtags"
                   />
                   {tagsOnFocus && (
-                    <p className={classes.enterTags}>
-                      press Enter to add new tag.
-                    </p>
+                    <div>
+                      <p className={classes.enterTags}>
+                        press <b>Enter</b> to add new tag.
+                      </p>
+                      <p className={classes.enterTags}>
+                        press <b>BackSpace</b> to remove tag.
+                      </p>
+                    </div>
                   )}
                 </div>
               </FormControl>
@@ -122,7 +155,11 @@ export default function Search() {
           <Button variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={handleSearch}>
+          <Button
+            variant="contained"
+            onClick={handleSearch}
+            disabled={disableSearch}
+          >
             Search
           </Button>
         </DialogActions>
