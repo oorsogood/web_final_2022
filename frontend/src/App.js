@@ -10,6 +10,7 @@ import Home from "./containers/main/Home";
 import MyAccount from "./containers/settings/MyAccount";
 import MyPosts from "./containers/settings/MyPosts";
 import SavedPosts from "./containers/settings/SavedPosts";
+import MyMap from "./containers/main/MyMap";
 import PostDetails from "./containers/main/PostDetails";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="myaccount" element={<MyAccount />} />
         <Route path="myposts" element={<MyPosts />} />
         <Route path="savedposts" element={<SavedPosts />} />
+        <Route path="mymap" element={<MyMap />} />
         <Route path="posts/:postId" element={<PostDetails />} />
       </Route>
     </Routes>
