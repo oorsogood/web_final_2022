@@ -2,17 +2,9 @@ import { React, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-import Ben from "../../images/ben.jpg";
-import Architects from "../../images/architects.jpg";
-import Briton from "../../images/briton.jpg";
-import Chris from "../../images/chris.jpg";
-import Gigo from "../../images/gigo.jpg";
-import Josh from "../../images/josh.jpg";
-import Sam from "../../images/sam.jpg";
-import Steven from "../../images/steven.jpg";
-import WSS from "../../images/wss.jpg";
-import Lawrence from "../../images/Lawrence.jfif";
 import { makeStyles } from "@mui/styles";
+import { useParams } from "react-router-dom";
+import axios from "../../api";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -38,6 +30,25 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function PostDetails() {
+  const { postId } = useParams();
+  // console.log("Current post id is", postId);
+  const [postInfo, setPostInfo] = useState({});
+  const getPost = async () => {
+    const id = String(postId.substring(1, postId.length));
+    // console.log(id);
+    const { data: { contents } } = await axios.get('/post', {
+      params: {
+        id: id
+      }
+    });
+    // console.log(contents[0]);
+    setPostInfo(contents[0]);
+  }
+  useEffect(() => {
+      if (Object.keys(postInfo).length === 0) {
+          getPost();
+      };
+  }, []);
   const classes = useStyles();
   const [edit, setEdit] = useState(false);
   return (
@@ -45,91 +56,40 @@ export default function PostDetails() {
       <div className={classes.header}>
         <h1>PostDetails</h1>
         <div>
-          <Button variant="contained" color="primary">
-            Edit
-          </Button>
-          <Button variant="contained" color="error">
-            Delete
-          </Button>
+          {(postInfo.author === JSON.parse(window.localStorage.getItem("user")).username) ?
+            <>
+              <Button variant="contained" color="primary">
+                Edit
+              </Button>
+              <Button variant="contained" color="error">
+                Delete
+              </Button>
+            </> :
+            <></>
+          }
         </div>
       </div>
-      <h2>Title: {fakeData.title}</h2>
-      <h2>Author: {fakeData.author}</h2>
-      <h2>Date: {fakeData.time}</h2>
+      <h2>Title: {postInfo.title}</h2>
+      <h2>Author: {postInfo.author}</h2>
+      <h2>Date: {postInfo.time}</h2>
       <h2>
         Tags :{" "}
         <div className={classes.tags}>
-          {fakeData.tags.map((tags) => (
-            <div>{tags}. </div>
+          {(postInfo.tags === undefined) ? <></> : postInfo.tags.map((tags, index) => (
+            <div key={index} >{tags}. </div>
           ))}
         </div>
       </h2>
-      <h3>Description: {fakeData.description}</h3>
-      <div class="carousel-wrapper" className={classes.mainPicture}>
+      <h3>Description: {postInfo.description}</h3>
+      {/* <div class="carousel-wrapper" className={classes.mainPicture}> */}
+      <div className={classes.mainPicture}>
         <Carousel infiniteLoop useKeyboardArrows autoPlay showArrows={true}>
-          <div>
-            <img src={Ben} alt="Ben" />
-            <p className="legend">Ben</p>
-          </div>
-          <div>
-            <img src={Architects} alt="Architects" />
-            <p className="legend">Architects</p>
-          </div>
-          <div>
-            <img src={Briton} alt="Briton" />
-            <p className="legend">Briton</p>
-          </div>
-          <div>
-            <img src={Chris} alt="Chris" />
-            <p className="legend">Chris</p>
-          </div>
-          <div>
-            <img src={Gigo} alt="Gigo" />
-            <p className="legend">Gigo</p>
-          </div>
-          <div>
-            <img src={Josh} alt="Josh" />
-            <p className="legend">Josh</p>
-          </div>
-          <div>
-            <img src={Sam} alt="Sam" />
-            <p className="legend">Sam</p>
-          </div>
-          <div>
-            <img src={Steven} alt="Steven" />
-            <p className="legend">Steven</p>
-          </div>
-          <div>
-            <img src={WSS} alt="While She Sleeps" />
-            <p className="legend">While She Sleeps</p>
-          </div>
-          <div>
-            <img src={Lawrence} alt="Lawrence" />
-            <p className="legend">Lawrence</p>
-          </div>
+          {(postInfo.images === undefined) ? <></> : postInfo.images.map((imgURL, index) => {
+            return <img src={imgURL} key={index} />
+          })}
         </Carousel>
-        <h3>Address : {fakeData.address}</h3>
+        <h3>Address : {postInfo.address}</h3>
       </div>
     </div>
   );
-}
-
-const fakeData = {
-  title: "這球樂團修煉場",
-  address:
-    "106, Taipei City, Da’an District, Section 1, Fuxing S Rd, 390號十樓之六",
-  time: "2022/12/31",
-  description:
-    "成立於2006年，主要經營項目為練團室出租及音樂教學。在這裡我們提供頂級練團設備及專業的服務品質，用心聚焦於提供每位音樂同好一個舒適練團環境。",
-  tags: [
-    "練團",
-    "學生樂團",
-    "樂器學習",
-    "歌唱教學",
-    "吉他",
-    "貝斯",
-    "鋼琴",
-    "爵士鼓",
-  ],
-  author: "Wilson",
 };

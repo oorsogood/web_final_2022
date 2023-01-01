@@ -1,5 +1,6 @@
 import { Box } from "./Box.js";
 import { makeStyles } from "@mui/styles";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   allPost: {
@@ -32,11 +33,18 @@ const useStyles = makeStyles(() => ({
 function Post({ data }) {
   const classes = useStyles();
   // console.log(data);
+  const navigate = useNavigate();
+
+  const ToPost = (postId) => {
+    navigate('/dashboard/posts/:' + postId);
+    // console.log(postId, "success");
+  };
+
   return (
     <Box css={{ px: "$12", mt: "$8", "@xsMax": { px: "$10" } }}>
       {/* should apply this comment section */}
       {data.map((object, index) => (
-        <div className={classes.post} key={index}>
+        <div className={classes.post} key={index} onClick={() => ToPost(object.id)}>
           {/* TODO: add a post title and time picker */}
           <div className={classes.author}>Author : {object.author}</div>
           <div className={classes.address}>Title(Location) : {object.location}</div>
