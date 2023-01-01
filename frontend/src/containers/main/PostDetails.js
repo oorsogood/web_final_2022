@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { makeStyles } from "@mui/styles";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../api";
 import PostDetailsEdit from "./PostDetailsEdit";
 
@@ -35,6 +35,7 @@ export default function PostDetails() {
   // console.log("Current post id is", postId);
   const [postInfo, setPostInfo] = useState({});
   const [edit, setEdit] = useState(false);
+  const navigate = useNavigate();
 
   const getPost = async () => {
     const id = String(postId.substring(1, postId.length));
@@ -50,22 +51,28 @@ export default function PostDetails() {
     setPostInfo(contents[0]);
   };
   useEffect(() => {
-    if (Object.keys(postInfo).length === 0) {
-      getPost();
-    }
-  }, []);
+    // console.log("getPost called");
+    getPost();
+  }, [edit]);
   const classes = useStyles();
 
   const handleClickEdit = () => {
     setEdit(true);
   };
 
-  const handleClickDelete = () => {
+  const handleClickDelete = async () => {
     // connect delete post API
-    console.log("delete");
+    const id = String(postId.substring(1, postId.length));
+    const result = await axios.delete("/post", {
+      params: {
+        id
+      }
+    });
+    console.log("delete", result);
+    navigate("/dashboard/home");
   };
 
-  console.log("postinfo", postInfo);
+  // console.log("postinfo", postInfo);
 
   return (
     <>
@@ -73,8 +80,8 @@ export default function PostDetails() {
         <PostDetailsEdit
           postId={postInfo.id}
           setEdit={setEdit}
-          editTitle={postInfo.title}
-          // editDate={postInfo.time}
+          editTitle={postInfo.location}
+          editDate={postInfo.time}
           editTags={postInfo.tags}
           editDescription={postInfo.description}
           editImages={postInfo.images}
@@ -108,7 +115,7 @@ export default function PostDetails() {
               )}
             </div>
           </div>
-          <h2>Title: {postInfo.title}</h2>
+          <h2>Title: {postInfo.location}</h2>
           <h2>Author: {postInfo.author}</h2>
           <h2>Date: {(new Date(postInfo.time)).toDateString()}</h2>
           <h2>
