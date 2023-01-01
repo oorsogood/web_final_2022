@@ -73,8 +73,8 @@ const CreatePostPage = () => {
 };
 
 const CreatePost = () => {
-	// const user = JSON.parse(window.localStorage.getItem("user"));
-	// console.log("User is", user.username);
+  // const user = JSON.parse(window.localStorage.getItem("user"));
+  // console.log("User is", user.username);
   const { location, setLocation, address, latitude, longitude } = useMap();
   const classes = useStyles();
   const [selectedImages, setSelectedImages] = useState([]);
@@ -164,10 +164,10 @@ const CreatePost = () => {
   //   console.log("dateInput", dateInput);
   // }, [dateInput]);
 
-    useEffect(() => {
-      setPostTitle(location);
-      // console.log("postTitle", postTitle);
-    }, [location]);
+  useEffect(() => {
+    setPostTitle(location);
+    // console.log("postTitle", postTitle);
+  }, [location]);
 
   return (
     <div>
