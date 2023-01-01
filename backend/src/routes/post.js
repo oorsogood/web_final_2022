@@ -124,19 +124,19 @@ router.get("/posts", async (req, res) => {
 	// console.log("Coordinate is", coordinate);
 	// console.log("tags", tags);
 	const authorFilter = (author !== "") ? author : { $exists: true };
-	console.log("authorFilter is ", authorFilter);
+	// console.log("authorFilter is ", authorFilter);
 	const placeFilter = (place !== undefined && place !== "") ? place : { $exists: true };
-	console.log("placeFilter is ", placeFilter);
+	// console.log("placeFilter is ", placeFilter);
 	const tagFilter = (tags !== undefined) ? { $in: tags } : { $exists: true };
-	console.log("tagFilter is ", tagFilter);
+	// console.log("tagFilter is ", tagFilter);
 	const latFilter = (coordinate !== undefined) ? 
 		{ $gte: Number(coordinate.lat) - 0.0001, $lte: Number(coordinate.lat) + 0.0001 } :
 		{ $exists: true };
-	console.log("latFilter is ", latFilter);
+	// console.log("latFilter is ", latFilter);
 	const lngFilter = (coordinate !== undefined) ? 
 		{ $gte: Number(coordinate.lng) - 0.0001, $lte: Number(coordinate.lng) + 0.0001 } :
 		{ $exists: true };
-	console.log("lngFilter is ", lngFilter);
+	// console.log("lngFilter is ", lngFilter);
 	const result = await Post.find({
 		author: authorFilter, 
 		location: placeFilter, 
@@ -144,7 +144,7 @@ router.get("/posts", async (req, res) => {
 		latitude: latFilter, 
 		longitude: lngFilter
 	}).sort({time: -1});
-	console.log(result);
+	// console.log(result);
 	if(result.length >= 1){
 		res.status(200).send({ message: 'Success', contents: result });
 	}
