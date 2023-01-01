@@ -68,7 +68,9 @@ router.post("/post", async (req, res) => {
   const address = String(req.body.address);
   const latitude = Number(req.body.latitude);
   const longitude = Number(req.body.longitude);
-  const time = Date(req.body.time);
+  const time = new Date(req.body.time);
+  // console.log("req.body.time is", req.body.time);
+  // console.log("time is", time);
   const description = String(req.body.description);
   const userID = String(req.body.userID);
   const author = String(req.body.author);
@@ -102,7 +104,7 @@ router.post("/post", async (req, res) => {
   };
   try {
     const newPost = await new Post(newEntry).save();
-    console.log("Created post", newPost);
+    // console.log("Created post", newPost);
     res.status(200).send({ message: "Success", contents: newPost });
     // res.json({ newPost });
     return newPost;
