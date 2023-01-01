@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import ProtectedLayout from "./components/ProtectedLayout";
 import HomeLayout from "./components/HomeLayout";
 import "./App.css";
-import HomePage from "./containers/main/Home";
 import LoginPage from "./containers/account/Login";
 import SignUpPage from "./containers/account/SignUp";
 import CreatePost from "./components/createPost";
@@ -14,25 +13,24 @@ import MyMap from "./containers/main/MyMap";
 import PostDetails from "./containers/main/PostDetails";
 
 function App() {
-  return (
-    <Routes>
-      <Route element={<HomeLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-      </Route>
-
-      <Route path="/dashboard" element={<ProtectedLayout />}>
-        <Route path="posts" element={<Home />} />
-        <Route path="create" element={<CreatePost />} />
-        <Route path="myaccount" element={<MyAccount />} />
-        <Route path="myposts" element={<MyPosts />} />
-        <Route path="savedposts" element={<SavedPosts />} />
-        <Route path="mymap" element={<MyMap />} />
-        <Route path="posts/:postId" element={<PostDetails />} />
-      </Route>
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route element={<HomeLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+            </Route>
+            <Route path="/dashboard" element={<ProtectedLayout />}>
+                <Route path="home" element={<Home />} />
+                <Route path="create" element={<CreatePost />} />
+                <Route path="myaccount" element={<MyAccount />} />
+                <Route path="myposts" element={<MyPosts />} />
+                <Route path="savedposts" element={<SavedPosts />} />
+                <Route path="mymap" element={<MyMap />} />
+                <Route path="posts/:postId" element={<PostDetails />} />
+            </Route>
+        </Routes>
+    );
 }
 
 export default App;

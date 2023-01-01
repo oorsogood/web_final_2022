@@ -4,22 +4,22 @@ import { useSearch } from "../../hooks/useSearch";
 import { useEffect, useState } from "react";
 
 const Layout = ({ children }) => {
-  const { posts, getPosts } = useSearch();
+    const { posts, getPosts } = useSearch();
 
-  useEffect(() => {
-    getPosts();
-  }, []);
+    useEffect(() => {
+        getPosts();
+    }, []);
 
-  return (
-    <Box
-      css={{
-        maxW: "100%",
-      }}
-    >
-      {children}
-      {(posts === undefined) ? <div>No matching results</div> : <Post data={posts} />}
-    </Box>
-  );
+    return (
+        <Box
+            css={{
+                maxW: "100%",
+            }}
+        >
+            {children}
+            {(posts === undefined) ? <div>No matching results</div> : <Post data={posts} />}
+        </Box>
+    );
 };
 
 export default Layout;
