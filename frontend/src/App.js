@@ -9,6 +9,7 @@ import Home from "./containers/main/Home";
 import MyAccount from "./containers/settings/MyAccount";
 import MyPosts from "./containers/settings/MyPosts";
 import SavedPosts from "./containers/settings/SavedPosts";
+import MyMap from "./containers/main/MyMap";
 import PostDetails from "./containers/main/PostDetails";
 
 function App() {
@@ -19,7 +20,6 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
             </Route>
-
             <Route path="/dashboard" element={<ProtectedLayout />}>
                 <Route path="home" element={<Home />} />
                 <Route path="create" element={<CreatePost />} />

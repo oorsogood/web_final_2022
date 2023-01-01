@@ -47,6 +47,9 @@ const useStyles = makeStyles(() => ({
   error: {
     textAlign: "center",
   },
+  tags: {
+    width: "350px",
+  },
   enterTags: {
     color: "royalblue",
   },
@@ -73,30 +76,46 @@ const CreatePostPage = () => {
 };
 
 const CreatePost = () => {
-	// const user = JSON.parse(window.localStorage.getItem("user"));
-	// console.log("User is", user.username);
+  // const user = JSON.parse(window.localStorage.getItem("user"));
+  // console.log("User is", user.username);
   const { location, setLocation, address, latitude, longitude } = useMap();
   const classes = useStyles();
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedImgRaw, setSelectedImgRaw] = useState([]);
   const [dateInput, setDateInput] = useState({
-    $D: 1, //Date
+    $D: 0, //Date
     $H: 0, // Hour
     $L: "en", // Language
-    $M: 8, // Month, need to plus 1 to get the correct month, E.g. 0 represents January
-    $W: 4, // Week
+    $M: 0, // Month, need to plus 1 to get the correct month, E.g. 0 represents January
+    $W: 0, // Week
     $d: {}, // an object contain all the time info {Thu Sep 01 2022 00:00:00 GMT+0800 (Taipei Standard Time)}
     $m: 0, // Minutes
     $ms: 0, // unknown attribute
     $s: 0, // Seconds
     $u: undefined,
     $x: {},
-    $y: 2022, // Year
+    $y: 0, // Year
   });
   const [postTitle, setPostTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState([]);
   const [tagsOnFocus, setTagsOnFocus] = useState(false);
+  const [disablePostButton, setDisablePostButton] = useState(true);
+
+  useEffect(() => {
+    if (
+      dateInput.$y !== 0 &&
+      location.length !== 0 &&
+      postTitle.length !== 0 &&
+      selectedImages.length !== 0 &&
+      content.length !== 0 &&
+      tags.length !== 0
+    ) {
+      setDisablePostButton(false);
+    } else {
+      setDisablePostButton(true);
+    }
+  }, [dateInput, location, postTitle, selectedImages, content, tags]);
 
   const onSelectFile = (e) => {
     const selectedFiles = e.target.files;
@@ -133,17 +152,14 @@ const CreatePost = () => {
       },
     });
     const userID = result.data.contents;
-    // console.log("userID", userID);
     const imgURL = [];
     for (const img of selectedImgRaw) {
-      // console.log(img);
       var formdata = new FormData();
       formdata.append("image", img);
       const result = await axios.post("./uploadImg", formdata);
-      // console.log(result.data);
       imgURL.push(result.data);
     }
-    // console.log("Finish mapping", imgURL);
+
     const newPost = await axios.post("./post", {
       id: uuidv4(),
       location,
@@ -160,14 +176,9 @@ const CreatePost = () => {
     // console.log(newPost);
   };
 
-  // useEffect(() => {
-  //   console.log("dateInput", dateInput);
-  // }, [dateInput]);
-
-    useEffect(() => {
-      setPostTitle(location);
-      // console.log("postTitle", postTitle);
-    }, [location]);
+  useEffect(() => {
+    setPostTitle(location);
+  }, [location]);
 
   return (
     <div>
@@ -185,9 +196,9 @@ const CreatePost = () => {
           <h2>Search On Map</h2>
           <GoogleMaps />
         </div>
-        <div className={classes.PostTitle}>
+        <div>
           <h2>Title</h2>
-          <div onFocus={handleOthersOnFocus}>
+          <div className={classes.PostTitle} onFocus={handleOthersOnFocus}>
             <TextField
               label="Name of Location?"
               variant="outlined"
@@ -265,25 +276,35 @@ const CreatePost = () => {
           />
         </div>
       </div>
-      <div className="tags">
+      <div>
         <h2>Add HashTags</h2>
-        <div onFocus={handleTagsOnFocus}>
+        <div className={classes.tags} onFocus={handleTagsOnFocus}>
           <TagsInput
             value={tags}
             onChange={setTags}
             placeHolder="Your Hashtags"
           />
           {tagsOnFocus && (
-            <p className={classes.enterTags}>press Enter to add new tag.</p>
+            <div>
+              <p className={classes.enterTags}>
+                press <b>Enter</b> to add new tag.
+              </p>
+              <p className={classes.enterTags}>
+                press <b>BackSpace</b> to remove tag.
+              </p>
+            </div>
           )}
         </div>
       </div>
       <div>
         <br />
-        <Button variant="outlined" color="error">
-          Discard
-        </Button>
-        <Button variant="contained" color="success" onClick={handlePost}>
+        <Button variant="outlined">Discard</Button>
+        <Button
+          variant="contained"
+          color="success"
+          disabled={disablePostButton}
+          onClick={handlePost}
+        >
           Post
         </Button>
       </div>

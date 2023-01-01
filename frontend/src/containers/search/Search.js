@@ -28,15 +28,42 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Search() {
-    const [open, setOpen] = useState(false);
-    const { authorFilter, setAuthorFilter, locationFilter, setLocationFilter, tagsFilter, setTagsFilter, getPosts } = useSearch();
-    const [tagsOnFocus, setTagsOnFocus] = useState(false);
-    const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const {
+    authorFilter,
+    setAuthorFilter,
+    locationFilter,
+    setLocationFilter,
+    tagsFilter,
+    setTagsFilter,
+    getPosts,
+  } = useSearch();
+  const [tagsOnFocus, setTagsOnFocus] = useState(false);
+  const [disableSearch, setDisableSearch] = useState(true);
+  const classes = useStyles();
 
-    const handleChangeAuthor = (e) => {
-        setAuthorFilter(e.target.value);
-    };
+  useEffect(() => {
+    if (
+      authorFilter.length !== 0 ||
+      locationFilter.length !== 0 ||
+      tagsFilter.length !== 0
+    ) {
+      setDisableSearch(false);
+    } else {
+      setDisableSearch(true);
+    }
+  }, [
+    authorFilter,
+    setAuthorFilter,
+    locationFilter,
+    setLocationFilter,
+    tagsFilter,
+    setTagsFilter,
+  ]);
 
+  const handleChangeAuthor = (e) => {
+    setAuthorFilter(e.target.value);
+  };
     const handleChangeLocation = (e) => {
         setLocationFilter(e.target.value);
     };
@@ -59,74 +86,82 @@ export default function Search() {
             setTagsOnFocus(false);
         }
     };
+  const handleSearch = (event, reason) => {
+    getPosts();
+    if (reason !== "backdropClick") {
+      setOpen(false);
+      setTagsOnFocus(false);
+    }
+  };
 
-    const handleSearch = (event, reason) => {
-        getPosts();
-        if (reason !== "backdropClick") {
-            setOpen(false);
-            setTagsOnFocus(false);
-        };
-    };
-
-    return (
-        <div>
-            <Button onClick={handleClickOpen}>
-                Search Post
-                <img className={classes.searchIcon} src={SearchIcon} alt="SearchIcon" />
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Find The Post!</DialogTitle>
-                <DialogContent>
-                    <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
-                        <div className={classes.dialogContent}>
-                            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                <div onFocus={handleOthersOnFocus}>
-                                    <TextField
-                                        id="filled-search"
-                                        label="Author"
-                                        type="search"
-                                        value={authorFilter}
-                                        onChange={handleChangeAuthor}
-                                    />
-                                </div>
-                            </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                <div onFocus={handleOthersOnFocus}>
-                                    <TextField
-                                        id="filled-search"
-                                        label="Location"
-                                        type="search"
-                                        value={locationFilter}
-                                        onChange={handleChangeLocation}
-                                    />
-                                </div>
-                            </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                <div onFocus={handleTagsOnFocus}>
-                                    <TagsInput
-                                        value={tagsFilter}
-                                        onChange={setTagsFilter}
-                                        placeHolder="Your Hashtags"
-                                    />
-                                    {tagsOnFocus && (
-                                        <p className={classes.enterTags}>
-                                            press Enter to add new tag.
-                                        </p>
-                                    )}
-                                </div>
-                            </FormControl>
-                        </div>
-                    </Box>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="outlined" onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button variant="contained" onClick={handleSearch}>
-                        Search
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
+  return (
+    <div>
+      <Button onClick={handleClickOpen}>
+        Search Post
+        <img className={classes.searchIcon} src={SearchIcon} alt="SearchIcon" />
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Find The Post!</DialogTitle>
+        <DialogContent>
+          <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+            <div className={classes.dialogContent}>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <div onFocus={handleOthersOnFocus}>
+                  <TextField
+                    id="filled-search"
+                    label="Author"
+                    type="search"
+                    value={authorFilter}
+                    onChange={handleChangeAuthor}
+                  />
+                </div>
+              </FormControl>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <div onFocus={handleOthersOnFocus}>
+                  <TextField
+                    id="filled-search"
+                    label="Location"
+                    type="search"
+                    value={locationFilter}
+                    onChange={handleChangeLocation}
+                  />
+                </div>
+              </FormControl>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <div onFocus={handleTagsOnFocus}>
+                  <TagsInput
+                    value={tagsFilter}
+                    onChange={setTagsFilter}
+                    placeHolder="Your Hashtags"
+                  />
+                  {tagsOnFocus && (
+                    <div>
+                      <p className={classes.enterTags}>
+                        press <b>Enter</b> to add new tag.
+                      </p>
+                      <p className={classes.enterTags}>
+                        press <b>BackSpace</b> to remove tag.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </FormControl>
+            </div>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleSearch}
+            disabled={disableSearch}
+          >
+            Search
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }
