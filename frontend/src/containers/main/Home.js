@@ -60,7 +60,11 @@ function Home() {
 
     return (
         <SearchProvider>
-            <Layout></Layout>
+            <Layout>
+                <div className={classes.searchBar}>
+                    <Search />
+                </div>
+            </Layout>
         </SearchProvider>
         // <SearchProvider>
         //     <Layout>
