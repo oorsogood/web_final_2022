@@ -55,7 +55,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Home() {
-  const collapseItems = ["myaccount", "myposts", "savedposts", "logout"];
+  const collapseItems = ["myaccount", "myposts", "savedposts", "mymap", "logout"];
   const classes = useStyles();
 
   return (
@@ -126,6 +126,13 @@ function Home() {
                       alt="SavedPostIcon"
                     />
                   )}
+                  {item === "mymap" && (
+                    <img
+                      className={classes.saveIcon}
+                      src={SavedPostIcon}
+                      alt="SavedPostIcon"
+                    />
+                  )}
                   {item === "logout" && (
                     <img
                       className={classes.logoutIcon}
@@ -136,6 +143,7 @@ function Home() {
                   {item === "myaccount" && "My Account"}
                   {item === "myposts" && "My Posts"}
                   {item === "savedposts" && "Saved Posts"}
+                  {item === "mymap" && "My Map"}
                   {item === "logout" && "Log Out"}
                 </Link>
               </Navbar.CollapseItem>
