@@ -13,18 +13,18 @@ import { TagsInput } from "react-tag-input-component";
 import { useSearch } from "../../hooks/useSearch";
 
 const useStyles = makeStyles(() => ({
-  searchIcon: {
-    width: "25px",
-    height: "25px",
-    marginLeft: "5px",
-  },
-  dialogContent: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  enterTags: {
-    color: "royalblue",
-  },
+    searchIcon: {
+        width: "25px",
+        height: "25px",
+        marginLeft: "5px",
+    },
+    dialogContent: {
+        display: "flex",
+        flexDirection: "column",
+    },
+    enterTags: {
+        color: "royalblue",
+    },
 }));
 
 export default function Search() {
@@ -64,30 +64,28 @@ export default function Search() {
   const handleChangeAuthor = (e) => {
     setAuthorFilter(e.target.value);
   };
+    const handleChangeLocation = (e) => {
+        setLocationFilter(e.target.value);
+    };
 
-  const handleChangeLocation = (e) => {
-    setLocationFilter(e.target.value);
-  };
+    const handleOthersOnFocus = () => {
+        setTagsOnFocus(false);
+    };
 
-  const handleOthersOnFocus = () => {
-    setTagsOnFocus(false);
-  };
+    const handleTagsOnFocus = () => {
+        setTagsOnFocus(true);
+    };
 
-  const handleTagsOnFocus = () => {
-    setTagsOnFocus(true);
-  };
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason !== "backdropClick") {
-      setOpen(false);
-      setTagsOnFocus(false);
-    }
-  };
-
+    const handleClose = (event, reason) => {
+        if (reason !== "backdropClick") {
+            setOpen(false);
+            setTagsOnFocus(false);
+        }
+    };
   const handleSearch = (event, reason) => {
     getPosts();
     if (reason !== "backdropClick") {

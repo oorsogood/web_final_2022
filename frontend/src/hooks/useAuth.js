@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
   // check user status
   const login = async (data) => {
     setUser(data);
-    navigate("/dashboard/posts", { replace: true });
+    navigate("/dashboard/home", { replace: true });
   };
 
   const logout = async () => {

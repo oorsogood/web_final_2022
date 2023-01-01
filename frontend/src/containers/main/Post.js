@@ -36,18 +36,22 @@ function Post({ data }) {
   const navigate = useNavigate();
 
   const ToPost = (postId) => {
-    navigate('/dashboard/posts/:' + postId);
+    navigate("/dashboard/posts/:" + postId);
     // console.log(postId, "success");
   };
 
   return (
     <Box css={{ px: "$12", mt: "$8", "@xsMax": { px: "$10" } }}>
-      {/* should apply this comment section */}
       {data.map((object, index) => (
-        <div className={classes.post} key={index} onClick={() => ToPost(object.id)}>
-          {/* TODO: add a post title and time picker */}
+        <div
+          className={classes.post}
+          key={index}
+          onClick={() => ToPost(object.id)}
+        >
           <div className={classes.author}>Author : {object.author}</div>
-          <div className={classes.address}>Title(Location) : {object.location}</div>
+          <div className={classes.address}>
+            Title(Location) : {object.location}
+          </div>
           <div className={classes.time}>Date : {(new Date(object.time)).toDateString()}</div>
           <div className={classes.description}>
             Description : {object.description}
@@ -60,9 +64,8 @@ function Post({ data }) {
               </div>
             ))}
           </div>
-          {/* <div className={classes.images}> */}
-            <img className={classes.images} src={object.images[0]}/>
-          {/* </div> */}
+
+          <img className={classes.images} src={object.images[0]} alt="images" />
         </div>
       ))}
     </Box>
