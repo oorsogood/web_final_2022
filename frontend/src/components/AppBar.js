@@ -211,16 +211,6 @@ function AppBar({ pages }) {
                                 </Button>
                             )}
                         </Box>
-                        <Search />
-                        {/* <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search> */}
                     </Toolbar>
                 </Container>
             </MuiAppBar>
