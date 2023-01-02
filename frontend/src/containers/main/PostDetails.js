@@ -6,6 +6,7 @@ import { makeStyles } from "@mui/styles";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../api";
 import PostDetailsEdit from "./PostDetailsEdit";
+import StaticMap from "../../components/StaticMap";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -34,6 +35,10 @@ export default function PostDetails() {
   const { postId } = useParams();
   // console.log("Current post id is", postId);
   const [postInfo, setPostInfo] = useState({});
+  const [coordinate, setCoordinate] = useState({
+    lat: 0,
+    lng: 0
+  });
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
 
@@ -49,6 +54,10 @@ export default function PostDetails() {
     });
     // console.log(contents[0]);
     setPostInfo(contents[0]);
+    setCoordinate({
+      lat: contents[0].latitude,
+      lng: contents[0].longitude
+    });
   };
   useEffect(() => {
     // console.log("getPost called");
@@ -79,6 +88,7 @@ export default function PostDetails() {
       {edit ? (
         <PostDetailsEdit
           postId={postInfo.id}
+          coordinate={coordinate}
           setEdit={setEdit}
           editTitle={postInfo.location}
           editDate={postInfo.time}
@@ -144,6 +154,7 @@ export default function PostDetails() {
             </Carousel>
             <h3>Address : {postInfo.address}</h3>
           </div>
+          <StaticMap coordinate={coordinate} />
         </div>
       )}
     </>
