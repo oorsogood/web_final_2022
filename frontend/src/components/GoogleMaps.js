@@ -201,7 +201,7 @@ const Map = () => {
             (response) => {
                 const address = response.results[0].formatted_address;
                 setAddress(address);
-                setLocation(address);
+                setLocation("");
                 // console.log(address);
             },
             (error) => {

@@ -206,7 +206,7 @@ const CreatePost = () => {
           <GoogleMaps />
         </div>
         <div>
-          <h2>Title</h2>
+          <h2>Location</h2>
           <div className={classes.PostTitle} onFocus={handleOthersOnFocus}>
             <TextField
               label="Name of Location?"
@@ -305,6 +305,7 @@ const CreatePost = () => {
           )}
         </div>
       </div>
+      <div>Address: {address}</div>
       <div>
         <br />
         <Button variant="outlined">Discard</Button>
