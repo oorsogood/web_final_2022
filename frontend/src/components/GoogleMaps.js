@@ -14,6 +14,7 @@ import {
 } from "@reach/combobox";
 import styled from 'styled-components';
 import { useMap } from '../hooks/useMap';
+import mapStyles from "./mapStyles";
 
 Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
 const libraries = ["places"];
@@ -201,7 +202,7 @@ const Map = () => {
             (response) => {
                 const address = response.results[0].formatted_address;
                 setAddress(address);
-                setLocation(address);
+                setLocation("");
                 // console.log(address);
             },
             (error) => {
@@ -233,7 +234,7 @@ const Map = () => {
                 zoom={15}
                 center={center}
                 mapContainerStyle={containerStyle}
-                options={{ disableDefaultUI: true }}
+                options={{ disableDefaultUI: true, styles: mapStyles }}
                 onClick={handleClick}
                 onLoad={onMapLoad}
             >
@@ -241,7 +242,12 @@ const Map = () => {
                     setSelected(false);
                     setLatitude(null);
                     setLongitude(null);
-                }} />}
+                }} icon={{
+                    url: "/pin.png",
+                    scaledSize: new window.google.maps.Size(50, 50),
+                    origin: new window.google.maps.Point(-5, 8),
+                    anchor: new window.google.maps.Point(25, 25)
+                  }} />}
                 {searchMarkers.map((marker, i) => {
                     // console.log("Marker should set");
                     const lat = parseFloat(marker.geometry.location.lat());
@@ -249,7 +255,12 @@ const Map = () => {
                     return <MarkerF position={{ 
                         lat,
                         lng
-                    }} key={i} />
+                    }} key={i} icon={{
+                        url: "/pin.png",
+                        scaledSize: new window.google.maps.Size(50, 50),
+                        origin: new window.google.maps.Point(-5, 8),
+                        anchor: new window.google.maps.Point(25, 25)
+                    }} />
                 })}
                 {/* {markerClicked &&
 				<InfoWindow position={selected} onCloseClick={() => setMarkerClicked(false)}>

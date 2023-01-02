@@ -39,32 +39,12 @@ export default function Search(props) {
     getPosts,
   } = useSearch();
   const [tagsOnFocus, setTagsOnFocus] = useState(false);
-  const [disableSearch, setDisableSearch] = useState(true);
   const classes = useStyles();
 
   useEffect(() => {
     // console.log("props is", props.myPost);
     getPosts(props.myPost);
   }, []);
-
-  useEffect(() => {
-    if (
-      authorFilter.length !== 0 ||
-      locationFilter.length !== 0 ||
-      tagsFilter.length !== 0
-    ) {
-      setDisableSearch(false);
-    } else {
-      setDisableSearch(true);
-    }
-  }, [
-    authorFilter,
-    setAuthorFilter,
-    locationFilter,
-    setLocationFilter,
-    tagsFilter,
-    setTagsFilter,
-  ]);
 
   const handleChangeAuthor = (e) => {
     setAuthorFilter(e.target.value);
@@ -98,25 +78,6 @@ export default function Search(props) {
       setTagsOnFocus(false);
     }
   };
-
-  useEffect(() => {
-    if (
-      authorFilter !== "" ||
-      locationFilter !== "" ||
-      tagsFilter.length !== 0
-    ) {
-      setDisableSearch(false);
-    } else {
-      setDisableSearch(true);
-    }
-  }, [
-    authorFilter,
-    setAuthorFilter,
-    locationFilter,
-    setLocationFilter,
-    tagsFilter,
-    setTagsFilter,
-  ]);
 
   return (
     <div>
@@ -185,11 +146,7 @@ export default function Search(props) {
           <Button variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button
-            variant="contained"
-            onClick={handleSearch}
-            disabled={disableSearch}
-          >
+          <Button variant="contained" onClick={handleSearch}>
             Search
           </Button>
         </DialogActions>

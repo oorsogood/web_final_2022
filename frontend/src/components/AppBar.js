@@ -12,6 +12,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { createStyles, makeStyles } from '@mui/styles';
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
 // import SearchIcon from '@mui/icons-material/Search';
 
 import { useAuth } from "../hooks/useAuth";
@@ -50,12 +52,12 @@ function AppBar({ pages }) {
         setAnchorElNav(event.currentTarget);
     };
 
-    const handleCloseNavMenu = (path) => {
-        setAnchorElNav(null);
-        if (path) {
-            navigate(path);
-        }
-    };
+  const handleCloseNavMenu = (path) => {
+    setAnchorElNav(null);
+    if (path) {
+      navigate(path);
+    }
+  };
 
     return (
         <SearchProvider>

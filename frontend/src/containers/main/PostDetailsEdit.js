@@ -196,7 +196,7 @@ export default function PostDetailsEdit(props) {
             <GoogleMaps />
           </div> */}
           <div className={classes.PostTitle}>
-            <h2>Title</h2>
+            <h2>Location</h2>
             <div onFocus={handleOthersOnFocus}>
               <TextField
                 label="Name of Location?"
