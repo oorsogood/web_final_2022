@@ -103,7 +103,7 @@ export default function PostDetails() {
             <h1>PostDetails</h1>
             <div>
               {postInfo.author ===
-              JSON.parse(window.localStorage.getItem("user")).username ? (
+              JSON.parse(window.localStorage.getItem("user")) ? (
                 <>
                   <Button
                     variant="contained"

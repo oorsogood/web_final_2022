@@ -1,6 +1,7 @@
 import { Box } from "./Box.js";
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import noImageIcon from "../../images/no-image.png";
 
 const useStyles = makeStyles(() => ({
@@ -48,11 +49,16 @@ const useStyles = makeStyles(() => ({
 
 function Post({ data }) {
   const classes = useStyles();
+  const { user } = useAuth();
   // console.log(data);
   const navigate = useNavigate();
 
   const ToPost = (postId) => {
-    navigate("/dashboard/posts/:" + postId);
+    if (user){
+        navigate("/dashboard/posts/:" + postId);
+    } else{
+        navigate("/posts/:" + postId);
+    }
     // console.log(postId, "success");
   };
 
