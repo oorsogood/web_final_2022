@@ -13,14 +13,25 @@ const SignUpPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         const data = new FormData(event.currentTarget);
+
+        if (data.get("confirmpassword") !== data.get("password")){
+            return;
+        }
+        console.log("signup");
+
         const result = await axios.post('./api/auth/signup', {
             "username": data.get("username"),
             "password": data.get("password"),
             "email": data.get("email"),
             "role": ["user"]
         });
-        console.log(result.data["message"]);
+        
+        if (result !== "success"){
+            return;
+        }
+
         signup();
     };
 
@@ -55,6 +66,16 @@ const SignUpPage = () => {
                     label="Password"
                     type="password"
                     id="password"
+                    autoComplete="current-password"
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="confirmpassword"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmpassword"
                     autoComplete="current-password"
                 />
                 <Button

@@ -11,6 +11,7 @@ import MyPosts from "./containers/settings/MyPosts";
 import SavedPosts from "./containers/settings/SavedPosts";
 import MyMap from "./containers/main/MyMap";
 import PostDetails from "./containers/main/PostDetails";
+import Welcome from "./containers/account/Welcome";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="savedposts" element={<SavedPosts />} />
                 <Route path="mymap" element={<MyMap />} />
                 <Route path="posts/:postId" element={<PostDetails />} />
+                <Route path="sconfirm/:confirmationCode" element={<Welcome />} />
             </Route>
         </Routes>
     );

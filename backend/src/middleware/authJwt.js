@@ -1,12 +1,21 @@
 import jwt from 'jsonwebtoken';
-import config from '../config/auth_config.js';
+import dotenv from 'dotenv-defaults';
 import db from '../models';
 
 const User = db.user;
 const Role = db.role;
 
+dotenv.config();
+
+if(!process.env.BCRYPT_SECRET_KEY){
+    console.error("BCRYPT_SECRET_KEY!!!");
+    process.exit(1);
+}
+
+const SECRETKEY = process.env.BCRYPT_SECRET_KEY;
+
 const verifyToken = (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     let token = req.session.token;
     console.log(`token: ${token} req.session: ${req.session}`);
 
@@ -14,7 +23,7 @@ const verifyToken = (req, res, next) => {
         return res.status(403).send({ message: "No token provided!" });
     }
 
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token, SECRETKEY, (err, decoded) => {
         if (err) {
             return res.status(401).send({ message: "Unauthorized!" });
         }
@@ -24,7 +33,7 @@ const verifyToken = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     User.findById(req.userId).exec((err, user) => {
         if (err) {
             res.status(500).send({ message: err });

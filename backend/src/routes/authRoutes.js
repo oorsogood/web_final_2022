@@ -25,4 +25,6 @@ router.post("/signin", controller.signin);
 
 router.post("/signout", controller.signout);
 
+router.get("/confirm/:confirmationCode", controller.verifyUser)
+
 export default router;
