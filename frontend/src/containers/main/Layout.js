@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 const Layout = ({ children }) => {
     const { posts, getPosts } = useSearch();
 
-    useEffect(() => {
-        getPosts();
-    }, []);
+    // useEffect(() => {
+    //     getPosts();
+    // }, []);
 
     return (
         <Box

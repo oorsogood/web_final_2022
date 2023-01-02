@@ -54,7 +54,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-function Home() {
+function Home(props) {
     const collapseItems = ["myaccount", "myposts", "savedposts", "logout"];
     const classes = useStyles();
 
@@ -62,7 +62,7 @@ function Home() {
         <SearchProvider>
             <Layout>
                 <div className={classes.searchBar}>
-                    <Search />
+                    <Search myPost={props.myPost} />
                 </div>
             </Layout>
         </SearchProvider>

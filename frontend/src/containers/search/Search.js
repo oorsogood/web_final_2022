@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default function Search() {
+export default function Search(props) {
   const [open, setOpen] = useState(false);
   const {
     authorFilter,
@@ -41,6 +41,11 @@ export default function Search() {
   const [tagsOnFocus, setTagsOnFocus] = useState(false);
   const [disableSearch, setDisableSearch] = useState(true);
   const classes = useStyles();
+
+  useEffect(() => {
+    // console.log("props is", props.myPost);
+    getPosts(props.myPost);
+  }, []);
 
   useEffect(() => {
     if (
@@ -64,30 +69,30 @@ export default function Search() {
   const handleChangeAuthor = (e) => {
     setAuthorFilter(e.target.value);
   };
-    const handleChangeLocation = (e) => {
-        setLocationFilter(e.target.value);
-    };
+  const handleChangeLocation = (e) => {
+    setLocationFilter(e.target.value);
+  };
 
-    const handleOthersOnFocus = () => {
-        setTagsOnFocus(false);
-    };
+  const handleOthersOnFocus = () => {
+    setTagsOnFocus(false);
+  };
 
-    const handleTagsOnFocus = () => {
-        setTagsOnFocus(true);
-    };
+  const handleTagsOnFocus = () => {
+    setTagsOnFocus(true);
+  };
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const handleClose = (event, reason) => {
-        if (reason !== "backdropClick") {
-            setOpen(false);
-            setTagsOnFocus(false);
-        }
-    };
+  const handleClose = (event, reason) => {
+    if (reason !== "backdropClick") {
+      setOpen(false);
+      setTagsOnFocus(false);
+    }
+  };
   const handleSearch = (event, reason) => {
-    getPosts();
+    getPosts(false);
     if (reason !== "backdropClick") {
       setOpen(false);
       setTagsOnFocus(false);
@@ -105,17 +110,19 @@ export default function Search() {
         <DialogContent>
           <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
             <div className={classes.dialogContent}>
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <div onFocus={handleOthersOnFocus}>
-                  <TextField
-                    id="filled-search"
-                    label="Author"
-                    type="search"
-                    value={authorFilter}
-                    onChange={handleChangeAuthor}
-                  />
-                </div>
-              </FormControl>
+              {props.myPost ? <></> :
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <div onFocus={handleOthersOnFocus}>
+                    <TextField
+                      id="filled-search"
+                      label="Author"
+                      type="search"
+                      value={authorFilter}
+                      onChange={handleChangeAuthor}
+                    />
+                  </div>
+                </FormControl>
+              }
               <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <div onFocus={handleOthersOnFocus}>
                   <TextField
