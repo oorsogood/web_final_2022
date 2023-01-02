@@ -16,12 +16,12 @@ function App() {
     return (
         <Routes>
             <Route element={<HomeLayout />}>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home myPost={false} />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
             </Route>
             <Route path="/dashboard" element={<ProtectedLayout />}>
-                <Route path="home" element={<Home />} />
+                <Route path="home" element={<Home myPost={false} />} />
                 <Route path="create" element={<CreatePost />} />
                 <Route path="myaccount" element={<MyAccount />} />
                 <Route path="myposts" element={<MyPosts />} />

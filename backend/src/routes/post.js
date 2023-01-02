@@ -5,6 +5,7 @@ import AWS from "aws-sdk";
 import mime from "mime";
 import Post from "../models/Post";
 import User from "../models/userModel";
+import authJwt from "../middleware/authJwt";
 
 const ObjectId = require("mongoose").Types.ObjectId;
 

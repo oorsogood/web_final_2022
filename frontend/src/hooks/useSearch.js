@@ -6,7 +6,7 @@ const SearchContext = createContext({
   authorFilter: "",
   locationFilter: "",
   tagsFilter: [],
-  getPosts: () => {}
+  getPosts: (myPost) => {}
 });
 
 const SearchProvider = (props) => {
@@ -15,13 +15,12 @@ const SearchProvider = (props) => {
   const [locationFilter, setLocationFilter] = useState("");
   const [tagsFilter, setTagsFilter] = useState([]);
 
-  const getPosts = async () => {
-    // console.log("location", location);
-    // console.log("tags", tags);
-    // console.log(author);
+  const getPosts = async (myPost) => {
+    const author = myPost ? JSON.parse(window.localStorage.getItem("user")).username : authorFilter;
+    // console.log("author is", author);
     const result = await axios.get("/posts", {
       params: {
-        authorFilter,
+        authorFilter: author,
         placeFilter: locationFilter,
         tagFilter: tagsFilter
       }
