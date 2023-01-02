@@ -92,7 +92,7 @@ export default function Search(props) {
     }
   };
   const handleSearch = (event, reason) => {
-    getPosts(false);
+    getPosts(props.myPost);
     if (reason !== "backdropClick") {
       setOpen(false);
       setTagsOnFocus(false);
@@ -163,7 +163,7 @@ export default function Search(props) {
           <Button
             variant="contained"
             onClick={handleSearch}
-            disabled={disableSearch}
+            // disabled={disableSearch}
           >
             Search
           </Button>
