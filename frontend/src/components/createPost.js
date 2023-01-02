@@ -308,7 +308,7 @@ const CreatePost = () => {
       <div>Address: {address}</div>
       <div>
         <br />
-        <Button variant="outlined">Discard</Button>
+        <Button variant="outlined" onClick={() => navigate("/dashboard/home")}>Discard</Button>
         <Button
           variant="contained"
           color="success"
