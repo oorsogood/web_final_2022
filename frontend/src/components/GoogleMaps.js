@@ -242,7 +242,12 @@ const Map = () => {
                     setSelected(false);
                     setLatitude(null);
                     setLongitude(null);
-                }} />}
+                }} icon={{
+                    url: "/pin.png",
+                    scaledSize: new window.google.maps.Size(50, 50),
+                    origin: new window.google.maps.Point(-5, 8),
+                    anchor: new window.google.maps.Point(25, 25)
+                  }} />}
                 {searchMarkers.map((marker, i) => {
                     // console.log("Marker should set");
                     const lat = parseFloat(marker.geometry.location.lat());
@@ -250,7 +255,12 @@ const Map = () => {
                     return <MarkerF position={{ 
                         lat,
                         lng
-                    }} key={i} />
+                    }} key={i} icon={{
+                        url: "/pin.png",
+                        scaledSize: new window.google.maps.Size(50, 50),
+                        origin: new window.google.maps.Point(-5, 8),
+                        anchor: new window.google.maps.Point(25, 25)
+                    }} />
                 })}
                 {/* {markerClicked &&
 				<InfoWindow position={selected} onCloseClick={() => setMarkerClicked(false)}>
