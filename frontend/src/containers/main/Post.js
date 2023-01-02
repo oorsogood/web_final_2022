@@ -19,21 +19,11 @@ const useStyles = makeStyles(() => ({
     width: "300px",
     height: "250px",
   },
-  tags: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  eachTag: {
-    marginLeft: "5px",
-    marginRight: "5px",
-    color: "sienna",
-  },
   iamgesLayout: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    margin: "15px",
+    marginTop: "15px",
   },
   images: {
     width: "180px",
@@ -44,7 +34,23 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     justifyContent: "center",
   },
-  location: { fontSize: "23px", color: "navy" },
+  location: { fontSize: "20px", color: "navy" },
+  authorLayout: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  author: {
+    color: "darkviolet",
+  },
+  dateLayout: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  date: {
+    color: "palevioletred",
+  },
 }));
 
 function Post({ data }) {
@@ -54,10 +60,10 @@ function Post({ data }) {
   const navigate = useNavigate();
 
   const ToPost = (postId) => {
-    if (user){
-        navigate("/dashboard/posts/:" + postId);
-    } else{
-        navigate("/posts/:" + postId);
+    if (user) {
+      navigate("/dashboard/posts/:" + postId);
+    } else {
+      navigate("/posts/:" + postId);
     }
     // console.log(postId, "success");
   };
@@ -91,17 +97,15 @@ function Post({ data }) {
             <div className={classes.locationLayout}>
               <b className={classes.location}>{object.location}</b>
             </div>
-            {object.tags.length === 0 ? (
-              <></>
-            ) : (
-              <div className={classes.tags}>
-                {object.tags.map((tags, id) => (
-                  <div className={classes.eachTag} key={id}>
-                    #{tags}
-                  </div>
-                ))}
+
+            <div className={classes.authorLayout}>
+              <div className={classes.author}>{object.author}</div>
+            </div>
+            <div className={classes.dateLayout}>
+              <div className={classes.date}>
+                {new Date(object.time).toDateString()}
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
