@@ -16,6 +16,7 @@ const useStyles = makeStyles(() => ({
   header: {
     display: "flex",
     justifyContent: "space-around",
+    alignItems: "center",
   },
   background: {
     backgroundColor: "palegoldenrod",
@@ -69,25 +70,25 @@ const useStyles = makeStyles(() => ({
   error: {
     textAlign: "center",
   },
+  infos: {
+    marginLeft: "180px",
+    marginRight: "180px",
+  },
 }));
 
 export default function PostDetailsEdit(props) {
   const classes = useStyles();
   const { postId } = useParams();
-  // const { location, setLocation, address, latitude, longitude } = useMap();
   const [editTitle, setEditTitle] = useState(props.editTitle);
-  // edit date should wait for date complete
+
   const [editDate, setEditDate] = useState(props.editDate);
   const [editTags, setEditTags] = useState(props.editTags);
   const [editDescription, setEditDescription] = useState(props.editDescription);
   const [editImages, setEditImages] = useState(props.editImages);
-  // const [editAddress, setEditAddress] = useState(props.editAddress);
   const [tagsOnFocus, setTagsOnFocus] = useState(false);
 
   const [selectedImages, setSelectedImages] = useState([...editImages]);
   const [selectedImgRaw, setSelectedImgRaw] = useState([]);
-
-  const [disableSave, setDisableSave] = useState(false);
 
   const onSelectFile = (e) => {
     const selectedFiles = e.target.files;
@@ -101,31 +102,21 @@ export default function PostDetailsEdit(props) {
 
   const handleClickSave = async () => {
     const id = String(postId.substring(1, postId.length));
-    // const body = {
-    //   id: postId,
-    //   location: editTitle,
-    //   // time: editDate,
-    //   tags: editTags,
-    //   description: editDescription,
-    //   images: editImages, // this one i am not sure, maybe it should be selectedImages?
-    //   // address: editAddress, // this one not sure neither
-    //   // might be other data that needs to be saved
-    // };
     const imgURL = [...editImages];
     for (const img of selectedImgRaw) {
       var formdata = new FormData();
       formdata.append("image", img);
       const result = await axios.post("./uploadImg", formdata);
       imgURL.push(result.data);
-    };
+    }
     const time = editDate.$d;
     const result = await axios.patch("/post", {
       id,
       location: editTitle,
-      time: (time === undefined ? editDate : time.toISOString()),
+      time: time === undefined ? editDate : time.toISOString(),
       tags: editTags,
       description: editDescription,
-      images: imgURL
+      images: imgURL,
     });
     // console.log("result is", result);
     // edit API here
@@ -134,7 +125,6 @@ export default function PostDetailsEdit(props) {
 
   const handleChangeEditTitle = (e) => {
     setEditTitle(e.target.value);
-    // setLocation(e.target.value);
   };
 
   const handleOthersOnFocus = () => {
@@ -145,28 +135,11 @@ export default function PostDetailsEdit(props) {
     setTagsOnFocus(true);
   };
 
-  // useEffect(() => {
-  //   setEditTitle(location);
-  //   // console.log("editTitle", editTitle);
-  // }, [location]);
-
-  // useEffect(() => {
-  //   if (
-  //     editTitle !== 0 &&
-  //     editAddress.length === 0 &&
-  //     selectedImages.length === 0
-  //   ) {
-  //     setDisableSave(false);
-  //   } else {
-  //     setDisableSave(true);
-  //   }
-  // }, []);
-
   return (
     <div className={classes.background}>
       <div>
         <div className={classes.header}>
-          <h1>PostDetailsEdit</h1>
+          <h1>Edit Post Details</h1>
           <div>
             <div>
               <Button variant="contained" onClick={() => props.setEdit(false)}>
@@ -176,24 +149,20 @@ export default function PostDetailsEdit(props) {
                 variant="contained"
                 color="success"
                 onClick={handleClickSave}
-                disabled={disableSave}
               >
                 Save
               </Button>
             </div>
           </div>
         </div>
-        <div>
+        <div className={classes.infos}>
           <div className={classes.date}>
+            <h2>Date</h2>
             <ResponsiveDatePicker
               dateInput={editDate}
               setDateInput={setEditDate}
             />
           </div>
-          {/* <div className={classes.map}>
-            <h2>Search On Map</h2>
-            <GoogleMaps />
-          </div> */}
           <div className={classes.PostTitle}>
             <h2>Location</h2>
             <div onFocus={handleOthersOnFocus}>
@@ -205,17 +174,6 @@ export default function PostDetailsEdit(props) {
               />
             </div>
           </div>
-          {/* <div className={classes.address}>
-            <h2>Address</h2>
-            <div onFocus={handleOthersOnFocus}>
-              <TextField
-                label="Address?"
-                variant="outlined"
-                value={editAddress}
-                onChange={(e) => setEditAddress(e.target.value)}
-              />
-            </div>
-          </div> */}
           <div className={classes.imagesSection}>
             <h2>Upload Picture!</h2>
             <input
@@ -256,16 +214,12 @@ export default function PostDetailsEdit(props) {
                         </p>
                         <button
                           className={classes.deleteButton}
-                          onClick={() =>
-                            {
-                              setSelectedImages(
-                                selectedImages.filter((e) => e !== img)
-                              )
-                              setEditImages(
-                                editImages.filter((e) => e !== img)
-                              )
-                            }
-                          }
+                          onClick={() => {
+                            setSelectedImages(
+                              selectedImages.filter((e) => e !== img)
+                            );
+                            setEditImages(editImages.filter((e) => e !== img));
+                          }}
                         >
                           <img
                             className={classes.trashIcon}
@@ -280,20 +234,8 @@ export default function PostDetailsEdit(props) {
             </div>
           </div>
         </div>
-        <div className={classes.description}>
-          <h2>Any Idea?</h2>
-          <div onFocus={handleOthersOnFocus}>
-            <TextField
-              label="What's on your mind?"
-              multiline
-              rows={4}
-              value={editDescription}
-              onChange={(e) => setEditDescription(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className={classes.tags}>
-          <h2>Add HashTags</h2>
+        <div className={classes.infos}>
+          <h2>HashTags</h2>
           <div onFocus={handleTagsOnFocus}>
             <TagsInput
               value={editTags}
@@ -313,6 +255,17 @@ export default function PostDetailsEdit(props) {
                 </p>
               </div>
             )}
+          </div>
+          <h2>Any Idea?</h2>
+          <div onFocus={handleOthersOnFocus}>
+            <TextField
+              label="What's on your mind?"
+              multiline
+              fullWidth
+              rows={4}
+              value={editDescription}
+              onChange={(e) => setEditDescription(e.target.value)}
+            />
           </div>
         </div>
       </div>

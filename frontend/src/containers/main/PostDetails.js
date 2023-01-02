@@ -12,6 +12,7 @@ const useStyles = makeStyles(() => ({
   header: {
     display: "flex",
     justifyContent: "space-around",
+    alignItems: "center",
   },
   background: {
     backgroundColor: "palegoldenrod",
@@ -22,12 +23,17 @@ const useStyles = makeStyles(() => ({
     left: "0",
   },
   mainPicture: {
-    width: "50%",
-    height: "50%",
+    width: "55%",
+    height: "55%",
+    marginLeft: "200px",
   },
   tags: {
     display: "flex",
     flexWrap: "wrap",
+  },
+  infos: {
+    marginLeft: "100px",
+    marginRight: "100px",
   },
 }));
 
@@ -37,7 +43,7 @@ export default function PostDetails() {
   const [postInfo, setPostInfo] = useState({});
   const [coordinate, setCoordinate] = useState({
     lat: 0,
-    lng: 0
+    lng: 0,
   });
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
@@ -56,7 +62,7 @@ export default function PostDetails() {
     setPostInfo(contents[0]);
     setCoordinate({
       lat: contents[0].latitude,
-      lng: contents[0].longitude
+      lng: contents[0].longitude,
     });
   };
   useEffect(() => {
@@ -74,8 +80,8 @@ export default function PostDetails() {
     const id = String(postId.substring(1, postId.length));
     const result = await axios.delete("/post", {
       params: {
-        id
-      }
+        id,
+      },
     });
     console.log("delete", result);
     navigate("/dashboard/home");
@@ -100,11 +106,11 @@ export default function PostDetails() {
       ) : (
         <div className={classes.background}>
           <div className={classes.header}>
-            <h1>PostDetails</h1>
+            <h1>Post Details</h1>
             <div>
               {postInfo.author ===
-              JSON.parse(window.localStorage.getItem("user")) ? (
-                <>
+              JSON.parse(window.localStorage.getItem("user")).username ? (
+                <div>
                   <Button
                     variant="contained"
                     color="primary"
@@ -119,29 +125,12 @@ export default function PostDetails() {
                   >
                     Delete
                   </Button>
-                </>
+                </div>
               ) : (
                 <></>
               )}
             </div>
           </div>
-          <h2>Location: {postInfo.location}</h2>
-          <h2>Author: {postInfo.author}</h2>
-          <h2>Date: {(new Date(postInfo.time)).toDateString()}</h2>
-          {(postInfo.tags === undefined || postInfo.tags.length === 0) ? <></> : 
-            <h2>
-              Tags :{" "}
-              <div className={classes.tags}>
-                {postInfo.tags.map((tags, index) => (
-                    <div key={index}>{tags}, </div>
-                  ))
-                }
-              </div>
-            </h2>
-          }
-          {postInfo.description === "" ? <></> :
-            <h3>Description: {postInfo.description}</h3>
-          }
           <div className={classes.mainPicture}>
             <Carousel infiniteLoop useKeyboardArrows autoPlay showArrows={true}>
               {postInfo.images === undefined ? (
@@ -152,9 +141,36 @@ export default function PostDetails() {
                 })
               )}
             </Carousel>
+          </div>
+          <div className={classes.infos}>
+            <h2>Location : {postInfo.location}</h2>
+            <h3>Author : {postInfo.author}</h3>
+            <h3>Date : {new Date(postInfo.time).toDateString()}</h3>
+            {postInfo.tags === undefined || postInfo.tags.length === 0 ? (
+              <></>
+            ) : (
+              <h3>
+                Tags :{" "}
+                <div className={classes.tags}>
+                  {postInfo.tags.map((tags, index) => (
+                    <div key={index}>#{tags}</div>
+                  ))}
+                </div>
+              </h3>
+            )}
+            {postInfo.description === "" ? (
+              <></>
+            ) : (
+              <h3>Description : {postInfo.description}</h3>
+            )}
+          </div>
+          <div className={classes.infos}>
+            <h3>Location on Map</h3>
+            <div className={classes.staticMap}>
+              <StaticMap coordinate={coordinate} />
+            </div>
             <h3>Address : {postInfo.address}</h3>
           </div>
-          <StaticMap coordinate={coordinate} />
         </div>
       )}
     </>
