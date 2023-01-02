@@ -11,7 +11,6 @@ import { TagsInput } from "react-tag-input-component";
 import trashIcon from "../../images/trash.png";
 import { useMap } from "../../hooks/useMap";
 import ResponsiveDatePicker from "../../components/DatePicker";
-import StaticMap from "../../components/StaticMap";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -317,7 +316,6 @@ export default function PostDetailsEdit(props) {
           </div>
         </div>
       </div>
-      <StaticMap coordinate={props.coordinate} />
     </div>
   );
 }
