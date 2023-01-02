@@ -97,6 +97,7 @@ function Post({ data }) {
             <div className={classes.locationLayout}>
               <b className={classes.location}>{object.location}</b>
             </div>
+
             <div className={classes.authorLayout}>
               <div className={classes.author}>{object.author}</div>
             </div>

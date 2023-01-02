@@ -87,7 +87,7 @@ export default function PostDetails() {
     navigate("/dashboard/home");
   };
 
-  // console.log("postinfo", postInfo);
+  const currentUser = JSON.parse(window.localStorage.getItem("user"));
 
   return (
     <>
@@ -108,8 +108,7 @@ export default function PostDetails() {
           <div className={classes.header}>
             <h1>Post Details</h1>
             <div>
-              {postInfo.author ===
-              JSON.parse(window.localStorage.getItem("user")).username ? (
+              {(currentUser !== null && postInfo.author === currentUser.username) ? (
                 <div>
                   <Button
                     variant="contained"
