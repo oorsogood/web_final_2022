@@ -85,17 +85,18 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
 
         service.findPlaceFromQuery(request, (results, status) => {
             // if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-            let markerArray = [];
-            for (var i = 0; results !== null && i < results.length; i++) {
-                // console.log(results[i]);
-                // markerArray.push({ lat: results[i].geometry.location.lat(), lng: results[i].geometry.location.lng() });
-                markerArray.push(results[i]);
-            };
+            // let markerArray = [];
+            // for (var i = 0; results !== null && i < results.length; i++) {
+            //     // console.log(results[i]);
+            //     // markerArray.push({ lat: results[i].geometry.location.lat(), lng: results[i].geometry.location.lng() });
+            //     markerArray.push(results[i]);
+            // };
+            const markerArray = results === null ? [] : [results[0]];
             setSearchMarkers(markerArray);
             // }
             if(results === null){
               alert("No results found!");
-            }
+            };
             // else {
             //     alert("No results found!");
             // }
@@ -156,7 +157,7 @@ const Map = () => {
             // console.log("type of lat is", typeof(coordinate.lat));
             mapRef.current.panTo({ lat: coordinate.lat, lng: coordinate.lng });
             mapRef.current.setZoom(17);
-            // setSelected(coordinate);
+            setSelected(false);
             setLatitude(coordinate.lat);
             setLongitude(coordinate.lng);
             Geocode.fromLatLng(coordinate.lat, coordinate.lng).then(
@@ -242,6 +243,7 @@ const Map = () => {
             >
                 {selected && <MarkerF position={selected} onClick={() => {
                     setSelected(false);
+                    setAddress("");
                     setLatitude(null);
                     setLongitude(null);
                 }} icon={{
@@ -262,6 +264,11 @@ const Map = () => {
                         scaledSize: new window.google.maps.Size(50, 50),
                         origin: new window.google.maps.Point(-5, 8),
                         anchor: new window.google.maps.Point(25, 25)
+                    }} onClick={() => {
+                        setSearchMarkers([]);
+                        setAddress("");
+                        setLatitude(null);
+                        setLongitude(null);
                     }} />
                 })}
             </GoogleMap>
