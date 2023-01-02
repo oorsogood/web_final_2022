@@ -115,22 +115,23 @@ export default function PostDetails() {
               )}
             </div>
           </div>
-          <h2>Title: {postInfo.location}</h2>
+          <h2>Location: {postInfo.location}</h2>
           <h2>Author: {postInfo.author}</h2>
           <h2>Date: {(new Date(postInfo.time)).toDateString()}</h2>
-          <h2>
-            Tags :{" "}
-            <div className={classes.tags}>
-              {postInfo.tags === undefined ? (
-                <></>
-              ) : (
-                postInfo.tags.map((tags, index) => (
-                  <div key={index}>{tags}. </div>
-                ))
-              )}
-            </div>
-          </h2>
-          <h3>Description: {postInfo.description}</h3>
+          {(postInfo.tags === undefined || postInfo.tags.length === 0) ? <></> : 
+            <h2>
+              Tags :{" "}
+              <div className={classes.tags}>
+                {postInfo.tags.map((tags, index) => (
+                    <div key={index}>{tags}, </div>
+                  ))
+                }
+              </div>
+            </h2>
+          }
+          {postInfo.description === "" ? <></> :
+            <h3>Description: {postInfo.description}</h3>
+          }
           <div className={classes.mainPicture}>
             <Carousel infiniteLoop useKeyboardArrows autoPlay showArrows={true}>
               {postInfo.images === undefined ? (

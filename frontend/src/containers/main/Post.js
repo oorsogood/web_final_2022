@@ -48,24 +48,29 @@ function Post({ data }) {
           key={index}
           onClick={() => ToPost(object.id)}
         >
-          <div className={classes.author}>Author : {object.author}</div>
           <div className={classes.address}>
-            Title(Location) : {object.location}
+            Location : {object.location}
           </div>
+          <div className={classes.author}>Author : {object.author}</div>
           <div className={classes.time}>Date : {(new Date(object.time)).toDateString()}</div>
-          <div className={classes.description}>
-            Description : {object.description}
-          </div>
-          <div className={classes.tags}>
-            Tags :
-            {object.tags.map((tags, id) => (
-              <div className={classes.eachTag} key={id}>
-                {tags}
-              </div>
-            ))}
-          </div>
-
-          <img className={classes.images} src={object.images[0]} alt="images" />
+          {object.description === "" ? <></> :
+            <div className={classes.description}>
+              Description : {object.description}
+            </div>
+          }
+          {object.tags.length === 0 ? <></> :
+            <div className={classes.tags}>
+              Tags :
+              {object.tags.map((tags, id) => (
+                <div className={classes.eachTag} key={id}>
+                  {tags}
+                </div>
+              ))}
+            </div>
+          }
+          {object.images.length === 0 ? <></> : 
+            <img className={classes.images} src={object.images[0]} alt="images" />
+          }
         </div>
       ))}
     </Box>
