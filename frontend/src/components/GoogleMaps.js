@@ -27,15 +27,6 @@ const Wrapper = styled.div`
 	width: 100%;
 `;
 
-const PlacesContainer = styled.div`
-	position: absolute;
-	top: 10px;
-	left: 50%;
-	transform: translateX(-50%);
-	z-index: 10;
-	width: 300px;
-`;
-
 const containerStyle = {
     width: '600px',
     height: '600px'
@@ -94,14 +85,18 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
 
         service.findPlaceFromQuery(request, (results, status) => {
             // if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-            let markerArray = [];
-            for (var i = 0; i < results.length; i++) {
-                // console.log(results[i]);
-                // markerArray.push({ lat: results[i].geometry.location.lat(), lng: results[i].geometry.location.lng() });
-                markerArray.push(results[i]);
-            };
+            // let markerArray = [];
+            // for (var i = 0; results !== null && i < results.length; i++) {
+            //     // console.log(results[i]);
+            //     // markerArray.push({ lat: results[i].geometry.location.lat(), lng: results[i].geometry.location.lng() });
+            //     markerArray.push(results[i]);
+            // };
+            const markerArray = results === null ? [] : [results[0]];
             setSearchMarkers(markerArray);
             // }
+            if(results === null){
+              alert("No results found!");
+            };
             // else {
             //     alert("No results found!");
             // }
@@ -147,6 +142,7 @@ const Map = () => {
     const center = useMemo(() => ({ lat: 25.016259, lng: 121.533508 }), []);
     const [selected, setSelected] = useState(null);
     const [searchMarkers, setSearchMarkers] = useState([]);
+    const [searchError, setSearchError] = useState(false);
     const mapRef = useRef();
     const dummyRef = useRef();
 
@@ -161,7 +157,7 @@ const Map = () => {
             // console.log("type of lat is", typeof(coordinate.lat));
             mapRef.current.panTo({ lat: coordinate.lat, lng: coordinate.lng });
             mapRef.current.setZoom(17);
-            // setSelected(coordinate);
+            setSelected(false);
             setLatitude(coordinate.lat);
             setLongitude(coordinate.lng);
             Geocode.fromLatLng(coordinate.lat, coordinate.lng).then(
@@ -188,7 +184,7 @@ const Map = () => {
 
     const handleClick = (e) => {
         // console.log("place id", e.placeId);
-
+        // console.log(e);
         const coordinate = {
             lat: e.latLng.lat(),
             lng: e.latLng.lng()
@@ -210,6 +206,7 @@ const Map = () => {
             }
         );
         if(e.placeId !== undefined){
+            e.stop();
             var map = new window.google.maps.Map(dummyRef.current);
             var service = new window.google.maps.places.PlacesService(map);
             var request = {
@@ -227,6 +224,13 @@ const Map = () => {
     return (
         <Wrapper>
             <div ref={dummyRef} />
+            {/* {
+              searchError ? 
+              <div style={{color: "red", zIndex: 100, backgroundColor: "black"}} >
+                <p>No results found!</p>
+              </div>
+               : <></>
+            } */}
             <div>
                 <PlacesAutocomplete setSelected={setSelected} setSearchMarkers={setSearchMarkers} panTo={panTo} />
             </div>
@@ -240,6 +244,7 @@ const Map = () => {
             >
                 {selected && <MarkerF position={selected} onClick={() => {
                     setSelected(false);
+                    setAddress("");
                     setLatitude(null);
                     setLongitude(null);
                 }} icon={{
@@ -260,14 +265,13 @@ const Map = () => {
                         scaledSize: new window.google.maps.Size(50, 50),
                         origin: new window.google.maps.Point(-5, 8),
                         anchor: new window.google.maps.Point(25, 25)
+                    }} onClick={() => {
+                        setSearchMarkers([]);
+                        setAddress("");
+                        setLatitude(null);
+                        setLongitude(null);
                     }} />
                 })}
-                {/* {markerClicked &&
-				<InfoWindow position={selected} onCloseClick={() => setMarkerClicked(false)}>
-					<div>
-						<p>lat: {selected.lat.toFixed(2)}, lng: {selected.lng.toFixed(2)}</p>
-					</div>
-				</InfoWindow>} */}
             </GoogleMap>
         </Wrapper>
     )
