@@ -88,13 +88,9 @@ function Post({ data }) {
                 />
               </div>
             )}
-            {object.description === "" ? (
-              <></>
-            ) : (
-              <div className={classes.locationLayout}>
-                <b className={classes.location}>{object.location}</b>
-              </div>
-            )}
+            <div className={classes.locationLayout}>
+              <b className={classes.location}>{object.location}</b>
+            </div>
             {object.tags.length === 0 ? (
               <></>
             ) : (
