@@ -14,6 +14,7 @@ import {
 } from "@reach/combobox";
 import styled from 'styled-components';
 import { useMap } from '../hooks/useMap';
+import mapStyles from "./mapStyles";
 
 Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
 const libraries = ["places"];
@@ -233,7 +234,7 @@ const Map = () => {
                 zoom={15}
                 center={center}
                 mapContainerStyle={containerStyle}
-                options={{ disableDefaultUI: true }}
+                options={{ disableDefaultUI: true, styles: mapStyles }}
                 onClick={handleClick}
                 onLoad={onMapLoad}
             >

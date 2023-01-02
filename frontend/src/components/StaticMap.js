@@ -3,6 +3,7 @@ import { GoogleMap, useLoadScript, MarkerF, InfoWindow } from "@react-google-map
 import Geocode from "react-geocode";
 import styled from 'styled-components';
 import { propsToClassKey } from "@mui/styles";
+import mapStyles from "./mapStyles";
 
 Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
 const libraries = ["places"];
@@ -34,7 +35,7 @@ const Map = (props) => {
                 zoom={17}
                 center={props.coordinate}
                 mapContainerStyle={containerStyle}
-                options={{ disableDefaultUI: true }}
+                options={{ disableDefaultUI: true, styles: mapStyles }}
                 onLoad={onMapLoad}
             >
               <MarkerF position={props.coordinate} />

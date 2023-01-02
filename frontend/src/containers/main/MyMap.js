@@ -4,6 +4,7 @@ import Geocode from "react-geocode";
 import styled from 'styled-components';
 import Post from "./Post";
 import axios from "../../api";
+import mapStyles from "../../components/mapStyles";
 
 Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
 const libraries = ["places"];
@@ -68,7 +69,7 @@ const Map = () => {
                 zoom={1.2}
                 center={center}
                 mapContainerStyle={containerStyle}
-                options={{ disableDefaultUI: true }}
+                options={{ disableDefaultUI: true, styles: mapStyles }}
                 // onClick={handleClick}
                 onLoad={onMapLoad}
             >
