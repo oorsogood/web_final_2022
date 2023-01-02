@@ -184,7 +184,7 @@ const Map = () => {
 
     const handleClick = (e) => {
         // console.log("place id", e.placeId);
-
+        // console.log(e);
         const coordinate = {
             lat: e.latLng.lat(),
             lng: e.latLng.lng()
@@ -206,6 +206,7 @@ const Map = () => {
             }
         );
         if(e.placeId !== undefined){
+            e.stop();
             var map = new window.google.maps.Map(dummyRef.current);
             var service = new window.google.maps.places.PlacesService(map);
             var request = {
