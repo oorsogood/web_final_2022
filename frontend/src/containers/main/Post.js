@@ -2,10 +2,11 @@ import { Box } from "./Box.js";
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import noImageIcon from "../../images/no-image.png";
 
 const useStyles = makeStyles(() => ({
   mainLayout: {
-    marginLeft: "55px",
+    marginLeft: "85px",
   },
   allPost: {
     display: "flex",
@@ -14,11 +15,9 @@ const useStyles = makeStyles(() => ({
   post: {
     backgroundColor: "SpringGreen",
     borderRadius: "10px",
-    color: "blue",
-    border: "solid",
     margin: "10px",
-    width: "350px",
-    height: "300px",
+    width: "300px",
+    height: "250px",
   },
   tags: {
     display: "flex",
@@ -28,23 +27,24 @@ const useStyles = makeStyles(() => ({
   eachTag: {
     marginLeft: "5px",
     marginRight: "5px",
+    color: "sienna",
   },
   iamgesLayout: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    margin: "25px",
+    margin: "15px",
   },
   images: {
-    width: "200px",
-    height: "180px",
+    width: "180px",
+    height: "150px",
   },
-  descriptionLayout: {
+  locationLayout: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
-  description: { fontSize: "23px" },
+  location: { fontSize: "23px", color: "navy" },
 }));
 
 function Post({ data }) {
@@ -71,14 +71,14 @@ function Post({ data }) {
             key={index}
             onClick={() => ToPost(object.id)}
           >
-            {/* <div className={classes.address}>{object.location}</div> */}
-            {/* <div className={classes.author}>Author : {object.author}</div> */}
-            {/* <div className={classes.time}>
-            {new Date(object.time).toDateString()}
-          </div> */}
-
             {object.images.length === 0 ? (
-              <></>
+              <div className={classes.iamgesLayout}>
+                <img
+                  className={classes.images}
+                  src={noImageIcon}
+                  alt="images"
+                />
+              </div>
             ) : (
               <div className={classes.iamgesLayout}>
                 <img
@@ -91,8 +91,8 @@ function Post({ data }) {
             {object.description === "" ? (
               <></>
             ) : (
-              <div className={classes.descriptionLayout}>
-                <div className={classes.description}>{object.description}</div>
+              <div className={classes.locationLayout}>
+                <b className={classes.location}>{object.location}</b>
               </div>
             )}
             {object.tags.length === 0 ? (
