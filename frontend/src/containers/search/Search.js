@@ -13,18 +13,18 @@ import { TagsInput } from "react-tag-input-component";
 import { useSearch } from "../../hooks/useSearch";
 
 const useStyles = makeStyles(() => ({
-    searchIcon: {
-        width: "25px",
-        height: "25px",
-        marginLeft: "5px",
-    },
-    dialogContent: {
-        display: "flex",
-        flexDirection: "column",
-    },
-    enterTags: {
-        color: "royalblue",
-    },
+  searchIcon: {
+    width: "25px",
+    height: "25px",
+    marginLeft: "5px",
+  },
+  dialogContent: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  enterTags: {
+    color: "royalblue",
+  },
 }));
 
 export default function Search(props) {
@@ -99,6 +99,25 @@ export default function Search(props) {
     }
   };
 
+  useEffect(() => {
+    if (
+      authorFilter !== "" ||
+      locationFilter !== "" ||
+      tagsFilter.length !== 0
+    ) {
+      setDisableSearch(false);
+    } else {
+      setDisableSearch(true);
+    }
+  }, [
+    authorFilter,
+    setAuthorFilter,
+    locationFilter,
+    setLocationFilter,
+    tagsFilter,
+    setTagsFilter,
+  ]);
+
   return (
     <div>
       <Button onClick={handleClickOpen}>
@@ -106,11 +125,16 @@ export default function Search(props) {
         <img className={classes.searchIcon} src={SearchIcon} alt="SearchIcon" />
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Find The Post!</DialogTitle>
+        <DialogTitle>Find The Post !</DialogTitle>
         <DialogContent>
-          <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+          <Box
+            component="form"
+            sx={{ display: "flex", flexWrap: "wrap", minWidth: "420px" }}
+          >
             <div className={classes.dialogContent}>
-              {props.myPost ? <></> :
+              {props.myPost ? (
+                <></>
+              ) : (
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                   <div onFocus={handleOthersOnFocus}>
                     <TextField
@@ -122,7 +146,7 @@ export default function Search(props) {
                     />
                   </div>
                 </FormControl>
-              }
+              )}
               <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <div onFocus={handleOthersOnFocus}>
                   <TextField
@@ -139,7 +163,8 @@ export default function Search(props) {
                   <TagsInput
                     value={tagsFilter}
                     onChange={setTagsFilter}
-                    placeHolder="Your Hashtags"
+                    placeHolder="Tags"
+                    helperText="Optional"
                   />
                   {tagsOnFocus && (
                     <div>
@@ -163,7 +188,7 @@ export default function Search(props) {
           <Button
             variant="contained"
             onClick={handleSearch}
-            // disabled={disableSearch}
+            disabled={disableSearch}
           >
             Search
           </Button>
