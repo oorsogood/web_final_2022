@@ -11,6 +11,7 @@ import { TagsInput } from "react-tag-input-component";
 import trashIcon from "../../images/trash.png";
 import { useMap } from "../../hooks/useMap";
 import ResponsiveDatePicker from "../../components/DatePicker";
+import StaticMap from "../../components/StaticMap";
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -74,7 +75,7 @@ const useStyles = makeStyles(() => ({
 export default function PostDetailsEdit(props) {
   const classes = useStyles();
   const { postId } = useParams();
-  const { location, setLocation, address, latitude, longitude } = useMap();
+  // const { location, setLocation, address, latitude, longitude } = useMap();
   const [editTitle, setEditTitle] = useState(props.editTitle);
   // edit date should wait for date complete
   const [editDate, setEditDate] = useState(props.editDate);
@@ -316,6 +317,7 @@ export default function PostDetailsEdit(props) {
           </div>
         </div>
       </div>
+      <StaticMap coordinate={props.coordinate} />
     </div>
   );
 }
