@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import coffeeimg from '../../images/coffee.png';
+import coffeeimg from '../../images/coffeebean.png';
 
 import { useAuth } from "../../hooks/useAuth";
 import axios from "../../api";
@@ -64,12 +64,11 @@ const SignUpPage = () => {
                     sm={4}
                     md={7}
                     sx={{
-                        // backgroundImage: 'url(https://source.unsplash.com/random)',
-                        backgroundImage: `url(${'../../images/coffee.png'})`,
-                        backgroundRepeat: 'no-repeat',
+                        backgroundImage: `url(${coffeeimg})`,
+                        backgroundSize: "cover",
+                        height: "91vh",
                         backgroundColor: (t) =>
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                        backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
                 /> */}
