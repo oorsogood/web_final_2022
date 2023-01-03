@@ -13,9 +13,14 @@ import { TagsInput } from "react-tag-input-component";
 import { useSearch } from "../../hooks/useSearch";
 
 const useStyles = makeStyles(() => ({
+  searchButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   searchIcon: {
-    width: "25px",
-    height: "25px",
+    width: "15px",
+    height: "15px",
     marginLeft: "5px",
   },
   dialogContent: {
@@ -81,16 +86,22 @@ export default function Search(props) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
-        Search Post
-        <img className={classes.searchIcon} src={SearchIcon} alt="SearchIcon" />
-      </Button>
+      <div className={classes.searchButton}>
+        <Button onClick={handleClickOpen} variant="outlined">
+          Search Post
+          <img
+            className={classes.searchIcon}
+            src={SearchIcon}
+            alt="SearchIcon"
+          />
+        </Button>
+      </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Find The Post !</DialogTitle>
         <DialogContent>
           <Box
             component="form"
-            sx={{ display: "flex", flexWrap: "wrap", minWidth: "420px" }}
+            sx={{ display: "flex", flexWrap: "wrap", minWidth: "400px" }}
           >
             <div className={classes.dialogContent}>
               {props.myPost ? (
