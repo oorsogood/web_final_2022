@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { Button, TextField } from "@mui/material";
+import { Button } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 import { makeStyles } from "@mui/styles";
 import GoogleMaps from "../../components/GoogleMaps";
 import { MapProvider, useMap } from "../../hooks/useMap";
@@ -12,19 +13,19 @@ import moment from "moment";
 const useStyles = makeStyles(() => ({
   background: {
     backgroundColor: "#F6F5F2",
-    height: "90.5vh"
+    height: "90.5vh",
   },
   title: {
     color: "#69C123",
-    margin: "5px"
+    margin: "5px",
   },
   wrapper: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   h2: {
-    margin: "5px"
+    margin: "5px",
   },
   error: {
     textAlign: "center",
@@ -32,7 +33,7 @@ const useStyles = makeStyles(() => ({
   leftLayout: {
     width: "600px",
     height: "600px",
-    margin: "0"
+    margin: "0",
   },
   bottomLayout: {
     margin: "0px",
@@ -42,7 +43,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-  }
+  },
 }));
 
 const CreatePostPage = () => {
@@ -67,12 +68,13 @@ const CreatePost = () => {
   const [disablePostButton, setDisablePostButton] = useState(true);
 
   useEffect(() => {
-    const canPost = (
+    const canPost =
       dateInput.$y !== 0 &&
       latitude !== null &&
       postTitle.length !== 0 &&
       selectedImages.length <= 10
-    ) ? true : false;
+        ? true
+        : false;
     setDisablePostButton(!canPost);
   }, [dateInput, postTitle, selectedImages, latitude]);
 
@@ -127,7 +129,7 @@ const CreatePost = () => {
       address,
       latitude,
       longitude,
-      time: (time === undefined ? dateInput : time.toISOString()),
+      time: time === undefined ? dateInput : time.toISOString(),
       description: content,
       tags: tags,
       images: imgURL,
@@ -176,10 +178,9 @@ const CreatePost = () => {
       <center>
         <div className={classes.bottomLayout}>
           {/* <br /> */}
-          <Button variant="outlined" onClick={() => navigate("/dashboard/home")}>Discard</Button>
+          <Button onClick={() => navigate("/dashboard/home")}>Discard</Button>
           <Button
-            variant="contained"
-            color="success"
+            color="blue"
             disabled={disablePostButton}
             onClick={handlePost}
           >
