@@ -4,31 +4,48 @@ import Geocode from "react-geocode";
 import styled from "styled-components";
 import Post from "./Post";
 import axios from "../../api";
-import mapStyles from "../../components/mapStyles";
+import mapStyles from "../../components/MapStyles";
 import { makeStyles } from "@mui/styles";
+import bp1 from "../../images/bp1.jpg";
 
-Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_KEY);
 const libraries = ["places"];
 
 const useStyles = makeStyles(() => ({
   myMapPage: {
-    backgroundColor: "aquamarine",
-  },
-  header: {
-    marginLeft: "150px",
+    backgroundColor: "#F6F5F2",
+    height: "91.26vh",
+    width: "100%",
+    backgroundImage: `url(${bp1})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   },
   mapAndPostLayout: {
     display: "flex",
     flexDirection: "row",
-    marginLeft: "50px",
+    justifyContent: "center",
   },
   post: {
     display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    width: "400px",
+    height: "600px",
+    overflow: "scroll",
+    // background: "red"
+  },
+  header: {
+    display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "80px",
+  },
+  helperText: {
+    marginLeft: "10px",
+    color: "gray",
+    fontSize: "20px",
   },
 }));
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,8 +55,8 @@ const Wrapper = styled.div`
 `;
 
 const containerStyle = {
-  width: "450px",
-  height: "450px",
+  width: "800px",
+  height: "600px",
 };
 
 const Map = () => {
@@ -89,10 +106,13 @@ const Map = () => {
   return (
     <div className={classes.myMapPage}>
       <Wrapper>
-        <h2 className={classes.header}>Where You've been to !</h2>
+        <div className={classes.header}>
+          <h2 className={classes.title}>Where You've been to !</h2>
+          <p className={classes.helperText}>(Click pins to check posts)</p>
+        </div>
         <div className={classes.mapAndPostLayout}>
           <GoogleMap
-            zoom={2}
+            zoom={1.8}
             center={center}
             mapContainerStyle={containerStyle}
             options={{
@@ -139,7 +159,7 @@ const Map = () => {
 
 export default () => {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
     libraries,
   });
 

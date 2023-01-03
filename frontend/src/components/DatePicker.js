@@ -21,7 +21,7 @@ export default function ResponsiveDatePicker({ dateInput, setDateInput }) {
         views={["year", "month", "day"]}
         value={dateInput}
         onChange={handleChangeDate}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField {...params} style={{background: "white"}} />}
       />
     </LocalizationProvider>
   );

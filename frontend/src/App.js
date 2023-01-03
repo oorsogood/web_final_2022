@@ -4,7 +4,7 @@ import HomeLayout from "./components/HomeLayout";
 import "./App.css";
 import LoginPage from "./containers/account/Login";
 import SignUpPage from "./containers/account/SignUp";
-import CreatePost from "./components/createPost";
+import CreatePost from "./containers/main/CreatePost";
 import Home from "./containers/main/Home";
 import MyPosts from "./containers/main/MyPosts";
 import MyMap from "./containers/main/MyMap";

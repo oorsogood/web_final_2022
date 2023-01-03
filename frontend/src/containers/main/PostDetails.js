@@ -7,177 +7,251 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../api";
 import PostDetailsEdit from "./PostDetailsEdit";
 import StaticMap from "../../components/StaticMap";
+import { TextField } from "@mui/material";
+import bp1 from "../../images/bp1.jpg";
 import { useAuth } from "../../hooks/useAuth";
 
 const useStyles = makeStyles(() => ({
-    header: {
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-    },
-    background: {
-        backgroundColor: "palegoldenrod",
-        width: "100%",
-        height: "100%",
-
-        top: "0",
-        left: "0",
-    },
-    mainPicture: {
-        width: "55%",
-        height: "55%",
-        marginLeft: "200px",
-    },
-    tags: {
-        display: "flex",
-        flexWrap: "wrap",
-    },
-    infos: {
-        marginLeft: "100px",
-        marginRight: "100px",
-    },
+  postDetail: {
+    width: "100%",
+    height: "91.26vh",
+    backgroundImage: `url(${bp1})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+  },
+  title: {
+    // backgroundColor: "palegoldenrod",
+    margin: "0",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  background: {
+    // backgroundColor: "palegoldenrod",
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    top: "0",
+    left: "0",
+  },
+  h2: {
+    margin: "0",
+  },
+  mainPicture: {
+    width: "300px",
+    height: "400px",
+    margin: "0",
+  },
+  images: {
+    margin: "0",
+  },
+  tags: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  infos: {
+    margin: "0",
+    height: "620px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  carousel: {
+    width: "270px",
+    height: "270px",
+    margin: "0",
+  },
+  address: {
+    width: "450px",
+  },
+  bottomLayout: {
+    position: "absolute",
+    left: "50%",
+    bottom: "3vh",
+    transform: "translate(-50%, 0%)",
+    width: "17%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  }
 }));
 
 export default function PostDetails() {
-    const { postId } = useParams();
-    const { user } = useAuth();
+  const { postId } = useParams();
+  const { user } = useAuth();
 
-    // console.log("Current post id is", postId);
-    const [postInfo, setPostInfo] = useState({});
-    const [coordinate, setCoordinate] = useState({
-        lat: 0,
-        lng: 0,
+  // console.log("Current post id is", postId);
+  const [postInfo, setPostInfo] = useState({});
+  const [coordinate, setCoordinate] = useState({
+    lat: 0,
+    lng: 0,
+  });
+  const [edit, setEdit] = useState(false);
+  const navigate = useNavigate();
+
+  const getPost = async () => {
+    const id = String(postId.substring(1, postId.length));
+    // console.log(id);
+    const {
+      data: { contents },
+    } = await axios.get("/post", {
+      params: {
+        id: id,
+      },
     });
-    const [edit, setEdit] = useState(false);
-    const navigate = useNavigate();
-
-    const getPost = async () => {
-        const id = String(postId.substring(1, postId.length));
-        // console.log(id);
-        const {
-            data: { contents },
-        } = await axios.get("/post", {
-            params: {
-                id: id,
-            },
-        });
-        // console.log(contents[0]);
-        setPostInfo(contents[0]);
-        setCoordinate({
-            lat: contents[0].latitude,
-            lng: contents[0].longitude,
-        });
-    };
-    useEffect(() => {
-        // console.log("getPost called");
-        getPost();
-    }, [edit]);
-    const classes = useStyles();
-
-    const handleClickEdit = () => {
-        setEdit(true);
-    };
-
-    const handleClickDelete = async () => {
-        // connect delete post API
-        const id = String(postId.substring(1, postId.length));
-        const result = await axios.delete("/post", {
-            data: {
-                "token": user.token,
-            },
-            params: {
-                id,
-            },
+    // console.log(contents[0]);
+    setPostInfo(contents[0]);
+    setCoordinate({
+      lat: contents[0].latitude,
+      lng: contents[0].longitude,
     });
-        console.log("delete", result);
-        navigate("/dashboard/home");
-    };
+  };
+  useEffect(() => {
+    // console.log("getPost called");
+    getPost();
+  }, [edit]);
+  const classes = useStyles();
 
-    const currentUser = JSON.parse(window.localStorage.getItem("user"));
+  const handleClickEdit = () => {
+    setEdit(true);
+  };
 
-    return (
-        <>
-            {edit ? (
-                <PostDetailsEdit
-                    postId={postInfo.id}
-                    coordinate={coordinate}
-                    setEdit={setEdit}
-                    editTitle={postInfo.location}
-                    editDate={postInfo.time}
-                    editTags={postInfo.tags}
-                    editDescription={postInfo.description}
-                    editImages={postInfo.images}
-                    editAddress={postInfo.address}
-                />
-            ) : (
-                <div className={classes.background}>
-                    <div className={classes.header}>
-                        <h1>Post Details</h1>
-                        <div>
-                            {(currentUser !== null && postInfo.author === currentUser.username) ? (
-                                <div>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={handleClickEdit}
-                                    >
-                                        Edit
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="error"
-                                        onClick={handleClickDelete}
-                                    >
-                                        Delete
-                                    </Button>
-                                </div>
-                            ) : (
-                                <></>
-                            )}
-                        </div>
-                    </div>
-                    <div className={classes.mainPicture}>
-                        <Carousel infiniteLoop useKeyboardArrows autoPlay showArrows={true}>
-                            {postInfo.images === undefined ? (
-                                <></>
-                            ) : (
-                                postInfo.images.map((imgURL, index) => {
-                                    return <img src={imgURL} key={index} alt="images" />;
-                                })
-                            )}
-                        </Carousel>
-                    </div>
-                    <div className={classes.infos}>
-                        <h2>Location : {postInfo.location}</h2>
-                        <h3>Author : {postInfo.author}</h3>
-                        <h3>Date : {new Date(postInfo.time).toDateString()}</h3>
-                        {postInfo.tags === undefined || postInfo.tags.length === 0 ? (
-                            <></>
-                        ) : (
-                            <h3>
-                                Tags :{" "}
-                                <div className={classes.tags}>
-                                    {postInfo.tags.map((tags, index) => (
-                                        <div key={index}>#{tags}</div>
-                                    ))}
-                                </div>
-                            </h3>
-                        )}
-                        {postInfo.description === "" ? (
-                            <></>
-                        ) : (
-                            <h3>Description : {postInfo.description}</h3>
-                        )}
-                    </div>
-                    <div className={classes.infos}>
-                        <h3>Location on Map</h3>
-                        <div className={classes.staticMap}>
-                            <StaticMap coordinate={coordinate} />
-                        </div>
-                        <h3>Address : {postInfo.address}</h3>
-                    </div>
+  const handleClickDelete = async () => {
+    // connect delete post API
+    const id = String(postId.substring(1, postId.length));
+    const result = await axios.delete("/post", {
+      data: {
+        token: user.token,
+      },
+      params: {
+        id,
+      },
+    });
+    console.log("delete", result);
+    navigate("/dashboard/home");
+  };
+
+  const currentUser = JSON.parse(window.localStorage.getItem("user"));
+
+  return (
+    <>
+      {edit ? (
+        <PostDetailsEdit
+          postId={postInfo.id}
+          coordinate={coordinate}
+          setEdit={setEdit}
+          editTitle={postInfo.location}
+          editDate={postInfo.time}
+          editTags={postInfo.tags}
+          editDescription={postInfo.description}
+          editImages={postInfo.images}
+          editAddress={postInfo.address}
+        />
+      ) : (
+        <div className={classes.postDetail}>
+          <center>
+            <h1 className={classes.title}>Post Details</h1>
+          </center>
+          <div className={classes.background}>
+            <div className={classes.infos}>
+              <h2 className={classes.h2}>Location : {postInfo.location}</h2>
+              <h3 className={classes.title}>Author : {postInfo.author}</h3>
+              <h3 className={classes.title}>
+                Date : {new Date(postInfo.time).toDateString()}
+              </h3>
+              {postInfo.tags === undefined || postInfo.tags.length === 0 ? (
+                <></>
+              ) : (
+                <h3 className={classes.title}>
+                  Tags :{" "}
+                  <div className={classes.tags}>
+                    {postInfo.tags.map((tags, index) => (
+                      <div key={index}>#{tags}</div>
+                    ))}
+                  </div>
+                </h3>
+              )}
+              {postInfo.description === "" ? (
+                <></>
+              ) : (
+                <div>
+                  <h3 className={classes.title}>
+                    Description :
+                  </h3>
+                  <TextField
+                    // label="What's on your mind?"
+                    multiline
+                    rows={2}
+                    value={postInfo.description}
+                    InputProps={{ disableUnderline: true }}
+                    variant="standard"
+                    inputProps={
+                      { readOnly: true, }
+                    }
+                    style={{ width: "300px", overflow: "scroll" }}
+                  />
+                  {/* <div style={{ overflowY: "scroll", width: "300px", height: "50px", background: "red" }}>
+                    {postInfo.description}
+                  </div> */}
                 </div>
+              )}
+              <div className={classes.mainPicture}>
+                <Carousel
+                  className={classes.carousel}
+                  infiniteLoop
+                  useKeyboardArrows
+                  autoPlay
+                  showArrows={true}
+                >
+                  {postInfo.images === undefined ? (
+                    <></>
+                  ) : (
+                    postInfo.images.map((imgURL, index) => {
+                      return <img src={imgURL} key={index} alt="images" />;
+                    })
+                  )}
+                </Carousel>
+              </div>
+            </div>
+            <div className={classes.infos}>
+              <center>
+                <h2>Location on Map</h2>
+              </center>
+              <div className={classes.staticMap}>
+                <StaticMap coordinate={coordinate} />
+              </div>
+              <h3 className={classes.address}>Address : {postInfo.address}</h3>
+            </div>
+          </div>
+          <div>
+            {currentUser !== null &&
+            postInfo.author === currentUser.username ? (
+              <center className={classes.bottomLayout}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleClickEdit}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={handleClickDelete}
+                >
+                  Delete
+                </Button>
+              </center>
+            ) : (
+              <></>
             )}
-        </>
-    );
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
