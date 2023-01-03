@@ -14,13 +14,17 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     marginLeft: "35px",
     marginRight: "35px",
+    marginTop: "1%"
   },
   post: {
     backgroundColor: "white",
     borderRadius: "10px",
-    margin: "10px",
-    width: "250px",
-    height: "270px",
+    marginLeft: "2%",
+    marginRight: "2%",
+    marginTop: "1%",
+    marginBottom: "1%",
+    width: "40vh",
+    height: "37vh",
   },
   iamgesLayout: {
     display: "flex",
@@ -29,7 +33,7 @@ const useStyles = makeStyles(() => ({
   },
   images: {
     width: "100%",
-    height: "150px",
+    height: "23vh",
     borderRadius: "10px",
   },
   locationLayout: {
@@ -37,7 +41,12 @@ const useStyles = makeStyles(() => ({
     alignItems: "left",
     marginLeft: "10px",
   },
-  location: { fontSize: "18px", color: "navy" },
+  location: { 
+    fontSize: "18px", 
+    color: "navy",
+    height: "3.7vh",
+    overflow: "scroll",
+  },
   authorLayout: {
     display: "flex",
     alignItems: "left",
@@ -52,6 +61,7 @@ const useStyles = makeStyles(() => ({
   },
   tagsLayout: {
     display: "flex",
+    marginRight: "0.5%"
   },
   tagIcon: {
     width: "20px",
@@ -60,6 +70,8 @@ const useStyles = makeStyles(() => ({
   tags: {
     marginLeft: "5px",
     color: "lightcoral",
+    maxWidth: "10vh",
+    overflow: "scroll"
   },
   authorAndTagLayout: {
     marginTop: "10px",
@@ -133,7 +145,8 @@ function Post({ data }) {
             <Divider
               sx={{ borderBottomWidth: 2 }}
               style={{
-                marginTop: "15px",
+                marginTop: "0.5%",
+                marginBottom: "0",
                 background: "lightgray",
                 display: "flex",
                 alignItems: "center",
