@@ -4,7 +4,7 @@ import Geocode from "react-geocode";
 import styled from "styled-components";
 import Post from "./Post";
 import axios from "../../api";
-import mapStyles from "../../components/mapStyles";
+import mapStyles from "../../components/MapStyles";
 import { makeStyles } from "@mui/styles";
 
 Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
@@ -12,23 +12,25 @@ const libraries = ["places"];
 
 const useStyles = makeStyles(() => ({
   myMapPage: {
-    backgroundColor: "aquamarine",
-  },
-  header: {
-    marginLeft: "150px",
+    backgroundColor: "#F6F5F2",
+    height: "91vh"
   },
   mapAndPostLayout: {
     display: "flex",
     flexDirection: "row",
-    marginLeft: "50px",
+    justifyContent: "center",
   },
   post: {
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
-    marginLeft: "80px",
+    width: "400px",
+    height: "600px",
+    overflow: "scroll"
+    // background: "red"
   },
 }));
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,8 +40,8 @@ const Wrapper = styled.div`
 `;
 
 const containerStyle = {
-  width: "450px",
-  height: "450px",
+  width: "800px",
+  height: "600px",
 };
 
 const Map = () => {
@@ -89,10 +91,12 @@ const Map = () => {
   return (
     <div className={classes.myMapPage}>
       <Wrapper>
-        <h2 className={classes.header}>Where You've been to !</h2>
+        <center>
+          <h2>Where You've been to ! (Click pins to check posts)</h2>
+        </center>
         <div className={classes.mapAndPostLayout}>
           <GoogleMap
-            zoom={2}
+            zoom={1.8}
             center={center}
             mapContainerStyle={containerStyle}
             options={{

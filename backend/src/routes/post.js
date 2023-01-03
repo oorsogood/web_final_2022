@@ -40,27 +40,31 @@ router.get("/user", async (req, res) => {
 });
 
 router.post("/uploadImg", upload.single("image"), async (req, res) => {
-  // console.log(req.file);
-  const content = fs.readFileSync(req.file.path);
-  // console.log(mime.getType(req.file.path));
-  const params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
-    Key: req.file.originalname,
-    Body: content,
-    ContentType: mime.getType(req.file.path),
-    ContentEncoding: "base64",
-  };
-  s3.upload(params, (err, data) => {
-    if (err) {
-      console.log("ERROR MSG: ", err);
-    }
-    // console.log(data);
-    res.json(data.Location);
-  });
-  fs.unlink(req.file.path, (err) => {
-    if (err) console.log(err);
-    else console.log("\nDeleted file");
-  });
+  if(req.file !== undefined){
+    const content = fs.readFileSync(req.file.path);
+    // console.log(mime.getType(req.file.path));
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: req.file.originalname,
+      Body: content,
+      ContentType: mime.getType(req.file.path),
+      ContentEncoding: "base64",
+    };
+    s3.upload(params, (err, data) => {
+      if (err) {
+        console.log("ERROR MSG: ", err);
+      }
+      // console.log(data);
+      res.json(data.Location);
+    });
+    fs.unlink(req.file.path, (err) => {
+      if (err) console.log(err);
+      // else console.log("\nDeleted file");
+    });
+  }
+  else{
+    res.status(200).send({ message: "No file to be uploaded" });
+  }
 });
 
 router.post("/post", async (req, res) => {
@@ -179,12 +183,13 @@ router.get("/post", async (req, res) => {
 });
 
 router.patch("/post", async (req, res) => {
+  // console.log("patch fired");
   const id = String(req.body.id);
-  console.log("req.body is ", req.body);
+  // console.log("req.body is ", req.body);
   const updatedPost = await Post.findOneAndUpdate({ id }, req.body, {
     new: true,
   });
-  console.log(updatedPost);
+  // console.log(updatedPost);
   res
     .status(200)
     .send({ message: "Updated post successfully", contents: updatedPost });
