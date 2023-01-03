@@ -13,7 +13,7 @@ const libraries = ["places"];
 const useStyles = makeStyles(() => ({
   myMapPage: {
     backgroundColor: "#F6F5F2",
-    height: "91vh"
+    height: "91vh",
   },
   mapAndPostLayout: {
     display: "flex",
@@ -26,8 +26,18 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     width: "400px",
     height: "600px",
-    overflow: "scroll"
+    overflow: "scroll",
     // background: "red"
+  },
+  header: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  helperText: {
+    marginLeft: "10px",
+    color: "gray",
+    fontSize: "15px",
   },
 }));
 
@@ -91,9 +101,10 @@ const Map = () => {
   return (
     <div className={classes.myMapPage}>
       <Wrapper>
-        <center>
-          <h2>Where You've been to ! (Click pins to check posts)</h2>
-        </center>
+        <div className={classes.header}>
+          <h2 className={classes.title}>Where You've been to !</h2>
+          <p className={classes.helperText}>(Click pins to check posts)</p>
+        </div>
         <div className={classes.mapAndPostLayout}>
           <GoogleMap
             zoom={1.8}
