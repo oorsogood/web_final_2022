@@ -192,14 +192,13 @@ const Map = () => {
             (response) => {
                 const address = response.results[0].formatted_address;
                 setAddress(address);
-                setLocation("");
+                // setLocation("");
             },
             (error) => {
                 console.error(error);
             }
         );
         if(e.placeId !== undefined){
-            e.stop();
             var map = new window.google.maps.Map(dummyRef.current);
             var service = new window.google.maps.places.PlacesService(map);
             var request = {
@@ -210,6 +209,7 @@ const Map = () => {
                     setLocation(place.name);
                 }
             });
+						e.stop();
         };
     };
 
