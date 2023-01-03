@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import db from './mongo';
-const cookieSession = require("cookie-session");
+const session = require('express-session')
 import PostRouter from './routes/post';
 import AuthRouter from './routes/authRoutes';
 import UserRouter from './routes/userRoutes';
@@ -22,10 +22,11 @@ app.use(express.json());
 
 // store data in cookieSession
 app.use(
-    cookieSession({
-        name: "user-session",
+    session({
+        name: "session",
         secret: "MY_COOKIE_SECRET", // should use as secret environment variable
-        httpOnly: true
+        // httpOnly: true,
+        // secure: false
     })
 );
 
