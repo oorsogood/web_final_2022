@@ -23,9 +23,10 @@ app.use(express.json());
 // store data in cookieSession
 app.use(
     cookieSession({
-        name: "user-session",
+        name: "session",
         secret: "MY_COOKIE_SECRET", // should use as secret environment variable
-        httpOnly: true
+        httpOnly: true,
+        secure: false
     })
 );
 
