@@ -7,10 +7,13 @@ import authorIcon from "../../images/author.png";
 import tagIcon from "../../images/tag.png";
 
 const useStyles = makeStyles(() => ({
-  allPostLayout: {},
   allPost: {
     display: "flex",
     flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: "35px",
+    marginRight: "35px",
   },
   post: {
     backgroundColor: "white",
