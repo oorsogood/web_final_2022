@@ -4,7 +4,7 @@ import Geocode from "react-geocode";
 import styled from "styled-components";
 import Post from "./Post";
 import axios from "../../api";
-import mapStyles from "../../components/mapStyles";
+import mapStyles from "../../components/MapStyles";
 import { makeStyles } from "@mui/styles";
 
 Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");

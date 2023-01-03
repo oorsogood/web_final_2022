@@ -1,20 +1,20 @@
 import { useCallback, useEffect, useState, useMemo, useRef } from "react";
 import { GoogleMap, useLoadScript, MarkerF, InfoWindow } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
-    getGeocode,
-    getLatLng
+	getGeocode,
+	getLatLng
 } from "use-places-autocomplete";
 import Geocode from "react-geocode";
 import {
-    Combobox,
-    ComboboxInput,
-    ComboboxPopover,
-    ComboboxList,
-    ComboboxOption
+	Combobox,
+	ComboboxInput,
+	ComboboxPopover,
+	ComboboxList,
+	ComboboxOption
 } from "@reach/combobox";
 import styled from 'styled-components';
 import { useMap } from '../hooks/useMap';
-import mapStyles from "./mapStyles";
+import mapStyles from "./MapStyles";
 
 Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
 const libraries = ["places"];
@@ -32,7 +32,7 @@ const containerStyle = {
 	height: '475px'
 };
 
-const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
+const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo, setSearchError }) => {
     const { setAddress, setLocation, setLatitude, setLongitude } = useMap();
     const {
         ready,
@@ -45,15 +45,14 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
     const dummyRef = useRef();
 
     const handleSelect = async (location) => {
-        // console.log("location", location);
         setLocation(location);
         setValue(location, false);
         clearSuggestions();
 				setIsSearching(false);
+				setSearchError(false);
 
         const results = await getGeocode({ address: location });
         const { lat, lng } = getLatLng(results[0]);
-        // console.log({ lat, lng });
         setSelected({ lat, lng });
         setSearchMarkers([]);
         panTo({ lat, lng });
@@ -63,7 +62,6 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
             (response) => {
                 const address = response.results[0].formatted_address;
                 setAddress(address);
-                // console.log(address);
             },
             (error) => {
                 console.error(error);
@@ -74,9 +72,6 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
 
     const handleSearch = (query) => {
         var request = {
-            // location: new window.google.maps.LatLng(25.016259, 121.533508),
-            // radius: '1000',
-            // keyword: query
             query: query,
             fields: ['name', 'geometry']
         };
@@ -93,11 +88,14 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
             //     markerArray.push(results[i]);
             // };
             const markerArray = results === null ? [] : [results[0]];
+						const error = results === null ? true : false;
             setSearchMarkers(markerArray);
+						setAddress("");
+						setSearchError(error);
             // }
-            if(results === null){
-              alert("No results found!");
-            };
+            // if(results === null){
+            //   alert("No results found!");
+            // };
             // else {
             //     alert("No results found!");
             // }
@@ -119,7 +117,6 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
                     placeholder="Search an address"
                     onKeyPress={(e) => {
                         if (e.key === "Enter") {
-                            // console.log("Search fired!", value);
                             handleSearch(value);
                             setIsSearching(false);
                         }
@@ -164,7 +161,6 @@ const Map = () => {
                 (response) => {
                     const address = response.results[0].formatted_address;
                     setAddress(address);
-                    // console.log(address);
                 },
                 (error) => {
                     console.error(error);
@@ -183,23 +179,20 @@ const Map = () => {
     }, []);
 
     const handleClick = (e) => {
-        // console.log("place id", e.placeId);
-        // console.log(e);
         const coordinate = {
             lat: e.latLng.lat(),
             lng: e.latLng.lng()
         };
-        // console.log(coordinate);
         setSelected(coordinate);
         setSearchMarkers([]);
         setLatitude(coordinate.lat);
         setLongitude(coordinate.lng);
+				setSearchError(false);
         Geocode.fromLatLng(coordinate.lat, coordinate.lng).then(
             (response) => {
                 const address = response.results[0].formatted_address;
                 setAddress(address);
                 setLocation("");
-                // console.log(address);
             },
             (error) => {
                 console.error(error);
@@ -214,7 +207,6 @@ const Map = () => {
             };
             service.getDetails(request, function (place, status) {
                 if (status == window.google.maps.places.PlacesServiceStatus.OK) {
-                    // console.log("place name", place.name)
                     setLocation(place.name);
                 }
             });
@@ -224,13 +216,6 @@ const Map = () => {
     return (
         <Wrapper>
             <div ref={dummyRef} />
-            {/* {
-              searchError ? 
-              <div style={{color: "red", zIndex: 100, backgroundColor: "black"}} >
-                <p>No results found!</p>
-              </div>
-               : <></>
-            } */}
 						<div>
 							<div style={{
 								height: "50px", 
@@ -240,7 +225,12 @@ const Map = () => {
 								transform: "translate(0%, 20%)",
 								zIndex: 1
 							}}>
-									<PlacesAutocomplete setSelected={setSelected} setSearchMarkers={setSearchMarkers} panTo={panTo} />
+									<PlacesAutocomplete
+										setSelected={setSelected}
+										setSearchMarkers={setSearchMarkers}
+										panTo={panTo}
+										setSearchError={setSearchError}
+									/>
 							</div>
 							<GoogleMap
 									zoom={15}
@@ -281,6 +271,13 @@ const Map = () => {
 											}} />
 									})}
 							</GoogleMap>
+							{
+								searchError ? 
+								<center style={{ margin: "0"}}>
+									<p style={{ color: "red" }}>No results found! Please search or pin another place.</p>
+								</center>
+								: <></>
+            	}
 						</div>
         </Wrapper>
     )
