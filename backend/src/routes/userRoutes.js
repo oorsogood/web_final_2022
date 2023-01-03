@@ -4,13 +4,13 @@ import controller from "../controllers/userController";
 
 const router = Router();
 
-// router.use((req, res, next) => {
-//     res.header(
-//         "Access-Control-Allow-Headers",
-//         "Origin, Content-Type, Accept"
-//     );
-//     next();
-// });
+router.use((req, res, next) => {
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, Content-Type, Accept"
+    );
+    next();
+});
 
 router.get("/all", controller.allAccess);
 

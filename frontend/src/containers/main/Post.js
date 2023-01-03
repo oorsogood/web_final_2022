@@ -1,55 +1,82 @@
-import { Box } from "./Box.js";
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import noImageIcon from "../../images/no-image.png";
+import { Divider } from "@mui/material";
+import authorIcon from "../../images/author.png";
+import tagIcon from "../../images/tag.png";
 
 const useStyles = makeStyles(() => ({
-  mainLayout: {
-    marginLeft: "85px",
-  },
   allPost: {
     display: "flex",
     flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: "35px",
+    marginRight: "35px",
   },
   post: {
-    backgroundColor: "SpringGreen",
+    backgroundColor: "white",
     borderRadius: "10px",
     margin: "10px",
-    width: "300px",
-    height: "250px",
+    width: "250px",
+    height: "270px",
   },
   iamgesLayout: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "15px",
   },
   images: {
-    width: "180px",
+    width: "100%",
     height: "150px",
+    borderRadius: "10px",
   },
   locationLayout: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "left",
+    marginLeft: "10px",
   },
-  location: { fontSize: "20px", color: "navy" },
+  location: { fontSize: "18px", color: "navy" },
   authorLayout: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "left",
   },
   author: {
+    marginLeft: "5px",
     color: "darkviolet",
+  },
+  authorIcon: {
+    width: "20px",
+    height: "20px",
+  },
+  tagsLayout: {
+    display: "flex",
+  },
+  tagIcon: {
+    width: "20px",
+    height: "20px",
+  },
+  tags: {
+    marginLeft: "5px",
+    color: "lightcoral",
+  },
+  authorAndTagLayout: {
+    marginTop: "10px",
+    marginLeft: "10px",
+    marginRight: "10px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   dateLayout: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "left",
+    marginTop: "5px",
+    marginLeft: "10px",
   },
   date: {
-    color: "palevioletred",
+    color: "gray",
   },
 }));
 
@@ -69,7 +96,7 @@ function Post({ data }) {
   };
 
   return (
-    <div className={classes.mainLayout}>
+    <div className={classes.allPostLayout}>
       <div className={classes.allPost}>
         {data.map((object, index) => (
           <div
@@ -94,17 +121,42 @@ function Post({ data }) {
                 />
               </div>
             )}
-            <div className={classes.locationLayout}>
-              <b className={classes.location}>{object.location}</b>
-            </div>
 
-            <div className={classes.authorLayout}>
-              <div className={classes.author}>{object.author}</div>
-            </div>
             <div className={classes.dateLayout}>
               <div className={classes.date}>
                 {new Date(object.time).toDateString()}
               </div>
+            </div>
+            <div className={classes.locationLayout}>
+              <b className={classes.location}>{object.location}</b>
+            </div>
+            <Divider
+              sx={{ borderBottomWidth: 2 }}
+              style={{
+                marginTop: "15px",
+                background: "lightgray",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            />
+            <div className={classes.authorAndTagLayout}>
+              <div className={classes.authorLayout}>
+                <img
+                  src={authorIcon}
+                  className={classes.authorIcon}
+                  alt="author"
+                />
+                <div className={classes.author}>{object.author}</div>
+              </div>
+              {object.tags.length !== 0 ? (
+                <div className={classes.tagsLayout}>
+                  <img src={tagIcon} className={classes.tagIcon} alt="tag" />
+                  <div className={classes.tags}>{object.tags[0]}</div>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         ))}

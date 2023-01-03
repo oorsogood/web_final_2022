@@ -5,6 +5,7 @@ import { makeStyles } from "@mui/styles";
 import { useParams } from "react-router-dom";
 import axios from "../../api";
 import InfoInput from "../../components/InfoInput";
+// import { useAuth } from "../../hooks/useAuth";
 
 const useStyles = makeStyles(() => ({
   background: {
@@ -28,12 +29,13 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-  }
+  },
 }));
 
 export default function PostDetailsEdit(props) {
   const classes = useStyles();
   const { postId } = useParams();
+//   const { user } = useAuth();
   const [editTitle, setEditTitle] = useState(props.editTitle);
   const [editDate, setEditDate] = useState(props.editDate);
   const [editTags, setEditTags] = useState(props.editTags);
@@ -54,15 +56,15 @@ export default function PostDetailsEdit(props) {
     setDisableSaveButton(!canPost);
   }, [editDate, editTitle, selectedImages]);
 
-  const onSelectFile = (e) => {
-    const selectedFiles = e.target.files;
-    const selectedFilesArray = Array.from(selectedFiles);
-    const imagesArray = selectedFilesArray.map((file) => {
-      return URL.createObjectURL(file);
-    });
-    setSelectedImgRaw((previous) => previous.concat(selectedFilesArray));
-    setSelectedImages((previous) => previous.concat(imagesArray));
-  };
+    const onSelectFile = (e) => {
+        const selectedFiles = e.target.files;
+        const selectedFilesArray = Array.from(selectedFiles);
+        const imagesArray = selectedFilesArray.map((file) => {
+            return URL.createObjectURL(file);
+        });
+        setSelectedImgRaw((previous) => previous.concat(selectedFilesArray));
+        setSelectedImages((previous) => previous.concat(imagesArray));
+    };
 
   const handleClickSave = async () => {
     const id = String(postId.substring(1, postId.length));
@@ -87,21 +89,22 @@ export default function PostDetailsEdit(props) {
       tags: editTags,
       description: editDescription,
       images: imgURL,
+    //   token: user.token,
     });
     props.setEdit(false);
   };
 
-  const handleChangeEditTitle = (e) => {
-    setEditTitle(e.target.value);
-  };
+    const handleChangeEditTitle = (e) => {
+        setEditTitle(e.target.value);
+    };
 
-  const handleOthersOnFocus = () => {
-    setTagsOnFocus(false);
-  };
+    const handleOthersOnFocus = () => {
+        setTagsOnFocus(false);
+    };
 
-  const handleTagsOnFocus = () => {
-    setTagsOnFocus(true);
-  };
+    const handleTagsOnFocus = () => {
+        setTagsOnFocus(true);
+    };
 
   return (
     <div className={classes.background}>

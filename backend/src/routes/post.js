@@ -131,7 +131,9 @@ router.get("/posts", async (req, res) => {
   const authorFilter = author !== "" ? author : { $exists: true };
   // console.log("authorFilter is ", authorFilter);
   const placeFilter =
-    place !== undefined && place !== "" ? { $regex: place, $options: "i" } : { $exists: true };
+    place !== undefined && place !== ""
+      ? { $regex: place, $options: "i" }
+      : { $exists: true };
   // console.log("placeFilter is ", placeFilter);
   const tagFilter = tags !== undefined ? { $in: tags } : { $exists: true };
   // console.log("tagFilter is ", tagFilter);

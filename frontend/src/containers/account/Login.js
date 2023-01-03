@@ -43,9 +43,11 @@ const LoginPage = () => {
             "username": data.get("username"),
             "password": data.get("password")
         });
-        console.log(result.data["message"]);
+        console.log(result);
+        // console.log(result.data["message"]);
         login({
-            username: data.get("username")
+            username: data.get("username"),
+            token: result["data"]["accessToken"],
         });
     };
 
