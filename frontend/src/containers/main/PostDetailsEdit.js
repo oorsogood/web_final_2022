@@ -12,11 +12,8 @@ const useStyles = makeStyles(() => ({
   background: {
     margin: "0",
     padding: "0",
-    // backgroundColor: "#F6F5F2",
-    // width: "100%",
-    // height: "100%",
     width: "100%",
-    height: "90.7vh",
+    height: "91.35vh",
     backgroundImage: `url(${bp1})`,
     backgroundPosition: "center",
     backgroundSize: "cover"

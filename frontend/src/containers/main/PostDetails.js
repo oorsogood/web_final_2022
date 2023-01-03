@@ -14,7 +14,7 @@ import { useAuth } from "../../hooks/useAuth";
 const useStyles = makeStyles(() => ({
   postDetail: {
     width: "100%",
-    height: "91.26vh",
+    height: "92vh",
     backgroundImage: `url(${bp1})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
