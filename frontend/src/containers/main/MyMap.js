@@ -14,7 +14,7 @@ const libraries = ["places"];
 const useStyles = makeStyles(() => ({
   myMapPage: {
     backgroundColor: "#F6F5F2",
-    height: "100%",
+    height: "91.26vh",
     width: "100%",
     backgroundImage: `url(${bp1})`,
     backgroundPosition: "center",
@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
   helperText: {
     marginLeft: "10px",
     color: "gray",
-    fontSize: "15px",
+    fontSize: "20px",
   },
 }));
 

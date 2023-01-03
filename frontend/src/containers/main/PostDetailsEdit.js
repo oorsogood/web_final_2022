@@ -5,17 +5,24 @@ import { makeStyles } from "@mui/styles";
 import { useParams } from "react-router-dom";
 import axios from "../../api";
 import InfoInput from "../../components/InfoInput";
+import bp1 from "../../images/bp1.jpg";
 // import { useAuth } from "../../hooks/useAuth";
 
 const useStyles = makeStyles(() => ({
   background: {
     margin: "0",
-    backgroundColor: "#F6F5F2",
+    padding: "0",
+    // backgroundColor: "#F6F5F2",
+    // width: "100%",
+    // height: "100%",
     width: "100%",
-    height: "100%",
+    height: "90.7vh",
+    backgroundImage: `url(${bp1})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover"
   },
   title: {
-    color: "#69C123",
+    // color: "#69C123",
     margin: "5px",
   },
   error: {
