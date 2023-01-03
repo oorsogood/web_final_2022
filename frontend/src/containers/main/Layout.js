@@ -4,10 +4,16 @@ import { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import NoMatch from "../../components/noMatch";
 import NoMatchIcon from "../../images/no-results.png";
+import bp1 from "../../images/bp1.jpg";
 
 const useStyles = makeStyles(() => ({
   mainLayout: {
-    backgroundColor: "aquamarine",
+    backgroundColor: "#F6F5F2",
+    height: "100%",
+    width: "100vw",
+    backgroundImage: `url(${bp1})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   },
   contentLayout: {
     display: "flex",

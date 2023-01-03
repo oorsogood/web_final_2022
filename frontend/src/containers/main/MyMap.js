@@ -6,6 +6,7 @@ import Post from "./Post";
 import axios from "../../api";
 import mapStyles from "../../components/MapStyles";
 import { makeStyles } from "@mui/styles";
+import bp1 from "../../images/bp1.jpg";
 
 Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
 const libraries = ["places"];
@@ -13,7 +14,11 @@ const libraries = ["places"];
 const useStyles = makeStyles(() => ({
   myMapPage: {
     backgroundColor: "#F6F5F2",
-    height: "91vh",
+    height: "100%",
+    width: "100%",
+    backgroundImage: `url(${bp1})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   },
   mapAndPostLayout: {
     display: "flex",

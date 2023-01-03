@@ -14,6 +14,7 @@ import { useSearch } from "../../hooks/useSearch";
 
 const useStyles = makeStyles(() => ({
   searchButton: {
+    paddingTop: "15px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -87,7 +88,7 @@ export default function Search(props) {
   return (
     <div>
       <div className={classes.searchButton}>
-        <Button onClick={handleClickOpen} variant="outlined">
+        <Button onClick={handleClickOpen} variant="contained" color="success">
           Search Post
           <img
             className={classes.searchIcon}

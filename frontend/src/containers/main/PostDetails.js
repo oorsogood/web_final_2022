@@ -10,6 +10,9 @@ import StaticMap from "../../components/StaticMap";
 import { useAuth } from "../../hooks/useAuth";
 
 const useStyles = makeStyles(() => ({
+  postDetail: {
+    backgroundColor: "palegoldenrod",
+  },
   title: {
     backgroundColor: "palegoldenrod",
     margin: "0",
@@ -144,7 +147,7 @@ export default function PostDetails() {
           editAddress={postInfo.address}
         />
       ) : (
-        <>
+        <div className={classes.postDetail}>
           <center>
             <h1 className={classes.title}>Post Details</h1>
           </center>
@@ -227,7 +230,7 @@ export default function PostDetails() {
               <></>
             )}
           </div>
-        </>
+        </div>
       )}
     </>
   );
