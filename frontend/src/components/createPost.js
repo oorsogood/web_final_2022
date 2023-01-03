@@ -69,7 +69,7 @@ const useStyles = makeStyles(() => ({
     margin: "0",
     border: "none",
     borderRadius: "50%",
-    backgroundColor: "white",
+    backgroundColor: "#F6F5F2",
     position: "absolute",
     right: "0%",
     transform: "translate(0%, 20%)"
@@ -217,12 +217,12 @@ const CreatePost = () => {
   return (
     <div className={classes.background}>
       <center>
-        <h1 className={classes.title}>Create a New Post!</h1>
+        <h1 className={classes.title}>Create a New Post !</h1>
       </center>
       <div className={classes.wrapper}>
         <div className={classes.leftLayout}>
           <center>
-            <h2 className={classes.h2}>Pin or search!*</h2>
+            <h2 className={classes.h2}>Pin or search ! *</h2>
           </center>
           <GoogleMaps />
           <h3 >Address: {address}</h3>
@@ -230,14 +230,14 @@ const CreatePost = () => {
         <div className={classes.rightLayout}>
           <div className={classes.requiredField}>
             <div className={classes.date}>
-              <h2 className={classes.h2}>Date*</h2>
+              <h2 className={classes.h2}>Date *</h2>
               <ResponsiveDatePicker
                 dateInput={dateInput}
                 setDateInput={setDateInput}
               />
             </div>
             <div>
-              <h2 className={classes.h2}>Location*</h2>
+              <h2 className={classes.h2}>Location *</h2>
               <div className={classes.PostTitle} onFocus={handleOthersOnFocus}>
                 <TextField
                   label="Name of location"
