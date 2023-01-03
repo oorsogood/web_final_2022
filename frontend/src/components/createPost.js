@@ -14,6 +14,22 @@ import moment from "moment";
 const useStyles = makeStyles(() => ({
   title: {
     color: "yellowgreen",
+    margin: "5px"
+  },
+  wrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly"
+  },
+  h2: {
+    margin: "5px"
+  },
+  requiredField: {
+    margin: "0",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   trashIcon: {
     width: "20px",
@@ -25,6 +41,13 @@ const useStyles = makeStyles(() => ({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
+    overflow: "scroll",
+    height: "150px"
+  },
+  uploadImage: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   images: {
     margin: "1rem .5rem",
@@ -33,12 +56,19 @@ const useStyles = makeStyles(() => ({
   imageIndex: {
     color: "darkslateblue",
     margin: "0",
+    position: "absolute",
+    left: "50%",
+    bottom: "0%",
+    transform: "translate(-50%, 70%)"
   },
   deleteButton: {
     margin: "0",
     border: "none",
     borderRadius: "50%",
     backgroundColor: "white",
+    position: "absolute",
+    right: "0%",
+    transform: "translate(0%, 20%)"
   },
   indexAndDeleteIcon: {
     display: "flex",
@@ -54,18 +84,33 @@ const useStyles = makeStyles(() => ({
   enterTags: {
     color: "royalblue",
   },
+  tagInput: {
+    width: "400px"
+  },
   //   layout: {
   //     margin: "20px",
   //     display: "flex",
   //     flexDirection: "row",
   //   },
-  //   leftLayout: {
-  //     width: "450px",
-  //     margin: "auto",
-  //   },
-  //   rightLayout: {
-  //     margin: "auto",
-  //   },
+  rightLayout: {
+    width: "600px",
+    height: "600px",
+    margin: "0",
+  },
+  leftLayout: {
+    width: "600px",
+    height: "600px",
+    margin: "0"
+  },
+  bottomLayout: {
+    margin: "0px",
+    height: "50px",
+    width: "250px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  }
 }));
 
 const CreatePostPage = () => {
@@ -77,27 +122,11 @@ const CreatePostPage = () => {
 };
 
 const CreatePost = () => {
-  // const user = JSON.parse(window.localStorage.getItem("user"));
-  // console.log("User is", user.username);
   const { location, setLocation, address, latitude, longitude } = useMap();
   const classes = useStyles();
   const navigate = useNavigate();
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedImgRaw, setSelectedImgRaw] = useState([]);
-  // const [dateInput, setDateInput] = useState({
-  //   $D: 0, //Date
-  //   $H: 0, // Hour
-  //   $L: "en", // Language
-  //   $M: 0, // Month, need to plus 1 to get the correct month, E.g. 0 represents January
-  //   $W: 0, // Week
-  //   $d: {}, // an object contain all the time info {Thu Sep 01 2022 00:00:00 GMT+0800 (Taipei Standard Time)}
-  //   $m: 0, // Minutes
-  //   $ms: 0, // unknown attribute
-  //   $s: 0, // Seconds
-  //   $u: undefined,
-  //   $x: {},
-  //   $y: 0, // Year
-  // });
   const [dateInput, setDateInput] = useState(Date());
   const [postTitle, setPostTitle] = useState("");
   const [content, setContent] = useState("");
@@ -110,9 +139,6 @@ const CreatePost = () => {
       dateInput.$y !== 0 &&
       latitude !== null &&
       postTitle.length !== 0
-      // selectedImages.length !== 0 &&
-      // content.length !== 0 &&
-      // tags.length !== 0
     ) {
       setDisablePostButton(false);
     } else {
@@ -148,10 +174,7 @@ const CreatePost = () => {
   };
 
   const handlePost = async () => {
-    // console.log("Date is", dateInput);
     const time = dateInput.$d;
-    // console.log("dateInput.$d.toISOString() is", dateInput.$d.toISOString());
-    // console.log("type of dateInput.$d.toISOString() is", typeof(dateInput.$d.toISOString()));
     const username = JSON.parse(window.localStorage.getItem("user")).username;
     const result = await axios.get("/user", {
       params: {
@@ -167,7 +190,6 @@ const CreatePost = () => {
       imgURL.push(result.data);
     }
 
-    // console.log("time is", time);
     const newPost = await axios.post("./post", {
       id: uuidv4(),
       location,
@@ -181,7 +203,6 @@ const CreatePost = () => {
       userID: userID,
       author: username,
     });
-    // console.log(newPost);
     navigate("/dashboard/home");
   };
 
@@ -194,130 +215,139 @@ const CreatePost = () => {
       <center>
         <h1 className={classes.title}>Create a New Post!</h1>
       </center>
-      <div>
-        <div className={classes.date}>
-          <ResponsiveDatePicker
-            dateInput={dateInput}
-            setDateInput={setDateInput}
-          />
-        </div>
-        <div className={classes.map}>
-          <h2>Search On Map</h2>
+      <div className={classes.wrapper}>
+        <div className={classes.leftLayout}>
+          {/* <h2 className={classes.h2}>Pin or search!</h2> */}
           <GoogleMaps />
+          <h3 >Address: {address}</h3>
         </div>
-        <div>
-          <h2>Location</h2>
-          <div className={classes.PostTitle} onFocus={handleOthersOnFocus}>
-            <TextField
-              label="Name of Location?"
-              variant="outlined"
-              value={postTitle}
-              onChange={handleChangePostTitle}
-            />
-          </div>
-        </div>
-        <div className={classes.imagesSection}>
-          <h2>Upload Picture!</h2>
-          <input
-            type="file"
-            name="images"
-            onChange={onSelectFile}
-            multiple
-            accept="image/png, image/jpeg, image/webp"
-            style={{ display: "none" }}
-            id="upload-button"
-          />
-          <label htmlFor="upload-button">
-            <Button variant="contained" color="primary" component="span">
-              Upload
-            </Button>
-          </label>
-          {selectedImages.length > 0 &&
-            (selectedImages.length > 10 ? (
-              <p className={classes.error}>
-                You can't upload more than <b>10</b> images!
-                <br />
-                <span>
-                  Please delete <b>{selectedImages.length - 10}</b> images.
-                </span>
-              </p>
-            ) : (
-              <></>
-            ))}
-          <div className={classes.imageSection}>
-            {selectedImages &&
-              selectedImages.map((img, index) => {
-                return (
-                  <div key={img} className={classes.images}>
-                    <img src={img} alt="uploadFile" height="100" />
-                    <div className={classes.indexAndDeleteIcon}>
-                      <p className={classes.imageIndex}>Picture {index + 1}</p>
-                      <button
-                        className={classes.deleteButton}
-                        onClick={() =>
-                          setSelectedImages(
-                            selectedImages.filter((e) => e !== img)
-                          )
-                        }
-                      >
-                        <img
-                          className={classes.trashIcon}
-                          src={trashIcon}
-                          alt="trashCanIcon"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-      </div>
-      <div className="content">
-        <h2>Any Idea?</h2>
-        <div onFocus={handleOthersOnFocus}>
-          <TextField
-            label="What's on your mind?"
-            multiline
-            rows={4}
-            value={content}
-            onChange={handleChangeContent}
-          />
-        </div>
-      </div>
-      <div>
-        <h2>Add HashTags</h2>
-        <div className={classes.tags} onFocus={handleTagsOnFocus}>
-          <TagsInput
-            value={tags}
-            onChange={setTags}
-            placeHolder="Your Hashtags"
-          />
-          {tagsOnFocus && (
-            <div>
-              <p className={classes.enterTags}>
-                press <b>Enter</b> to add new tag.
-              </p>
-              <p className={classes.enterTags}>
-                press <b>BackSpace</b> to remove tag.
-              </p>
+        <div className={classes.rightLayout}>
+          <div className={classes.requiredField}>
+            <div className={classes.date}>
+              <h2 className={classes.h2}>Date*</h2>
+              <ResponsiveDatePicker
+                dateInput={dateInput}
+                setDateInput={setDateInput}
+              />
             </div>
-          )}
+            <div>
+              <h2 className={classes.h2}>Location*</h2>
+              <div className={classes.PostTitle} onFocus={handleOthersOnFocus}>
+                <TextField
+                  label="Name of location"
+                  variant="outlined"
+                  value={postTitle}
+                  onChange={handleChangePostTitle}
+                  style={{ width: "300px" }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className={classes.imagesSection}>
+            <div className={classes.uploadImage}>
+              <h2 className={classes.h2}>Upload Pictures</h2>
+              <input
+                type="file"
+                name="images"
+                onChange={onSelectFile}
+                multiple
+                accept="image/png, image/jpeg, image/webp"
+                style={{ display: "none" }}
+                id="upload-button"
+              />
+              <label htmlFor="upload-button">
+                <Button variant="contained" color="primary" component="span">
+                  Upload
+                </Button>
+              </label>
+            </div>
+            {selectedImages.length > 0 &&
+              (selectedImages.length > 10 ? (
+                <p className={classes.error}>
+                  You can't upload more than <b>10</b> images!
+                  <br />
+                  <span>
+                    Please delete <b>{selectedImages.length - 10}</b> images.
+                  </span>
+                </p>
+              ) : (
+                <></>
+              ))}
+            <div className={classes.imageSection}>
+              {selectedImages &&
+                selectedImages.map((img, index) => {
+                  return (
+                    <div key={img} className={classes.images}>
+                      <img src={img} alt="uploadFile" height="100" />
+                      <div className={classes.indexAndDeleteIcon}>
+                        <p className={classes.imageIndex}>{index + 1}</p>
+                        <button
+                          className={classes.deleteButton}
+                          onClick={() =>
+                            setSelectedImages(
+                              selectedImages.filter((e) => e !== img)
+                            )
+                          }
+                        >
+                          <img
+                            className={classes.trashIcon}
+                            src={trashIcon}
+                            alt="trashCanIcon"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+          <div className="content">
+            <h2 className={classes.h2}>Description</h2>
+            <div onFocus={handleOthersOnFocus}>
+              <TextField
+                label="What's on your mind?"
+                multiline
+                rows={2}
+                value={content}
+                onChange={handleChangeContent}
+                style={{ width: "600px", overflow: "scroll" }}
+              />
+            </div>
+          </div>
+          <div>
+            <h2 className={classes.h2}>HashTags</h2>
+            <div className={classes.tags} onFocus={handleTagsOnFocus}>
+              <TagsInput
+                value={tags}
+                onChange={setTags}
+                placeHolder="Your hashtags"
+                classNames={{ tag:'tag-cls', input: classes.tagInput }}
+              />
+              {tagsOnFocus && (
+                <div>
+                  <p className={classes.enterTags}>
+                    <b>Enter</b> to add new tags and <b>Backspace</b> to remove.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-      <div>Address: {address}</div>
-      <div>
-        <br />
-        <Button variant="outlined" onClick={() => navigate("/dashboard/home")}>Discard</Button>
-        <Button
-          variant="contained"
-          color="success"
-          disabled={disablePostButton}
-          onClick={handlePost}
-        >
-          Post
-        </Button>
-      </div>
+      <center>
+        <div className={classes.bottomLayout}>
+          {/* <br /> */}
+          <Button variant="outlined" onClick={() => navigate("/dashboard/home")}>Discard</Button>
+          <Button
+            variant="contained"
+            color="success"
+            disabled={disablePostButton}
+            onClick={handlePost}
+          >
+            Post
+          </Button>
+        </div>
+      </center>
     </div>
   );
 };

@@ -28,8 +28,8 @@ const Wrapper = styled.div`
 `;
 
 const containerStyle = {
-    width: '600px',
-    height: '600px'
+	width: '500px',
+	height: '500px'
 };
 
 const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
@@ -149,12 +149,10 @@ const Map = () => {
     useEffect(() => {
         if (searchMarkers.length !== 0) {
             setLocation(searchMarkers[0].name);
-            // console.log("lat is ", searchMarkers[0].geometry.location.lat());
             const coordinate = {
                 lat: parseFloat(searchMarkers[0].geometry.location.lat()),
                 lng: parseFloat(searchMarkers[0].geometry.location.lng())
             };
-            // console.log("type of lat is", typeof(coordinate.lat));
             mapRef.current.panTo({ lat: coordinate.lat, lng: coordinate.lng });
             mapRef.current.setZoom(17);
             setSelected(false);
