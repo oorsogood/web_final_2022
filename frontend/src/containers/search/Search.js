@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import { Button } from "semantic-ui-react";
-import "semantic-ui-css/semantic.min.css";
+import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -88,7 +87,7 @@ export default function Search(props) {
   return (
     <div>
       <div className={classes.searchButton}>
-        <Button color="blue" onClick={handleClickOpen}>
+        <Button onClick={handleClickOpen} variant="outlined">
           Search Post
           <img
             className={classes.searchIcon}
@@ -155,8 +154,10 @@ export default function Search(props) {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button color="blue" onClick={handleSearch}>
+          <Button variant="outlined" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="contained" onClick={handleSearch}>
             Search
           </Button>
         </DialogActions>
