@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
     margin: "0",
     backgroundColor: "#F6F5F2",
     width: "100%",
-    height: "90.5vh",
+    height: "100%",
   },
   title: {
     color: "#69C123",

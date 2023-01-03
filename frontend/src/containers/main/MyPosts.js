@@ -4,10 +4,11 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles(() => ({
   myPostLayout: {
-    backgroundColor: "aquamarine",
+    backgroundColor: "#F6F5F2",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    height: "100%",
   },
 }));
 

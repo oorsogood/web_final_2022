@@ -21,9 +21,6 @@ const useStyles = makeStyles(() => ({
     height: "25px",
     marginRight: "5px",
   },
-  searchBar: {
-    marginTop: "5px",
-  },
   writeIcon: {
     width: "25px",
     height: "25px",

@@ -8,15 +8,20 @@ import { MapProvider, useMap } from "../../hooks/useMap";
 import axios from "../../api";
 import InfoInput from "../../components/InfoInput";
 import moment from "moment";
+import bp1 from "../../images/bp1.jpg";
 
 const useStyles = makeStyles(() => ({
   background: {
     backgroundColor: "#F6F5F2",
-    height: "90.5vh",
+    height: "100%",
+    width: "100%",
+    backgroundImage: `url(${bp1})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   },
   title: {
     color: "#69C123",
-    margin: "5px",
+    margin: "0",
   },
   wrapper: {
     display: "flex",
@@ -178,7 +183,7 @@ const CreatePost = () => {
         <div className={classes.bottomLayout}>
           {/* <br /> */}
           <Button
-            variant="outlined"
+            variant="contained"
             onClick={() => navigate("/dashboard/home")}
           >
             Discard
