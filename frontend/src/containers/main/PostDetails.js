@@ -187,7 +187,7 @@ export default function PostDetails() {
                     multiline
                     rows={2}
                     value={postInfo.description}
-                    disableUnderline={true}
+                    InputProps={{ disableUnderline: true }}
                     variant="standard"
                     inputProps={
                       { readOnly: true, }
