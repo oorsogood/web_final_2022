@@ -1,5 +1,4 @@
 import Post from "./Post";
-import { Box } from "./Box.js";
 import { useSearch } from "../../hooks/useSearch";
 import { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
@@ -19,18 +18,12 @@ const Layout = ({ children }) => {
 
   return (
     <div className={classes.mainLayout}>
-      <Box
-        css={{
-          maxW: "100%",
-        }}
-      >
-        {children}
-        {posts === undefined ? (
-          <div>No matching results</div>
-        ) : (
-          <Post data={posts} />
-        )}
-      </Box>
+      {children}
+      {posts === undefined ? (
+        <div>No matching results</div>
+      ) : (
+        <Post data={posts} />
+      )}
     </div>
   );
 };
