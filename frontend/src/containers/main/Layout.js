@@ -12,10 +12,6 @@ const Layout = ({ children }) => {
   const { posts, getPosts } = useSearch();
   const classes = useStyles();
 
-  // useEffect(() => {
-  //     getPosts();
-  // }, []);
-
   return (
     <div className={classes.mainLayout}>
       {children}
