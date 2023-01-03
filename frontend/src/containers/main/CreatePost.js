@@ -13,7 +13,7 @@ import bp1 from "../../images/bp1.jpg";
 const useStyles = makeStyles(() => ({
   background: {
     backgroundColor: "#F6F5F2",
-    height: "100%",
+    height: "91.26vh",
     width: "100%",
     backgroundImage: `url(${bp1})`,
     backgroundPosition: "center",

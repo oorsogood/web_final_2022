@@ -8,14 +8,19 @@ import axios from "../../api";
 import PostDetailsEdit from "./PostDetailsEdit";
 import StaticMap from "../../components/StaticMap";
 import { TextField } from "@mui/material";
+import bp1 from "../../images/bp1.jpg";
 import { useAuth } from "../../hooks/useAuth";
 
 const useStyles = makeStyles(() => ({
   postDetail: {
-    backgroundColor: "palegoldenrod",
+    width: "100%",
+    height: "91.26vh",
+    backgroundImage: `url(${bp1})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   },
   title: {
-    backgroundColor: "palegoldenrod",
+    // backgroundColor: "palegoldenrod",
     margin: "0",
   },
   header: {
@@ -24,9 +29,8 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
   },
   background: {
-    backgroundColor: "palegoldenrod",
+    // backgroundColor: "palegoldenrod",
     width: "100%",
-    height: "100%",
     display: "flex",
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -40,25 +44,16 @@ const useStyles = makeStyles(() => ({
     width: "300px",
     height: "400px",
     margin: "0",
-    // background: "green"
   },
   images: {
     margin: "0",
-    // position: "absolute",
-    // top: "50%",
-    // left: "50%",
-    // // msTransform: "translate(-50%, -50%)",
-    // transform: "translate(-50%, -50%)"
   },
   tags: {
     display: "flex",
     flexWrap: "wrap",
   },
   infos: {
-    // marginLeft: "100px",
-    // marginRight: "100px",
     margin: "0",
-    // background: "blue",
     height: "620px",
     display: "flex",
     flexDirection: "column",
@@ -68,7 +63,6 @@ const useStyles = makeStyles(() => ({
   carousel: {
     width: "270px",
     height: "270px",
-    // background: "red",
     margin: "0",
   },
   address: {
@@ -77,6 +71,7 @@ const useStyles = makeStyles(() => ({
   bottomLayout: {
     position: "absolute",
     left: "50%",
+    bottom: "3vh",
     transform: "translate(-50%, 0%)",
     width: "17%",
     display: "flex",

@@ -19,11 +19,11 @@ const useStyles = makeStyles(() => ({
   post: {
     backgroundColor: "white",
     borderRadius: "10px",
-    marginLeft: "2%",
-    marginRight: "2%",
+    marginLeft: "2.5%",
+    marginRight: "2.5%",
     marginTop: "1%",
     marginBottom: "1%",
-    width: "40vh",
+    width: "36vh",
     height: "36vh",
   },
   iamgesLayout: {
