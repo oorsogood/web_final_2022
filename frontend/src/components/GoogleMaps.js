@@ -28,8 +28,8 @@ const Wrapper = styled.div`
 `;
 
 const containerStyle = {
-	width: '500px',
-	height: '500px'
+	width: '550px',
+	height: '475px'
 };
 
 const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
@@ -49,6 +49,7 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
         setLocation(location);
         setValue(location, false);
         clearSuggestions();
+				setIsSearching(false);
 
         const results = await getGeocode({ address: location });
         const { lat, lng } = getLatLng(results[0]);
@@ -229,48 +230,59 @@ const Map = () => {
               </div>
                : <></>
             } */}
-            <div>
-                <PlacesAutocomplete setSelected={setSelected} setSearchMarkers={setSearchMarkers} panTo={panTo} />
-            </div>
-            <GoogleMap
-                zoom={15}
-                center={center}
-                mapContainerStyle={containerStyle}
-                options={{ disableDefaultUI: true, styles: mapStyles }}
-                onClick={handleClick}
-                onLoad={onMapLoad}
-            >
-                {selected && <MarkerF position={selected} onClick={() => {
-                    setSelected(false);
-                    setAddress("");
-                    setLatitude(null);
-                    setLongitude(null);
-                }} icon={{
-                    url: "/pin.png",
-                    scaledSize: new window.google.maps.Size(50, 50),
-                    origin: new window.google.maps.Point(-5, 8),
-                    anchor: new window.google.maps.Point(25, 25)
-                  }} />}
-                {searchMarkers.map((marker, i) => {
-                    // console.log("Marker should set");
-                    const lat = parseFloat(marker.geometry.location.lat());
-                    const lng = parseFloat(marker.geometry.location.lng());
-                    return <MarkerF position={{ 
-                        lat,
-                        lng
-                    }} key={i} icon={{
-                        url: "/pin.png",
-                        scaledSize: new window.google.maps.Size(50, 50),
-                        origin: new window.google.maps.Point(-5, 8),
-                        anchor: new window.google.maps.Point(25, 25)
-                    }} onClick={() => {
-                        setSearchMarkers([]);
-                        setAddress("");
-                        setLatitude(null);
-                        setLongitude(null);
-                    }} />
-                })}
-            </GoogleMap>
+						<div style={{
+							background: "red",
+						}}>
+							<div style={{
+								height: "50px", 
+								width: "100px", 
+								position: "absolute",
+								left: "12.5%",
+								transform: "translate(0%, 20%)",
+								zIndex: 1
+							}}>
+									<PlacesAutocomplete setSelected={setSelected} setSearchMarkers={setSearchMarkers} panTo={panTo} />
+							</div>
+							<GoogleMap
+									zoom={15}
+									center={center}
+									mapContainerStyle={containerStyle}
+									options={{ disableDefaultUI: true, styles: mapStyles }}
+									onClick={handleClick}
+									onLoad={onMapLoad}
+							>
+									{selected && <MarkerF position={selected} onClick={() => {
+											setSelected(false);
+											setAddress("");
+											setLatitude(null);
+											setLongitude(null);
+									}} icon={{
+											url: "/pin.png",
+											scaledSize: new window.google.maps.Size(50, 50),
+											origin: new window.google.maps.Point(-5, 8),
+											anchor: new window.google.maps.Point(25, 25)
+										}} />}
+									{searchMarkers.map((marker, i) => {
+											// console.log("Marker should set");
+											const lat = parseFloat(marker.geometry.location.lat());
+											const lng = parseFloat(marker.geometry.location.lng());
+											return <MarkerF position={{ 
+													lat,
+													lng
+											}} key={i} icon={{
+													url: "/pin.png",
+													scaledSize: new window.google.maps.Size(50, 50),
+													origin: new window.google.maps.Point(-5, 8),
+													anchor: new window.google.maps.Point(25, 25)
+											}} onClick={() => {
+													setSearchMarkers([]);
+													setAddress("");
+													setLatitude(null);
+													setLongitude(null);
+											}} />
+									})}
+							</GoogleMap>
+						</div>
         </Wrapper>
     )
 }

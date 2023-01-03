@@ -221,7 +221,9 @@ const CreatePost = () => {
       </center>
       <div className={classes.wrapper}>
         <div className={classes.leftLayout}>
-          {/* <h2 className={classes.h2}>Pin or search!</h2> */}
+          <center>
+            <h2 className={classes.h2}>Pin or search!*</h2>
+          </center>
           <GoogleMaps />
           <h3 >Address: {address}</h3>
         </div>
