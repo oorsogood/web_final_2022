@@ -7,6 +7,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../api";
 import PostDetailsEdit from "./PostDetailsEdit";
 import StaticMap from "../../components/StaticMap";
+import { TextField } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
 
 const useStyles = makeStyles(() => ({
@@ -62,14 +63,23 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
   },
   carousel: {
-    width: "300px",
-    height: "300px",
+    width: "270px",
+    height: "270px",
     // background: "red",
     margin: "0",
   },
   address: {
     width: "450px",
   },
+  bottomLayout: {
+    position: "absolute",
+    left: "50%",
+    transform: "translate(-50%, 0%)",
+    width: "17%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  }
 }));
 
 export default function PostDetails() {
@@ -170,10 +180,25 @@ export default function PostDetails() {
               {postInfo.description === "" ? (
                 <></>
               ) : (
-                <div style={{ overflow: "scroll" }}>
+                <div>
                   <h3 className={classes.title}>
-                    Description : {postInfo.description}
+                    Description :
                   </h3>
+                  <TextField
+                    // label="What's on your mind?"
+                    multiline
+                    rows={2}
+                    value={postInfo.description}
+                    disableUnderline={true}
+                    variant="standard"
+                    inputProps={
+                      { readOnly: true, }
+                    }
+                    style={{ width: "300px", overflow: "scroll" }}
+                  />
+                  {/* <div style={{ overflowY: "scroll", width: "300px", height: "50px", background: "red" }}>
+                    {postInfo.description}
+                  </div> */}
                 </div>
               )}
               <div className={classes.mainPicture}>
@@ -207,7 +232,7 @@ export default function PostDetails() {
           <div>
             {currentUser !== null &&
             postInfo.author === currentUser.username ? (
-              <div>
+              <center className={classes.bottomLayout}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -222,7 +247,7 @@ export default function PostDetails() {
                 >
                   Delete
                 </Button>
-              </div>
+              </center>
             ) : (
               <></>
             )}

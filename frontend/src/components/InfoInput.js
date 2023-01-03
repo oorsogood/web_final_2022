@@ -35,6 +35,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    margin: "2%"
   },
   images: {
     margin: "1rem .5rem",
