@@ -165,7 +165,7 @@ const CreatePost = () => {
         for (const img of selectedImgRaw) {
             var formdata = new FormData();
             formdata.append("image", img);
-            formdata.append("token", user.token);
+            // formdata.append("token", user.token);
             const result = await axios.post("./uploadImg", formdata);
             imgURL.push(result.data);
         }
@@ -183,7 +183,6 @@ const CreatePost = () => {
             images: imgURL,
             userID: userID,
             author: username,
-            token: user.token,
         });
         // console.log(newPost);
         navigate("/dashboard/home");

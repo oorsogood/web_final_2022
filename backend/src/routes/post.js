@@ -39,7 +39,7 @@ router.get("/user", async (req, res) => {
     }
 });
 
-router.post("/uploadImg", [authJwt.verifyToken, upload.single("image")], async (req, res) => {
+router.post("/uploadImg", upload.single("image"), async (req, res) => {
     // console.log(req.file);
     const content = fs.readFileSync(req.file.path);
     // console.log(mime.getType(req.file.path));
@@ -63,7 +63,8 @@ router.post("/uploadImg", [authJwt.verifyToken, upload.single("image")], async (
     });
 });
 
-router.post("/post", [authJwt.verifyToken], async (req, res) => {
+router.post("/post", async (req, res) => {
+    console.log(req.body);
     const id = String(req.body.id);
     const location = String(req.body.location);
     const address = String(req.body.address);

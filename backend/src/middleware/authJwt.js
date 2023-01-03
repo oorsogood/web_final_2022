@@ -16,8 +16,10 @@ const SECRETKEY = process.env.BCRYPT_SECRET_KEY;
 
 const verifyToken = (req, res, next) => {
     let token = req.body.token;
-
+    console.log('verifying token');
+    console.log(req.body);
     if (!token) {
+        console.log('no token');
         return res.status(403).send({ message: "No token provided!" });
     }
 

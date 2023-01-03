@@ -47,7 +47,6 @@ const SignUpPage = () => {
         const result = await axios.post('./api/auth/signup', {
             "username": data.get("username"),
             "password": data.get("password"),
-            "email": data.get("email"),
             "role": ["user"]
         });
         console.log(result.data["message"]);

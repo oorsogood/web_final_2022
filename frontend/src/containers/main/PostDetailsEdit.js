@@ -108,6 +108,7 @@ export default function PostDetailsEdit(props) {
         for (const img of selectedImgRaw) {
             var formdata = new FormData();
             formdata.append("image", img);
+            // formdata.append("token", user.token);
             const result = await axios.post("./uploadImg", formdata);
             imgURL.push(result.data);
         }
