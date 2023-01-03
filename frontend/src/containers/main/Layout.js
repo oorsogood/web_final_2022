@@ -10,6 +10,7 @@ const useStyles = makeStyles(() => ({
   mainLayout: {
     // backgroundColor: "#F6F5F2",
     height: "100%",
+    minHeight: "91.26vh",
     width: "100vw",
     backgroundImage: `url(${bp1})`,
     backgroundPosition: "center",
