@@ -39,7 +39,7 @@ router.get("/user", async (req, res) => {
     }
 });
 
-router.post("/uploadImg", [authJwt.verifyToken], upload.single("image"), async (req, res) => {
+router.post("/uploadImg", [authJwt.verifyToken, upload.single("image")], async (req, res) => {
     // console.log(req.file);
     const content = fs.readFileSync(req.file.path);
     // console.log(mime.getType(req.file.path));
