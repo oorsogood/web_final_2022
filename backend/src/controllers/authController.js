@@ -1,18 +1,26 @@
 import jwt from 'jsonwebtoken';
-// import bcrypt from 'bcryptjs';
-import config from "../config/auth_config";
+import bcrypt from 'bcryptjs';
+import dotenv from 'dotenv-defaults';
 import db from "../models";
 
 const User = db.user;
 const Role = db.role;
+
+dotenv.config();
+
+if (!process.env.BCRYPT_SECRET_KEY) {
+    console.error("Missing BCRYPT_SECRET_KEY!!!");
+    process.exit(1);
+}
+
+const SECRETKEY = process.env.BCRYPT_SECRET_KEY;
 
 export default {
     signup: async (req, res, next) => {
         const user = new User({
             username: req.body.username,
             email: req.body.email,
-            // password: bcrypt.hashSync(req.body.password, 8),
-            password: req.body.password,
+            password: bcrypt.hashSync(req.body.password, 8),
         });
 
         await user.save((err, user) => {
@@ -82,21 +90,19 @@ export default {
                 }
                 // console.log(req);
                 if (!req.session) {
-                    //     req.push({session: {token: null}});
                     console.log('no req session');
                 }
-                // var passwordIsValid = bcrypt.compareSync(
-                //     req.body.password,
-                //     user.password
-                // );
 
-                var passwordIsValid = req.body.password === user.password;
+                var passwordIsValid = bcrypt.compareSync(
+                    req.body.password,
+                    user.password
+                );
 
                 if (!passwordIsValid) {
                     return res.status(401).send({ message: "Invalid Password!" });
                 }
 
-                var token = jwt.sign({ id: user.id }, config.secret, {
+                var token = jwt.sign({ id: user.id }, SECRETKEY, {
                     expiresIn: 86400, // 24 hours
                 });
 
@@ -106,7 +112,7 @@ export default {
                     authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
                 }
 
-                console.log(`token: ${token} req session: ${req.session}`);
+                // console.log(`token: ${token} req session: ${req.session}`);
                 req.session.token = token;
 
                 res.status(200).send({
@@ -114,6 +120,7 @@ export default {
                     username: user.username,
                     email: user.email,
                     roles: authorities,
+                    accessToken: token
                 });
             });
     },
