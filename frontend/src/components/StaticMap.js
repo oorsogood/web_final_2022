@@ -10,7 +10,7 @@ import styled from "styled-components";
 import { propsToClassKey } from "@mui/styles";
 import mapStyles from "./MapStyles";
 
-Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_KEY);
 const libraries = ["places"];
 
 const Wrapper = styled.div`
@@ -59,7 +59,7 @@ const Map = (props) => {
 
 export default (props) => {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
     libraries,
   });
 

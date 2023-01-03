@@ -8,7 +8,7 @@ import mapStyles from "../../components/MapStyles";
 import { makeStyles } from "@mui/styles";
 import bp1 from "../../images/bp1.jpg";
 
-Geocode.setApiKey("AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_KEY);
 const libraries = ["places"];
 
 const useStyles = makeStyles(() => ({
@@ -159,7 +159,7 @@ const Map = () => {
 
 export default () => {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAHF2g9DJCIVmb-JwS0xL4teZiCrLXM6I8",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
     libraries,
   });
 
