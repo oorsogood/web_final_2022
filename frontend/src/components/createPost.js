@@ -12,8 +12,12 @@ import axios from "../api";
 import moment from "moment";
 
 const useStyles = makeStyles(() => ({
+  background: {
+    backgroundColor: "#F6F5F2",
+    height: "90.5vh"
+  },
   title: {
-    color: "yellowgreen",
+    color: "#69C123",
     margin: "5px"
   },
   wrapper: {
@@ -211,7 +215,7 @@ const CreatePost = () => {
   }, [location]);
 
   return (
-    <div>
+    <div className={classes.background}>
       <center>
         <h1 className={classes.title}>Create a New Post!</h1>
       </center>
