@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
-import Button from "@mui/material/Button";
+import { Button } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { makeStyles } from "@mui/styles";
 import { useParams } from "react-router-dom";
@@ -12,11 +13,11 @@ const useStyles = makeStyles(() => ({
     margin: "0",
     backgroundColor: "#F6F5F2",
     width: "100%",
-    height: "90.5vh"
+    height: "90.5vh",
   },
   title: {
     color: "#69C123",
-    margin: "5px"
+    margin: "5px",
   },
   error: {
     textAlign: "center",
@@ -35,7 +36,7 @@ const useStyles = makeStyles(() => ({
 export default function PostDetailsEdit(props) {
   const classes = useStyles();
   const { postId } = useParams();
-//   const { user } = useAuth();
+  //   const { user } = useAuth();
   const [editTitle, setEditTitle] = useState(props.editTitle);
   const [editDate, setEditDate] = useState(props.editDate);
   const [editTags, setEditTags] = useState(props.editTags);
@@ -48,23 +49,22 @@ export default function PostDetailsEdit(props) {
   const [disableSaveButton, setDisableSaveButton] = useState(true);
 
   useEffect(() => {
-    const canPost = (
-      editDate.$y !== 0 &&
-      editTitle.length !== 0 &&
-      selectedImages.length <= 10
-    ) ? true : false;
+    const canPost =
+      editDate.$y !== 0 && editTitle.length !== 0 && selectedImages.length <= 10
+        ? true
+        : false;
     setDisableSaveButton(!canPost);
   }, [editDate, editTitle, selectedImages]);
 
-    const onSelectFile = (e) => {
-        const selectedFiles = e.target.files;
-        const selectedFilesArray = Array.from(selectedFiles);
-        const imagesArray = selectedFilesArray.map((file) => {
-            return URL.createObjectURL(file);
-        });
-        setSelectedImgRaw((previous) => previous.concat(selectedFilesArray));
-        setSelectedImages((previous) => previous.concat(imagesArray));
-    };
+  const onSelectFile = (e) => {
+    const selectedFiles = e.target.files;
+    const selectedFilesArray = Array.from(selectedFiles);
+    const imagesArray = selectedFilesArray.map((file) => {
+      return URL.createObjectURL(file);
+    });
+    setSelectedImgRaw((previous) => previous.concat(selectedFilesArray));
+    setSelectedImages((previous) => previous.concat(imagesArray));
+  };
 
   const handleClickSave = async () => {
     const id = String(postId.substring(1, postId.length));
@@ -74,10 +74,9 @@ export default function PostDetailsEdit(props) {
       formdata.append("image", img);
       // console.log("image sent to backend", img);
       const result = await axios.post("./uploadImg", formdata);
-      if(typeof(result.data) === "string"){
+      if (typeof result.data === "string") {
         imgURL.push(result.data);
-      }
-      else{
+      } else {
         imgURL.push(img);
       }
     }
@@ -89,22 +88,22 @@ export default function PostDetailsEdit(props) {
       tags: editTags,
       description: editDescription,
       images: imgURL,
-    //   token: user.token,
+      //   token: user.token,
     });
     props.setEdit(false);
   };
 
-    const handleChangeEditTitle = (e) => {
-        setEditTitle(e.target.value);
-    };
+  const handleChangeEditTitle = (e) => {
+    setEditTitle(e.target.value);
+  };
 
-    const handleOthersOnFocus = () => {
-        setTagsOnFocus(false);
-    };
+  const handleOthersOnFocus = () => {
+    setTagsOnFocus(false);
+  };
 
-    const handleTagsOnFocus = () => {
-        setTagsOnFocus(true);
-    };
+  const handleTagsOnFocus = () => {
+    setTagsOnFocus(true);
+  };
 
   return (
     <div className={classes.background}>
@@ -131,12 +130,9 @@ export default function PostDetailsEdit(props) {
           />
         </div>
         <div className={classes.bottomLayout}>
-          <Button variant="contained" onClick={() => props.setEdit(false)}>
-            Cancel
-          </Button>
+          <Button onClick={() => props.setEdit(false)}>Cancel</Button>
           <Button
-            variant="contained"
-            color="success"
+            color="blue"
             onClick={handleClickSave}
             disabled={disableSaveButton}
           >

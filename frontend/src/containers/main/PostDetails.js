@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
-import Button from "@mui/material/Button";
+import { Button } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { makeStyles } from "@mui/styles";
@@ -10,124 +11,124 @@ import StaticMap from "../../components/StaticMap";
 import { useAuth } from "../../hooks/useAuth";
 
 const useStyles = makeStyles(() => ({
-		title: {
-			backgroundColor: "palegoldenrod",
-			margin: "0"
-		},
-    header: {
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-    },
-    background: {
-        backgroundColor: "palegoldenrod",
-        width: "100%",
-        height: "100%",
-				display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        top: "0",
-        left: "0",
-    },
-		h2: {
-			margin: "0"
-		},
-    mainPicture: {
-        width: "300px",
-        height: "400px",
-        margin: "0",
-				// background: "green"
-    },
-		images: {
-			margin: "0",
-			// position: "absolute",
-			// top: "50%",
-			// left: "50%",
-			// // msTransform: "translate(-50%, -50%)",
-			// transform: "translate(-50%, -50%)"
-		},
-    tags: {
-        display: "flex",
-        flexWrap: "wrap",
-    },
-    infos: {
-        // marginLeft: "100px",
-        // marginRight: "100px",
-				margin: "0",
-				// background: "blue",
-				height: "620px",
-				display: "flex",
-				flexDirection: "column",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-    },
-		carousel: {
-			width: "300px",
-			height: "300px",
-			// background: "red",
-			margin: "0",
-		},
-		address: {
-			width: "450px"
-		}
+  title: {
+    backgroundColor: "palegoldenrod",
+    margin: "0"
+  },
+  header: {
+      display: "flex",
+      justifyContent: "space-around",
+      alignItems: "center",
+  },
+  background: {
+      backgroundColor: "palegoldenrod",
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      top: "0",
+      left: "0",
+  },
+  h2: {
+    margin: "0"
+  },
+  mainPicture: {
+      width: "300px",
+      height: "400px",
+      margin: "0",
+      // background: "green"
+  },
+  images: {
+    margin: "0",
+    // position: "absolute",
+    // top: "50%",
+    // left: "50%",
+    // // msTransform: "translate(-50%, -50%)",
+    // transform: "translate(-50%, -50%)"
+  },
+  tags: {
+      display: "flex",
+      flexWrap: "wrap",
+  },
+  infos: {
+      // marginLeft: "100px",
+      // marginRight: "100px",
+      margin: "0",
+      // background: "blue",
+      height: "620px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+  },
+  carousel: {
+    width: "300px",
+    height: "300px",
+    // background: "red",
+    margin: "0",
+  },
+  address: {
+    width: "450px"
+  }
 }));
 
 export default function PostDetails() {
-    const { postId } = useParams();
-    const { user } = useAuth();
+  const { postId } = useParams();
+  const { user } = useAuth();
 
-    // console.log("Current post id is", postId);
-    const [postInfo, setPostInfo] = useState({});
-    const [coordinate, setCoordinate] = useState({
-        lat: 0,
-        lng: 0,
+  // console.log("Current post id is", postId);
+  const [postInfo, setPostInfo] = useState({});
+  const [coordinate, setCoordinate] = useState({
+    lat: 0,
+    lng: 0,
+  });
+  const [edit, setEdit] = useState(false);
+  const navigate = useNavigate();
+
+  const getPost = async () => {
+    const id = String(postId.substring(1, postId.length));
+    // console.log(id);
+    const {
+      data: { contents },
+    } = await axios.get("/post", {
+      params: {
+        id: id,
+      },
     });
-    const [edit, setEdit] = useState(false);
-    const navigate = useNavigate();
-
-    const getPost = async () => {
-        const id = String(postId.substring(1, postId.length));
-        // console.log(id);
-        const {
-            data: { contents },
-        } = await axios.get("/post", {
-            params: {
-                id: id,
-            },
-        });
-        // console.log(contents[0]);
-        setPostInfo(contents[0]);
-        setCoordinate({
-            lat: contents[0].latitude,
-            lng: contents[0].longitude,
-        });
-    };
-    useEffect(() => {
-        // console.log("getPost called");
-        getPost();
-    }, [edit]);
-    const classes = useStyles();
-
-    const handleClickEdit = () => {
-        setEdit(true);
-    };
-
-    const handleClickDelete = async () => {
-        // connect delete post API
-        const id = String(postId.substring(1, postId.length));
-        const result = await axios.delete("/post", {
-            data: {
-                "token": user.token,
-            },
-            params: {
-                id,
-            },
+    // console.log(contents[0]);
+    setPostInfo(contents[0]);
+    setCoordinate({
+      lat: contents[0].latitude,
+      lng: contents[0].longitude,
     });
-        // console.log("delete", result);
-        navigate("/dashboard/home");
-    };
+  };
+  useEffect(() => {
+    // console.log("getPost called");
+    getPost();
+  }, [edit]);
+  const classes = useStyles();
 
-    const currentUser = JSON.parse(window.localStorage.getItem("user"));
+  const handleClickEdit = () => {
+    setEdit(true);
+  };
+
+  const handleClickDelete = async () => {
+    // connect delete post API
+    const id = String(postId.substring(1, postId.length));
+    const result = await axios.delete("/post", {
+      data: {
+        token: user.token,
+      },
+      params: {
+        id,
+      },
+    });
+    console.log("delete", result);
+    navigate("/dashboard/home");
+  };
+
+  const currentUser = JSON.parse(window.localStorage.getItem("user"));
 
     return (
         <>
@@ -220,6 +221,6 @@ export default function PostDetails() {
 									</div>
 							</>
             )}
-        </>
-    );
+    </>
+  );
 }
