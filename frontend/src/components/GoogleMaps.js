@@ -188,6 +188,7 @@ const Map = () => {
         setLatitude(coordinate.lat);
         setLongitude(coordinate.lng);
 				setSearchError(false);
+				mapRef.current.panTo({ lat: coordinate.lat, lng: coordinate.lng });
         Geocode.fromLatLng(coordinate.lat, coordinate.lng).then(
             (response) => {
                 const address = response.results[0].formatted_address;
