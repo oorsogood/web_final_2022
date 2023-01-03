@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Button } from "semantic-ui-react";
-import "semantic-ui-css/semantic.min.css";
+import Button from "@mui/material/Button";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { makeStyles } from "@mui/styles";
 import { useParams } from "react-router-dom";
@@ -130,9 +129,12 @@ export default function PostDetailsEdit(props) {
           />
         </div>
         <div className={classes.bottomLayout}>
-          <Button onClick={() => props.setEdit(false)}>Cancel</Button>
+          <Button variant="contained" onClick={() => props.setEdit(false)}>
+            Cancel
+          </Button>
           <Button
-            color="blue"
+            variant="contained"
+            color="success"
             onClick={handleClickSave}
             disabled={disableSaveButton}
           >
