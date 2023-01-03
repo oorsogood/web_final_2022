@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
     marginTop: "1%",
     marginBottom: "1%",
     width: "40vh",
-    height: "37vh",
+    height: "36vh",
   },
   iamgesLayout: {
     display: "flex",
