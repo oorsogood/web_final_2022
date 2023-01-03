@@ -125,13 +125,15 @@ const PlacesAutocomplete = ({ setSelected, setSearchMarkers, panTo }) => {
                         }
                     }}
                 />
-                <ComboboxPopover style={{ background: "white", fontSize: "13px" }}>
-                    <ComboboxList>
-                        {status === "OK" && isSearching &&
-                            data.map(({ place_id, description }) => (
-                                <ComboboxOption key={place_id} value={description} />
-                            ))}
-                    </ComboboxList>
+                <ComboboxPopover style={{ background: "white", fontSize: "14px" }}>
+										{status === "OK" && isSearching && 
+											<ComboboxList>
+												{status === "OK" && isSearching &&
+													data.map(({ place_id, description }) => (
+														<ComboboxOption key={place_id} value={description} style={{cursor: "pointer"}} />
+												))}
+											</ComboboxList>
+										}
                 </ComboboxPopover>
             </Combobox>
         </>
@@ -230,9 +232,7 @@ const Map = () => {
               </div>
                : <></>
             } */}
-						<div style={{
-							background: "red",
-						}}>
+						<div>
 							<div style={{
 								height: "50px", 
 								width: "100px", 
