@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import RoleModel from "./RoleModel";
+import RoleModel from "./roleModel";
 import UserModel from './userModel';
 
 mongoose.Promise = global.Promise;
