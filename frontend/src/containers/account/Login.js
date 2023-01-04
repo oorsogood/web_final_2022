@@ -80,6 +80,9 @@ const LoginPage = () => {
     const [open, setOpen] = React.useState(false);
     const [severity, setSeverity] = React.useState("error");
     const [mes, setMessage] = React.useState("");
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [pressed, setPressed] = React.useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -103,6 +106,8 @@ const LoginPage = () => {
             setSeverity("error");
             console.log(err.response);
             setMessage(err.response.data['message']);
+            setUsername("");
+            setPassword("");
             setOpen(true);
             await delay(1500);
             setOpen(false);
@@ -158,6 +163,10 @@ const LoginPage = () => {
                                 name="username"
                                 autoComplete="username"
                                 autoFocus
+                                // value={this.state.text}
+                                onChange={event => setUsername(event.target.value)}
+                                // error={pressed && username === ""}
+                                helperText="Please enter user name."
                                 color="grey"
                             />
                             <TextField
@@ -168,7 +177,10 @@ const LoginPage = () => {
                                 label="Password"
                                 type="password"
                                 id="password"
-                                // autoComplete="current-password"
+                                autoComplete="current-password"
+                                onChange={event => setPassword(event.target.value)}
+                                // error={pressed && password === ""}
+                                helperText="Please enter password."
                                 color="grey"
                             />
                             <Button
@@ -176,6 +188,8 @@ const LoginPage = () => {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
+                                disabled={password === "" || username === ""}
+                                onClick={() => {setPressed(true)}}
                                 color="dark"
                             >
                                 Login
@@ -189,7 +203,6 @@ const LoginPage = () => {
                                     </RouterLink>
                                 </Grid>
                             </Grid>
-                            {/* <Copyright sx={{ mt: 5 }} /> */}
                         </Box>
                     </Box>
                 </Grid>
