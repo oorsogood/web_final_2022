@@ -99,36 +99,9 @@ export default function PostDetailsEdit(props) {
     props.setEdit(false);
   };
 
-<<<<<<< HEAD
-    const handleClickSave = async () => {
-        const id = String(postId.substring(1, postId.length));
-        const imgURL = [...editImages];
-        for (const img of selectedImgRaw) {
-            var formdata = new FormData();
-            formdata.append("image", img);
-            // formdata.append("token", user.token);
-            const result = await axios.post("./uploadImg", formdata);
-            imgURL.push(result.data);
-        }
-        const time = editDate.$d;
-        const result = await axios.patch("/post", {
-            id,
-            location: editTitle,
-            time: time === undefined ? editDate : time.toISOString(),
-            tags: editTags,
-            description: editDescription,
-            images: imgURL,
-            token: user.token,
-        });
-        // console.log("result is", result);
-        // edit API here
-        props.setEdit(false);
-    };
-=======
   const handleChangeEditTitle = (e) => {
     setEditTitle(e.target.value);
   };
->>>>>>> master
 
   const handleOthersOnFocus = () => {
     setTagsOnFocus(false);
