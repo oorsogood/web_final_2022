@@ -9,6 +9,7 @@ import axios from "../../api";
 import InfoInput from "../../components/InfoInput";
 import moment from "moment";
 import bp1 from "../../images/bp1.jpg";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const useStyles = makeStyles(() => ({
   background: {
@@ -70,6 +71,7 @@ const CreatePost = () => {
   const [tags, setTags] = useState([]);
   const [tagsOnFocus, setTagsOnFocus] = useState(false);
   const [disablePostButton, setDisablePostButton] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const canPost =
@@ -111,6 +113,7 @@ const CreatePost = () => {
   };
 
   const handlePost = async () => {
+    setLoading(true);
     const time = dateInput.$d;
     const username = JSON.parse(window.localStorage.getItem("user")).username;
     const result = await axios.get("/user", {
@@ -140,6 +143,7 @@ const CreatePost = () => {
       userID: userID,
       author: username,
     });
+    setLoading(false);
     navigate("/dashboard/home");
   };
 
@@ -189,8 +193,8 @@ const CreatePost = () => {
               color: "white",
               bgcolor: "#a92020",
               ":hover": {
-                bgcolor: "#a92020"
-              }
+                bgcolor: "#a92020",
+              },
             }}
           >
             Discard
@@ -205,13 +209,19 @@ const CreatePost = () => {
               bgcolor: "#rgb(55 140 49)",
               ":disabled": {
                 ":hover": {
-                  cursor: "none"
-                }
-              }
+                  cursor: "none",
+                },
+              },
             }}
           >
             Post
           </Button>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loading}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </div>
       </center>
     </div>
