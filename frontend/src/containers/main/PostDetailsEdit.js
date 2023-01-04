@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import axios from "../../api";
 import InfoInput from "../../components/InfoInput";
 import bp1 from "../../images/bp1.jpg";
-// import { useAuth } from "../../hooks/useAuth";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const useStyles = makeStyles(() => ({
   background: {
@@ -16,10 +16,9 @@ const useStyles = makeStyles(() => ({
     height: "91.35vh",
     backgroundImage: `url(${bp1})`,
     backgroundPosition: "center",
-    backgroundSize: "cover"
+    backgroundSize: "cover",
   },
   title: {
-    // color: "#69C123",
     margin: "5px",
   },
   error: {
@@ -50,6 +49,7 @@ export default function PostDetailsEdit(props) {
   // const [selectedImages, setSelectedImages] = useState([]);
   const [selectedImgRaw, setSelectedImgRaw] = useState([...editImages]);
   const [disableSaveButton, setDisableSaveButton] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const canPost =
@@ -70,6 +70,7 @@ export default function PostDetailsEdit(props) {
   };
 
   const handleClickSave = async () => {
+    setLoading(true);
     const id = String(postId.substring(1, postId.length));
     const imgURL = [];
     for (const img of selectedImgRaw) {
@@ -93,6 +94,7 @@ export default function PostDetailsEdit(props) {
       images: imgURL,
       //   token: user.token,
     });
+    setLoading(false);
     props.setEdit(false);
   };
 
@@ -144,6 +146,12 @@ export default function PostDetailsEdit(props) {
           >
             Save
           </Button>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loading}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </div>
       </center>
     </div>
