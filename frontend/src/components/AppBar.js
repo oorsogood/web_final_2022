@@ -54,9 +54,15 @@ function AppBar({ pages }) {
 
   const handleCloseNavMenu = (path) => {
     setAnchorElNav(null);
-    if (path) {
-      navigate(path);
+		const pathname = window.location.pathname
+		// console.log("Current path", pathname);
+		// console.log("Clicked path", path);
+    if (pathname.includes(path)) {
+			navigate(0);
     }
+		else{
+			navigate(path);
+		}
   };
 
     return (
