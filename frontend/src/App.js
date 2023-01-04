@@ -14,7 +14,7 @@ function App() {
   return (
     <Routes>
       <Route element={<HomeLayout />}>
-        <Route path="/" element={<Home myPost={false} />} />
+        <Route path="/home" element={<Home myPost={false} />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/posts/:postId" element={<PostDetails />} />
