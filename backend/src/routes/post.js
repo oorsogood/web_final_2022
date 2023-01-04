@@ -19,11 +19,11 @@ const router = Router();
 // 	}
 // });
 // var upload = multer({ storage: storage });
-const upload = multer({ dest: "uploadedFiles/" });
+const upload = multer({ dest: "/tmp" });
 // console.log(upload);
 const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
 });
 
 router.get("/user", async (req, res) => {
@@ -44,7 +44,7 @@ router.post("/uploadImg", upload.single("image"), async (req, res) => {
     const content = fs.readFileSync(req.file.path);
     // console.log(mime.getType(req.file.path));
     const params = {
-      Bucket: process.env.AWS_BUCKET_NAME,
+      Bucket: process.env.BUCKET_NAME,
       Key: req.file.originalname,
       Body: content,
       ContentType: mime.getType(req.file.path),

@@ -34,6 +34,12 @@ app.use('/api/auth', AuthRouter);
 app.use('/api/test', UserRouter);
 app.use('/', PostRouter);
 
+app.get("/", (req, res) => {
+    res.send("Express on Vercel");
+});
+
 app.listen(port, () =>
 	console.log(`App listening on port ${port}!`),
 );
+
+module.exports = app;
