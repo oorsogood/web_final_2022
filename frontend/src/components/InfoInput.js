@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    margin: "2%"
+    margin: "2%",
   },
   images: {
     margin: "1rem .5rem",
@@ -53,7 +53,7 @@ const useStyles = makeStyles(() => ({
     margin: "0",
     border: "none",
     borderRadius: "50%",
-    backgroundColor: "#F6F5F2",
+    backgroundColor: "transparent",
     position: "absolute",
     right: "0%",
     transform: "translate(0%, 20%)",
@@ -154,7 +154,7 @@ const InfoInput = (props) => {
                 <div key={index} className={classes.images}>
                   <img src={img} alt="uploadFile" height="100" />
                   <div className={classes.indexAndDeleteIcon}>
-                    <p className={classes.imageIndex}>{index + 1}</p>
+                    <b className={classes.imageIndex}>{index + 1}</b>
                     <button
                       className={classes.deleteButton}
                       onClick={() => {
@@ -182,7 +182,6 @@ const InfoInput = (props) => {
         <h2 className={classes.h2}>Description</h2>
         <div onFocus={props.handleOthersOnFocus}>
           <TextField
-            // label="What's on your mind?"
             multiline
             rows={2}
             value={props.content}
