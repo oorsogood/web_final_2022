@@ -21,10 +21,19 @@ const useStyles = makeStyles(() => ({
     borderRadius: "10px",
     marginLeft: "2.5%",
     marginRight: "2.5%",
-    marginTop: "1%",
-    marginBottom: "1%",
+    marginTop: "1.25%",
+    marginBottom: "1.25%",
     width: "36vh",
     height: "36vh",
+    WebkitTransition: "all .2s ease-in-out",
+    transition: "all .2s ease-in-out",
+    "&:hover": {
+      cursor: "pointer",
+      WebkitTrasition: "scale(1.05)",
+      msTransform: "scale(1.05)",
+      transform: "scale(1.05)",
+      boxShadow: "3px 4.5px 2.1px #C7C7C7"
+    }
   },
   iamgesLayout: {
     display: "flex",
