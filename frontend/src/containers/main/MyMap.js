@@ -4,7 +4,7 @@ import Geocode from "react-geocode";
 import styled from "styled-components";
 import Post from "./Post";
 import axios from "../../api";
-import mapStyles from "../../components/MapStyles";
+import mapStyles from "../../components/mapStyles";
 import { makeStyles } from "@mui/styles";
 import bp1 from "../../images/bp1.jpg";
 

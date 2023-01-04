@@ -2,7 +2,7 @@ import { useCallback, useRef } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import Geocode from "react-geocode";
 import styled from "styled-components";
-import mapStyles from "./MapStyles";
+import mapStyles from "./mapStyles";
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_KEY);
 const libraries = ["places"];

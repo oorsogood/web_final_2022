@@ -14,7 +14,7 @@ import {
 } from "@reach/combobox";
 import styled from "styled-components";
 import { useMap } from "../hooks/useMap";
-import mapStyles from "./MapStyles";
+import mapStyles from "./mapStyles";
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_KEY);
 const libraries = ["places"];
