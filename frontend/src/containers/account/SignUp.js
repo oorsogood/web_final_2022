@@ -50,6 +50,11 @@ const gridstyle = {
 
 
 const theme = createTheme({
+    button: {
+        "&:focus": {
+            color: "black",
+        }
+    },
     palette: {
         dark: {
             main: '#202020',
@@ -84,6 +89,7 @@ const SignUpPage = () => {
             setOpen(false);
             return;
         }
+
         const result = await axios.post('./api/auth/signup', {
             "username": data.get("username"),
             "password": data.get("password"),
@@ -122,21 +128,6 @@ const SignUpPage = () => {
                 }}
                 alignItems="center"
                 justifyContent="center">
-                {/* <CssBaseline /> */}
-                {/* <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
-                    sx={{
-                        backgroundImage: `url(${coffeeimg})`,
-                        backgroundSize: "cover",
-                        height: "91vh",
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                        backgroundPosition: 'center',
-                    }}
-                /> */}
                 <Grid
                     item
                     xs={12}
@@ -158,9 +149,6 @@ const SignUpPage = () => {
                             alignItems: 'center',
                         }}
                     >
-                        {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar> */}
                         <Typography component="h1" variant="h5" sx={{ opacity: 1.0 }}>
                             Sign Up
                         </Typography>
@@ -204,6 +192,7 @@ const SignUpPage = () => {
                             /> */}
                             <Button
                                 type="submit"
+                                className='button'
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, opacity: 1.5 }}
