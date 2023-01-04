@@ -38,7 +38,8 @@ const useStyles = makeStyles(() => ({
     left: "0",
   },
   h2: {
-    margin: "0",
+    marginLeft: "0vw", 
+    fontSize: "22px"
   },
   mainPicture: {
     width: "300px",
@@ -48,23 +49,37 @@ const useStyles = makeStyles(() => ({
   images: {
     margin: "0",
   },
-  tags: {
+  tagsWrapper: {
     display: "flex",
     flexWrap: "wrap",
+    fontSize: "20px",
+  },
+  tags: {
+    marginLeft: "0.3vw"
   },
   infos: {
     margin: "0",
     height: "620px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     alignItems: "left",
+    // background: "red"
   },
   attributes: {
     display: "flex",
     alignItems: "center",
+    fontSize: "18px",
   },
-  attributesInfo: { marginLeft: "5px", marginTop: "3px" },
+  description: {
+    display: "flex",
+    alignItems: "flex-start",
+  },
+  attributesInfo: { 
+    marginLeft: "0.5vw", 
+    // marginTop: "3px",
+    fontSize: "22px"
+  },
   carousel: {
     width: "270px",
     height: "270px",
@@ -182,11 +197,11 @@ export default function PostDetails() {
               {postInfo.tags === undefined || postInfo.tags.length === 0 ? (
                 <></>
               ) : (
-                <div>
+                <div className={classes.attributes}>
                   <h3 className={classes.title}>Tags :</h3>
-                  <div className={classes.tags}>
+                  <div className={classes.tagsWrapper}>
                     {postInfo.tags.map((tags, index) => (
-                      <div key={index}>#{tags}</div>
+                      <div className={classes.tags} key={index}>#{tags} {" "}</div>
                     ))}
                   </div>
                 </div>
@@ -194,7 +209,7 @@ export default function PostDetails() {
               {postInfo.description === "" ? (
                 <></>
               ) : (
-                <div>
+                <div className={classes.description}>
                   <h3 className={classes.title}>Description :</h3>
                   <TextField
                     // label="What's on your mind?"
@@ -204,30 +219,37 @@ export default function PostDetails() {
                     InputProps={{ disableUnderline: true }}
                     variant="standard"
                     inputProps={{ readOnly: true }}
-                    style={{ width: "300px", overflow: "scroll" }}
+                    style={{ 
+                      width: "15vw", 
+                      overflow: "scroll",
+                      marginLeft: "1vw"
+                    }}
                   />
                   {/* <div style={{ overflowY: "scroll", width: "300px", height: "50px", background: "red" }}>
                     {postInfo.description}
                   </div> */}
                 </div>
               )}
-              <div className={classes.mainPicture}>
-                <Carousel
-                  className={classes.carousel}
-                  infiniteLoop
-                  useKeyboardArrows
-                  autoPlay
-                  showArrows={true}
-                >
-                  {postInfo.images === undefined ? (
-                    <></>
-                  ) : (
-                    postInfo.images.map((imgURL, index) => {
-                      return <img src={imgURL} key={index} alt="images" />;
-                    })
-                  )}
-                </Carousel>
-              </div>
+              { (postInfo.images === undefined || postInfo.images.length === 0) ?
+                  <></> :
+                  <div className={classes.mainPicture}>
+                    <Carousel
+                      className={classes.carousel}
+                      infiniteLoop
+                      useKeyboardArrows
+                      autoPlay
+                      showArrows={true}
+                    >
+                      {postInfo.images === undefined ? (
+                        <></>
+                      ) : (
+                        postInfo.images.map((imgURL, index) => {
+                          return <img src={imgURL} key={index} alt="images" />;
+                        })
+                      )}
+                    </Carousel>
+                  </div>
+              }
             </div>
             <div className={classes.infos}>
               <center>
