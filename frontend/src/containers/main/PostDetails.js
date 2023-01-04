@@ -58,8 +58,13 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-evenly",
+    alignItems: "left",
+  },
+  attributes: {
+    display: "flex",
     alignItems: "center",
   },
+  attributesInfo: { marginLeft: "5px", marginTop: "3px" },
   carousel: {
     width: "270px",
     height: "270px",
@@ -77,7 +82,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-  }
+  },
 }));
 
 export default function PostDetails() {
@@ -158,30 +163,39 @@ export default function PostDetails() {
           </center>
           <div className={classes.background}>
             <div className={classes.infos}>
-              <h2 className={classes.h2}>Location : {postInfo.location}</h2>
-              <h3 className={classes.title}>Author : {postInfo.author}</h3>
-              <h3 className={classes.title}>
-                Date : {new Date(postInfo.time).toDateString()}
-              </h3>
+              <div className={classes.attributes}>
+                <h3 className={classes.h2}>Location :</h3>
+                <div className={classes.attributesInfo}>
+                  {postInfo.location}
+                </div>
+              </div>
+              <div className={classes.attributes}>
+                <h3 className={classes.title}>Author :</h3>
+                <div className={classes.attributesInfo}>{postInfo.author}</div>
+              </div>
+              <div className={classes.attributes}>
+                <h3 className={classes.title}>Date :</h3>
+                <div className={classes.attributesInfo}>
+                  {new Date(postInfo.time).toDateString()}
+                </div>
+              </div>
               {postInfo.tags === undefined || postInfo.tags.length === 0 ? (
                 <></>
               ) : (
-                <h3 className={classes.title}>
-                  Tags :{" "}
+                <div>
+                  <h3 className={classes.title}>Tags :</h3>
                   <div className={classes.tags}>
                     {postInfo.tags.map((tags, index) => (
                       <div key={index}>#{tags}</div>
                     ))}
                   </div>
-                </h3>
+                </div>
               )}
               {postInfo.description === "" ? (
                 <></>
               ) : (
                 <div>
-                  <h3 className={classes.title}>
-                    Description :
-                  </h3>
+                  <h3 className={classes.title}>Description :</h3>
                   <TextField
                     // label="What's on your mind?"
                     multiline
@@ -189,9 +203,7 @@ export default function PostDetails() {
                     value={postInfo.description}
                     InputProps={{ disableUnderline: true }}
                     variant="standard"
-                    inputProps={
-                      { readOnly: true, }
-                    }
+                    inputProps={{ readOnly: true }}
                     style={{ width: "300px", overflow: "scroll" }}
                   />
                   {/* <div style={{ overflowY: "scroll", width: "300px", height: "50px", background: "red" }}>
