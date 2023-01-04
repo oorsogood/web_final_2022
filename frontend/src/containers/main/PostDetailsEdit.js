@@ -133,7 +133,7 @@ export default function PostDetailsEdit(props) {
           />
         </div>
         <div className={classes.bottomLayout}>
-          <Button variant="contained" onClick={() => props.setEdit(false)}>
+          <Button variant="outlined" onClick={() => props.setEdit(false)}>
             Cancel
           </Button>
           <Button

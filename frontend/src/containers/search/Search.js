@@ -88,7 +88,16 @@ export default function Search(props) {
   return (
     <div>
       <div className={classes.searchButton}>
-        <Button onClick={handleClickOpen} variant="contained" color="success">
+        <Button 
+          onClick={handleClickOpen}
+          variant="contained"
+          style={{
+            backgroundColor: "#0000006b",
+            width: "35vw",
+            display: "flex",
+            justifyContent: "space-between"
+          }}
+        >
           Search Post
           <img
             className={classes.searchIcon}

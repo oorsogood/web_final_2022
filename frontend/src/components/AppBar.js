@@ -59,11 +59,11 @@ function AppBar({ pages }) {
         <MuiAppBar
           position="fixed"
           // className={classes.navbar}
-          style={{ background: "gray" }}
+          style={{ background: "#ce775c" }}
         >
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-              <div className={classes.title}>Web Final Project</div>
+              {/* <div className={classes.title}>Web Final Project</div> */}
 
               <Box
                 sx={{
@@ -122,14 +122,18 @@ function AppBar({ pages }) {
 													>
 															Some Title
 													</Typography> */}
-              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, marginLeft: "2vw" }}>
                 {pages?.map((page) => (
                   <Button
                     variant="outlined"
                     key={page.label}
                     onClick={() => handleCloseNavMenu(page.path)}
                     // style={styles}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{
+                      color: "white",
+                      ":hover": { bgcolor: "#8b5959", color: "white", border: "0" },
+                      border: "0"
+                    }}
                   >
                     {page.label}
                   </Button>
@@ -140,7 +144,13 @@ function AppBar({ pages }) {
                     key={"logout"}
                     onClick={logout}
                     // style={styles}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{
+                      color: "white",
+                      ":hover": { bgcolor: "#8b5959", color: "white", border: "0" },
+                      border: "0",
+                      position: "absolute",
+                      right: "0"
+                    }}
                   >
                     {"logout"}
                   </Button>
