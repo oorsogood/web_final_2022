@@ -14,7 +14,7 @@ function HomeLayout() {
     <div>
       <AppBar
         pages={[
-          { label: "Home", path: "/home" },
+          { label: "Home", path: "/" },
           { label: "Login", path: "/login" },
         ]}
       />

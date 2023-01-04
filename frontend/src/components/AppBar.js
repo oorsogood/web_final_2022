@@ -42,12 +42,15 @@ function AppBar({ pages }) {
 		const pathname = window.location.pathname
 		// console.log("Current path", pathname);
 		// console.log("Clicked path", path);
-    if (pathname.includes(path)) {
-			navigate(0);
+    if(path !== "/"){
+      navigate(pathname.includes(path) ? 0 : path);
     }
-		else{
-			navigate(path);
+		else if(pathname === "/"){
+			navigate(0);
 		}
+    else{
+      navigate(path);
+    }
   };
 
   return (

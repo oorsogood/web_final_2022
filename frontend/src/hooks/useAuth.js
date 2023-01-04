@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
     const result = await axios.post("./api/auth/signout");
     console.log(result.data["message"]);
     setUser(null);
-    navigate("/home", { replace: true });
+    navigate("/", { replace: true });
   };
 
   const signup = async () => {
