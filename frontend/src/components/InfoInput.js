@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import { Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import trashIcon from "../images/trash.png";

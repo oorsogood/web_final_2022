@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 import axios from "../api";
 
 const SearchContext = createContext({
@@ -6,7 +6,7 @@ const SearchContext = createContext({
   authorFilter: "",
   locationFilter: "",
   tagsFilter: [],
-  getPosts: (myPost) => {}
+  getPosts: (myPost) => {},
 });
 
 const SearchProvider = (props) => {
@@ -16,16 +16,16 @@ const SearchProvider = (props) => {
   const [tagsFilter, setTagsFilter] = useState([]);
 
   const getPosts = async (myPost) => {
-    const author = myPost ? JSON.parse(window.localStorage.getItem("user")).username : authorFilter;
-    // console.log("author is", author);
+    const author = myPost
+      ? JSON.parse(window.localStorage.getItem("user")).username
+      : authorFilter;
     const result = await axios.get("/posts", {
       params: {
         authorFilter: author,
         placeFilter: locationFilter,
-        tagFilter: tagsFilter
-      }
+        tagFilter: tagsFilter,
+      },
     });
-    // console.log(result.data.contents);
     setPosts(result.data.contents);
   };
 
@@ -39,7 +39,7 @@ const SearchProvider = (props) => {
         setLocationFilter,
         tagsFilter,
         setTagsFilter,
-        getPosts
+        getPosts,
       }}
       {...props}
     />

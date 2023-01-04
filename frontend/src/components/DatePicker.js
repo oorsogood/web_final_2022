@@ -1,14 +1,11 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 export default function ResponsiveDatePicker({ dateInput, setDateInput }) {
-  // const [value, setValue] = useState();
-
   const handleChangeDate = (date) => {
-    // setDateInput({ Year: date.$y, Month: date.$M + 1, Date: date.$D });
     setDateInput(date);
   };
 
@@ -21,7 +18,9 @@ export default function ResponsiveDatePicker({ dateInput, setDateInput }) {
         views={["year", "month", "day"]}
         value={dateInput}
         onChange={handleChangeDate}
-        renderInput={(params) => <TextField {...params} style={{background: "white"}} />}
+        renderInput={(params) => (
+          <TextField {...params} style={{ background: "white" }} />
+        )}
       />
     </LocalizationProvider>
   );

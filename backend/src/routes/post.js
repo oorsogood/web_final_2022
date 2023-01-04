@@ -10,29 +10,16 @@ import authJwt from "../middleware/authJwt";
 const ObjectId = require("mongoose").Types.ObjectId;
 
 const router = Router();
-// var storage = multer.diskStorage({
-// 	destination: function (req, file, cb) {
-// 		cb(null, "uploadedFiles/")
-// 	},
-// 	filename: function (req, file, cb) {
-// 		cb(null, file.originalname)
-// 	}
-// });
-// var upload = multer({ storage: storage });
 const upload = multer({ dest: "/tmp" });
-// console.log(upload);
 const s3 = new AWS.S3({
   accessKeyId: process.env.ACCESS_KEY_ID,
   secretAccessKey: process.env.SECRET_ACCESS_KEY,
 });
 
 router.get("/user", async (req, res) => {
-  // console.log("Get user api called");
-  // console.log("req.query.username", req.query.username);
   const username = req.query.username;
   const result = await User.find({ username });
   if (result.length >= 1) {
-    // console.log(result);
     res.status(200).send({ message: "Success", contents: result[0]._id });
   } else {
     res.status(500).send({ message: "Username not found." });
@@ -40,9 +27,8 @@ router.get("/user", async (req, res) => {
 });
 
 router.post("/uploadImg", upload.single("image"), async (req, res) => {
-  if(req.file !== undefined){
+  if (req.file !== undefined) {
     const content = fs.readFileSync(req.file.path);
-    // console.log(mime.getType(req.file.path));
     const params = {
       Bucket: process.env.BUCKET_NAME,
       Key: req.file.originalname,
@@ -54,15 +40,12 @@ router.post("/uploadImg", upload.single("image"), async (req, res) => {
       if (err) {
         console.log("ERROR MSG: ", err);
       }
-      // console.log(data);
       res.json(data.Location);
     });
     fs.unlink(req.file.path, (err) => {
       if (err) console.log(err);
-      // else console.log("\nDeleted file");
     });
-  }
-  else{
+  } else {
     res.status(200).send({ message: "No file to be uploaded" });
   }
 });
@@ -74,14 +57,9 @@ router.post("/post", async (req, res) => {
   const latitude = Number(req.body.latitude);
   const longitude = Number(req.body.longitude);
   const time = new Date(req.body.time);
-  // console.log("req.body.time is", req.body.time);
-  // console.log("time is", time);
   const description = String(req.body.description);
   const userID = String(req.body.userID);
   const author = String(req.body.author);
-  // console.log("Working here");
-  // console.log(userID);
-  // console.log(req.body.images);
   let tags = [];
   for (var key in req.body.tags) {
     if (req.body.tags.hasOwnProperty(key)) {
@@ -109,13 +87,10 @@ router.post("/post", async (req, res) => {
   };
   try {
     const newPost = await new Post(newEntry).save();
-    // console.log("Created post", newPost);
     res.status(200).send({ message: "Success", contents: newPost });
-    // res.json({ newPost });
     return newPost;
   } catch (e) {
     res.status(400).send({ message: "Post creation error" });
-    // throw new Error("Post creation error: " + e);
   }
 });
 

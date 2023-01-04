@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     marginLeft: "35px",
     marginRight: "35px",
-    marginTop: "1%"
+    marginTop: "1%",
   },
   post: {
     backgroundColor: "#cfe2e1",
@@ -32,8 +32,8 @@ const useStyles = makeStyles(() => ({
       WebkitTrasition: "scale(1.05)",
       msTransform: "scale(1.05)",
       transform: "scale(1.05)",
-      boxShadow: "3px 4.5px 2.1px #C7C7C7"
-    }
+      boxShadow: "3px 4.5px 2.1px #C7C7C7",
+    },
   },
   iamgesLayout: {
     display: "flex",
@@ -50,8 +50,8 @@ const useStyles = makeStyles(() => ({
     alignItems: "left",
     marginLeft: "10px",
   },
-  location: { 
-    fontSize: "18px", 
+  location: {
+    fontSize: "18px",
     color: "black",
     height: "3.7vh",
     overflow: "scroll",
@@ -70,7 +70,7 @@ const useStyles = makeStyles(() => ({
   },
   tagsLayout: {
     display: "flex",
-    marginRight: "0.5%"
+    marginRight: "0.5%",
   },
   tagIcon: {
     width: "20px",
@@ -80,7 +80,7 @@ const useStyles = makeStyles(() => ({
     marginLeft: "5px",
     color: "darkred",
     maxWidth: "10vh",
-    overflow: "scroll"
+    overflow: "scroll",
   },
   authorAndTagLayout: {
     marginTop: "10px",
@@ -104,7 +104,6 @@ const useStyles = makeStyles(() => ({
 function Post({ data }) {
   const classes = useStyles();
   const { user } = useAuth();
-  // console.log(data);
   const navigate = useNavigate();
 
   const ToPost = (postId) => {
@@ -113,7 +112,6 @@ function Post({ data }) {
     } else {
       navigate("/posts/:" + postId);
     }
-    // console.log(postId, "success");
   };
 
   return (

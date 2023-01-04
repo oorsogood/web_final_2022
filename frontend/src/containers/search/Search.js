@@ -49,7 +49,6 @@ export default function Search(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    // console.log("props is", props.myPost);
     getPosts(props.myPost);
   }, []);
 
@@ -89,14 +88,14 @@ export default function Search(props) {
   return (
     <div>
       <div className={classes.searchButton}>
-        <Button 
+        <Button
           onClick={handleClickOpen}
           variant="contained"
           style={{
             backgroundColor: "#0000006b",
             width: "35vw",
             display: "flex",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           Search Post

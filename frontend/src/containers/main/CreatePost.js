@@ -1,13 +1,12 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import GoogleMaps from "../../components/GoogleMaps";
 import { MapProvider, useMap } from "../../hooks/useMap";
 import axios from "../../api";
 import InfoInput from "../../components/InfoInput";
-import moment from "moment";
 import bp1 from "../../images/bp1.jpg";
 import { Backdrop, CircularProgress } from "@mui/material";
 
@@ -185,7 +184,6 @@ const CreatePost = () => {
       </div>
       <center>
         <div className={classes.bottomLayout}>
-          {/* <br /> */}
           <Button
             variant="contained"
             onClick={() => navigate("/dashboard/home")}

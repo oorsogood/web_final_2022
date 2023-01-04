@@ -20,7 +20,6 @@ const useStyles = makeStyles(() => ({
     backgroundSize: "cover",
   },
   title: {
-    // backgroundColor: "palegoldenrod",
     margin: "0",
   },
   header: {
@@ -29,7 +28,6 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
   },
   background: {
-    // backgroundColor: "palegoldenrod",
     width: "100%",
     display: "flex",
     justifyContent: "space-evenly",
@@ -38,8 +36,8 @@ const useStyles = makeStyles(() => ({
     left: "0",
   },
   h2: {
-    marginLeft: "0vw", 
-    fontSize: "22px"
+    marginLeft: "0vw",
+    fontSize: "22px",
   },
   mainPicture: {
     width: "300px",
@@ -55,7 +53,7 @@ const useStyles = makeStyles(() => ({
     fontSize: "20px",
   },
   tags: {
-    marginLeft: "0.3vw"
+    marginLeft: "0.3vw",
   },
   infos: {
     margin: "0",
@@ -64,7 +62,6 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "left",
-    // background: "red"
   },
   attributes: {
     display: "flex",
@@ -75,10 +72,9 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     alignItems: "flex-start",
   },
-  attributesInfo: { 
-    marginLeft: "0.5vw", 
-    // marginTop: "3px",
-    fontSize: "22px"
+  attributesInfo: {
+    marginLeft: "0.5vw",
+    fontSize: "22px",
   },
   carousel: {
     width: "270px",
@@ -104,7 +100,6 @@ export default function PostDetails() {
   const { postId } = useParams();
   const { user } = useAuth();
 
-  // console.log("Current post id is", postId);
   const [postInfo, setPostInfo] = useState({});
   const [coordinate, setCoordinate] = useState({
     lat: 0,
@@ -115,7 +110,6 @@ export default function PostDetails() {
 
   const getPost = async () => {
     const id = String(postId.substring(1, postId.length));
-    // console.log(id);
     const {
       data: { contents },
     } = await axios.get("/post", {
@@ -123,7 +117,6 @@ export default function PostDetails() {
         id: id,
       },
     });
-    // console.log(contents[0]);
     setPostInfo(contents[0]);
     setCoordinate({
       lat: contents[0].latitude,
@@ -131,7 +124,6 @@ export default function PostDetails() {
     });
   };
   useEffect(() => {
-    // console.log("getPost called");
     getPost();
   }, [edit]);
   const classes = useStyles();
@@ -201,7 +193,9 @@ export default function PostDetails() {
                   <h3 className={classes.title}>Tags :</h3>
                   <div className={classes.tagsWrapper}>
                     {postInfo.tags.map((tags, index) => (
-                      <div className={classes.tags} key={index}>#{tags} {" "}</div>
+                      <div className={classes.tags} key={index}>
+                        #{tags}{" "}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -212,44 +206,41 @@ export default function PostDetails() {
                 <div className={classes.description}>
                   <h3 className={classes.title}>Description :</h3>
                   <TextField
-                    // label="What's on your mind?"
                     multiline
                     rows={2}
                     value={postInfo.description}
                     InputProps={{ disableUnderline: true }}
                     variant="standard"
                     inputProps={{ readOnly: true }}
-                    style={{ 
-                      width: "15vw", 
+                    style={{
+                      width: "15vw",
                       overflow: "scroll",
-                      marginLeft: "1vw"
+                      marginLeft: "1vw",
                     }}
                   />
-                  {/* <div style={{ overflowY: "scroll", width: "300px", height: "50px", background: "red" }}>
-                    {postInfo.description}
-                  </div> */}
                 </div>
               )}
-              { (postInfo.images === undefined || postInfo.images.length === 0) ?
-                  <></> :
-                  <div className={classes.mainPicture}>
-                    <Carousel
-                      className={classes.carousel}
-                      infiniteLoop
-                      useKeyboardArrows
-                      autoPlay
-                      showArrows={true}
-                    >
-                      {postInfo.images === undefined ? (
-                        <></>
-                      ) : (
-                        postInfo.images.map((imgURL, index) => {
-                          return <img src={imgURL} key={index} alt="images" />;
-                        })
-                      )}
-                    </Carousel>
-                  </div>
-              }
+              {postInfo.images === undefined || postInfo.images.length === 0 ? (
+                <></>
+              ) : (
+                <div className={classes.mainPicture}>
+                  <Carousel
+                    className={classes.carousel}
+                    infiniteLoop
+                    useKeyboardArrows
+                    autoPlay
+                    showArrows={true}
+                  >
+                    {postInfo.images === undefined ? (
+                      <></>
+                    ) : (
+                      postInfo.images.map((imgURL, index) => {
+                        return <img src={imgURL} key={index} alt="images" />;
+                      })
+                    )}
+                  </Carousel>
+                </div>
+              )}
             </div>
             <div className={classes.infos}>
               <center>
@@ -279,8 +270,8 @@ export default function PostDetails() {
                     color: "white",
                     bgcolor: "#a92020",
                     ":hover": {
-                      bgcolor: "#a92020"
-                    }
+                      bgcolor: "#a92020",
+                    },
                   }}
                 >
                   Delete
