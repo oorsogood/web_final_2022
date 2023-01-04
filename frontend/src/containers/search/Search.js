@@ -30,6 +30,7 @@ const useStyles = makeStyles(() => ({
   },
   enterTags: {
     color: "royalblue",
+    fontSize: "12px",
   },
 }));
 
@@ -98,11 +99,18 @@ export default function Search(props) {
         </Button>
       </div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Find The Post !</DialogTitle>
+        <DialogTitle>
+          <b>Find The Post !</b>
+        </DialogTitle>
         <DialogContent>
           <Box
             component="form"
-            sx={{ display: "flex", flexWrap: "wrap", minWidth: "400px" }}
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              minWidth: "350px",
+              minHeight: "270px",
+            }}
           >
             <div className={classes.dialogContent}>
               {props.myPost ? (
@@ -114,6 +122,7 @@ export default function Search(props) {
                       id="filled-search"
                       label="Author"
                       type="search"
+                      sx={{ width: 250 }}
                       value={authorFilter}
                       onChange={handleChangeAuthor}
                     />
@@ -126,6 +135,7 @@ export default function Search(props) {
                     id="filled-search"
                     label="Location"
                     type="search"
+                    sx={{ width: 250 }}
                     value={locationFilter}
                     onChange={handleChangeLocation}
                   />
@@ -143,8 +153,7 @@ export default function Search(props) {
                     <div>
                       <p className={classes.enterTags}>
                         press <b>Enter</b> to add new tag.
-                      </p>
-                      <p className={classes.enterTags}>
+                        <br />
                         press <b>BackSpace</b> to remove tag.
                       </p>
                     </div>
