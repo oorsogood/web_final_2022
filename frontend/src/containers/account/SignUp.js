@@ -49,7 +49,18 @@ const gridstyle = {
 };
 
 
-const theme = createTheme();
+const theme = createTheme({
+    palette: {
+        dark: {
+            main: '#202020',
+            contrastText: '#fff',
+        },
+        neutral: {
+            main: '#64748B',
+            contrastText: '#fff',
+        },
+    },
+});
 
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
@@ -196,7 +207,7 @@ const SignUpPage = () => {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, opacity: 1.5 }}
-                                color="grey"
+                                color="dark"
                             >
                                 Sign Up
                             </Button>
