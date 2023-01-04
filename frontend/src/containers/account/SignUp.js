@@ -76,6 +76,9 @@ const SignUpPage = () => {
     const [open, setOpen] = React.useState(false);
     const [severity, setSeverity] = React.useState("error");
     const [mes, setMessage] = React.useState("");
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [confirmpassword, setConfirmPassword] = React.useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -87,6 +90,9 @@ const SignUpPage = () => {
             setOpen(true);
             await delay(1500);
             setOpen(false);
+            setUsername("");
+            setPassword("");
+            setConfirmPassword("");
             return;
         }
 
@@ -108,6 +114,9 @@ const SignUpPage = () => {
             setMessage(err.response.data['message']);
             setOpen(true);
             await delay(1500);
+            setUsername("");
+            setPassword("");
+            setConfirmPassword("");
             setOpen(false);
             return;
         });
@@ -162,6 +171,9 @@ const SignUpPage = () => {
                                 name="username"
                                 autoComplete="username"
                                 autoFocus
+                                onChange={event => setUsername(event.target.value)}
+                                // error={username === ""}
+                                helperText="Please enter user name."
                                 color="grey"
                             />
                             <TextField
@@ -173,6 +185,9 @@ const SignUpPage = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={event => setPassword(event.target.value)}
+                                // error={password === ""}
+                                helperText="Please enter password."
                                 color="grey"
                             />
                             <TextField
@@ -184,37 +199,22 @@ const SignUpPage = () => {
                                 type="password"
                                 id="confirmpassword"
                                 autoComplete="current-password"
+                                onChange={event => setConfirmPassword(event.target.value)}
+                                // error={confirmpassword === ""}
+                                helperText="Please confirm password."
                                 color="grey"
                             />
-                            {/* <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            /> */}
                             <Button
                                 type="submit"
                                 className='button'
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, opacity: 1.5 }}
+                                disabled={password === "" || username === "" || confirmpassword === ""}
                                 color="dark"
                             >
                                 Sign Up
                             </Button>
-                            {/* <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <RouterLink to="/signup">
-                                        <Link href="#" variant="body2">
-                                            {"Don't have an account? Sign Up"}
-                                        </Link>
-                                    </RouterLink>
-                                </Grid>
-                            </Grid> */}
-                            {/* <Copyright sx={{ mt: 5 }} /> */}
                         </Box>
                     </Box>
                 </Grid>
