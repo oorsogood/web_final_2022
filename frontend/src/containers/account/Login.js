@@ -106,8 +106,8 @@ const LoginPage = () => {
             setSeverity("error");
             console.log(err.response);
             setMessage(err.response.data['message']);
-            setUsername("");
-            setPassword("");
+            // setUsername("");
+            // setPassword("");
             setOpen(true);
             await delay(1500);
             setOpen(false);

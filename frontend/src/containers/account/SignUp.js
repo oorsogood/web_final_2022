@@ -90,9 +90,9 @@ const SignUpPage = () => {
             setOpen(true);
             await delay(1500);
             setOpen(false);
-            setUsername("");
-            setPassword("");
-            setConfirmPassword("");
+            // setUsername("");
+            // setPassword("");
+            // setConfirmPassword("");
             return;
         }
 
@@ -114,9 +114,9 @@ const SignUpPage = () => {
             setMessage(err.response.data['message']);
             setOpen(true);
             await delay(1500);
-            setUsername("");
-            setPassword("");
-            setConfirmPassword("");
+            // setUsername("");
+            // setPassword("");
+            // setConfirmPassword("");
             setOpen(false);
             return;
         });
