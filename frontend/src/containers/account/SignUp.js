@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Modal from '@mui/material/Modal';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import bgimg from '../../images/signupbackground.jpg';
+import bgimg from '../../images/bp1.jpg';
 
 import { useAuth } from "../../hooks/useAuth";
 import axios from "../../api";
@@ -26,7 +26,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 300,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -121,7 +121,7 @@ const SignUpPage = () => {
                 sx={{
                     backgroundImage: `url(${bgimg})`,
                     backgroundSize: "cover",
-                    height: "91vh",
+                    height: "92vh",
                     backgroundColor: (t) =>
                         t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                     backgroundPosition: 'center',
@@ -142,14 +142,14 @@ const SignUpPage = () => {
                 >
                     <Box
                         sx={{
-                            my: 8,
+                            my: 4,
                             mx: 4,
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
                         }}
                     >
-                        <Typography component="h1" variant="h5" sx={{ opacity: 1.0 }}>
+                        <Typography component="h1" variant="h5" sx={{ opacity: 1.0, fontWeight: 'bold' }}>
                             Sign Up
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -158,7 +158,7 @@ const SignUpPage = () => {
                                 required
                                 fullWidth
                                 id="username"
-                                label="User Name"
+                                label="Username"
                                 name="username"
                                 autoComplete="username"
                                 autoFocus
@@ -225,7 +225,7 @@ const SignUpPage = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Alert severity={severity}>
+                    <Alert severity={severity} sx={style}>
                         <AlertTitle>{severity}</AlertTitle>
                         <strong>{mes}</strong>
                     </Alert>
