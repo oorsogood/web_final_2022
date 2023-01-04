@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     backgroundSize: "cover",
   },
   title: {
-    color: "#69C123",
+    color: "black",
     margin: "0",
   },
   wrapper: {
@@ -158,7 +158,7 @@ const CreatePost = () => {
             <h2 className={classes.h2}>Pin or search ! *</h2>
           </center>
           <GoogleMaps />
-          <h3 style={{ margin: "5px" }}>Address: {address}</h3>
+          <h3 style={{ marginTop: "2vh" }}>Address: {address}</h3>
         </div>
         <InfoInput
           dateInput={dateInput}
@@ -185,6 +185,13 @@ const CreatePost = () => {
           <Button
             variant="contained"
             onClick={() => navigate("/dashboard/home")}
+            sx={{
+              color: "white",
+              bgcolor: "#a92020",
+              ":hover": {
+                bgcolor: "#a92020"
+              }
+            }}
           >
             Discard
           </Button>
@@ -193,6 +200,15 @@ const CreatePost = () => {
             color="success"
             disabled={disablePostButton}
             onClick={handlePost}
+            sx={{
+              color: "white",
+              bgcolor: "#rgb(55 140 49)",
+              ":disabled": {
+                ":hover": {
+                  cursor: "none"
+                }
+              }
+            }}
           >
             Post
           </Button>

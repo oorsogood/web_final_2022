@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     marginTop: "1%"
   },
   post: {
-    backgroundColor: "white",
+    backgroundColor: "#cfe2e1",
     borderRadius: "10px",
     marginLeft: "2.5%",
     marginRight: "2.5%",
@@ -52,7 +52,7 @@ const useStyles = makeStyles(() => ({
   },
   location: { 
     fontSize: "18px", 
-    color: "navy",
+    color: "black",
     height: "3.7vh",
     overflow: "scroll",
   },
@@ -62,7 +62,7 @@ const useStyles = makeStyles(() => ({
   },
   author: {
     marginLeft: "5px",
-    color: "darkviolet",
+    color: "#3c3c8a",
   },
   authorIcon: {
     width: "20px",
@@ -78,7 +78,7 @@ const useStyles = makeStyles(() => ({
   },
   tags: {
     marginLeft: "5px",
-    color: "lightcoral",
+    color: "darkred",
     maxWidth: "10vh",
     overflow: "scroll"
   },

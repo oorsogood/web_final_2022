@@ -252,8 +252,14 @@ export default function PostDetails() {
                 </Button>
                 <Button
                   variant="contained"
-                  color="error"
                   onClick={handleClickDelete}
+                  sx={{
+                    color: "white",
+                    bgcolor: "#a92020",
+                    ":hover": {
+                      bgcolor: "#a92020"
+                    }
+                  }}
                 >
                   Delete
                 </Button>
