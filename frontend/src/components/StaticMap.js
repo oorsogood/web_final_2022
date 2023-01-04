@@ -1,13 +1,7 @@
-import { useCallback, useEffect, useState, useMemo, useRef } from "react";
-import {
-  GoogleMap,
-  useLoadScript,
-  MarkerF,
-  InfoWindow,
-} from "@react-google-maps/api";
+import { useCallback, useRef } from "react";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import Geocode from "react-geocode";
 import styled from "styled-components";
-import { propsToClassKey } from "@mui/styles";
 import mapStyles from "./MapStyles";
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_KEY);
@@ -27,7 +21,6 @@ const containerStyle = {
 };
 
 const Map = (props) => {
-  // console.log(props.coordinate);
   const mapRef = useRef();
 
   const onMapLoad = useCallback((map) => {

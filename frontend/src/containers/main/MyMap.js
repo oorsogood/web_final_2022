@@ -74,7 +74,6 @@ const Map = () => {
         authorFilter: me,
       },
     });
-    // console.log("Get result is ", contents);
     setMyPosts(contents);
   };
 
@@ -98,7 +97,6 @@ const Map = () => {
         },
       },
     });
-    // console.log("Get result is ", contents);
     setSelectedPosts(contents);
   };
 
@@ -119,7 +117,6 @@ const Map = () => {
               styles: mapStyles,
               zoomControl: true,
             }}
-            // onClick={handleClick}
             onLoad={onMapLoad}
           >
             {myPosts !== undefined && myPosts.length > 0 ? (
@@ -141,7 +138,6 @@ const Map = () => {
                     }}
                   />
                 );
-                // return <MarkerF position={coordinate} onClick={handleMarkerClick} key={index} />
               })
             ) : (
               <></>

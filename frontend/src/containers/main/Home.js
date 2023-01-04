@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { Navbar, Button, Link, Text, css } from "@nextui-org/react";
 import Layout from "./Layout.js";
 import { SearchProvider } from "../../hooks/useSearch";
 import { makeStyles } from "@mui/styles";

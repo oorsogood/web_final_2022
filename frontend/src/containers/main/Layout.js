@@ -1,6 +1,5 @@
 import Post from "./Post";
 import { useSearch } from "../../hooks/useSearch";
-import { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import NoMatch from "../../components/noMatch";
 import NoMatchIcon from "../../images/no-results.png";
@@ -8,7 +7,6 @@ import bp1 from "../../images/bp1.jpg";
 
 const useStyles = makeStyles(() => ({
   mainLayout: {
-    // backgroundColor: "#F6F5F2",
     height: "100%",
     minHeight: "92vh",
     width: "100vw",
@@ -30,7 +28,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 const Layout = ({ children }) => {
-  const { posts, getPosts } = useSearch();
+  const { posts } = useSearch();
   const classes = useStyles();
 
   return (

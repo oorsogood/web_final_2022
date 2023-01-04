@@ -1,4 +1,4 @@
-import authJwt  from "./authJwt";
+import authJwt from "./authJwt";
 import verifySignUp from "./verifySignUp";
 
-export default {authJwt, verifySignUp};
+export default { authJwt, verifySignUp };
